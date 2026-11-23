@@ -87,7 +87,7 @@ export default function LocationsDirectory({ locations }: LocationsDirectoryProp
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by sector, DLF, or landmark (e.g., Sector 29, Cyber City, Aerocity)..."
-          className="w-full bg-white border-2 border-gray-200 focus:border-[#671725] px-12 py-3.5 text-sm text-[#111827] placeholder-gray-400 focus:outline-none transition-colors shadow-sm rounded-xl"
+          className="w-full bg-white border-2 border-gray-200 focus:border-[#671725] px-12 py-3.5 text-sm text-[#111827] placeholder-gray-400 focus:outline-hidden transition-colors shadow-sm rounded-xl"
         />
         <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#671725]" />
         {searchTerm && (

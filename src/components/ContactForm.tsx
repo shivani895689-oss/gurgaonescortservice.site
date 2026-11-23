@@ -58,7 +58,7 @@ export default function ContactForm() {
       {submissionStatus === 'success' && (
         <div className="mb-6 p-5 bg-emerald-50 border border-emerald-500/60 rounded-2xl text-emerald-950 text-sm animate-fade-in">
           <div className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-emerald-950">
                 {statusMessage}
@@ -83,7 +83,7 @@ export default function ContactForm() {
 
       {submissionStatus === 'error' && (
         <div className="mb-6 p-5 bg-red-500/10 border border-red-500/40 rounded-2xl text-red-900 text-sm flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
           <div>
             <p className="font-semibold">{statusMessage || 'An unexpected error occurred. Please try again.'}</p>
             <p className="text-xs text-red-800 mt-1">
@@ -108,7 +108,7 @@ export default function ContactForm() {
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-none transition-colors"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-hidden transition-colors"
               placeholder="e.g. Mr. Sharma"
             />
           </div>
@@ -123,7 +123,7 @@ export default function ContactForm() {
               required
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-none transition-colors"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-hidden transition-colors"
               placeholder="+91 98765 43210"
             />
           </div>
@@ -138,7 +138,7 @@ export default function ContactForm() {
               id="contact-category"
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 focus:border-primary-wine focus:outline-none transition-colors"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 focus:border-primary-wine focus:outline-hidden transition-colors"
             >
               <option value="">Any Category</option>
               <option value="Russian Escorts">Russian Escorts</option>
@@ -162,7 +162,7 @@ export default function ContactForm() {
               required
               value={formData.location}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 focus:border-primary-wine focus:outline-none transition-colors"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 focus:border-primary-wine focus:outline-hidden transition-colors"
             >
               <option value="">Select Destination Area</option>
               <optgroup label="Central Business Hubs">
@@ -210,7 +210,7 @@ export default function ContactForm() {
               id="contact-service-type"
               value={formData.serviceType}
               onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
-              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 focus:border-primary-wine focus:outline-none transition-colors"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 focus:border-primary-wine focus:outline-hidden transition-colors"
             >
               <option value="5-Star Hotel Outcall">5-Star Hotel Outcall</option>
               <option value="Private Residence">Private Residence Outcall</option>
@@ -230,7 +230,7 @@ export default function ContactForm() {
               type="email"
               value={formData.email || ''}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-none transition-colors"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-hidden transition-colors"
               placeholder="private@example.com"
             />
           </div>
@@ -245,7 +245,7 @@ export default function ContactForm() {
             rows={4}
             value={formData.message || ''}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            className="w-full bg-white border border-gray-300 rounded-xl p-4 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-none transition-colors resize-none"
+            className="w-full bg-white border border-gray-300 rounded-xl p-4 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:outline-hidden transition-colors resize-none"
             placeholder="Please mention your preferred timing, specific qualities desired, or any private requests..."
           />
         </div>
@@ -253,7 +253,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={submissionStatus === 'submitting'}
-          className="w-full py-4 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-neutral-900 font-bold rounded-xl text-base transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-4 bg-linear-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-neutral-900 font-bold rounded-xl text-base transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {submissionStatus === 'submitting' ? 'Preparing WhatsApp Booking...' : 'Book via WhatsApp Concierge →'}
         </button>

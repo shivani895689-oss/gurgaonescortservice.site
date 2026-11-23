@@ -8,7 +8,8 @@ try {
 import { cache } from 'react';
 import { blogPosts as fallbackPosts, BlogPost } from '@/data/blogs';
 import { getAssetUrl } from '@/lib/assets';
-import { getLocalPostBySlug, getLocalPosts } from '@/lib/admin/localPostsStore';
+import fs from 'fs';
+import path from 'path';
 
 export interface BlogPostRecord {
   id: string;
@@ -38,8 +39,41 @@ let postsListCache: CacheEntry<BlogPost[]> | null = null;
 const postBySlugCache = new Map<string, CacheEntry<BlogPost | null>>();
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5-minute memory TTL
 
+const LOCAL_POSTS_PATH = path.join(process.cwd(), 'src', 'data', 'local_posts.json');
+let localPostsCache: BlogPostRecord[] | null = null;
+let localPostsMtime = 0;
+
+function getLocalPosts(): BlogPostRecord[] {
+  try {
+    if (!fs.existsSync(LOCAL_POSTS_PATH)) {
+      localPostsCache = [];
+      return [];
+    }
+    const stat = fs.statSync(LOCAL_POSTS_PATH);
+    if (localPostsCache !== null && stat.mtimeMs <= localPostsMtime) {
+      return localPostsCache;
+    }
+    const raw = fs.readFileSync(LOCAL_POSTS_PATH, 'utf-8');
+    const data = JSON.parse(raw);
+    const valid: BlogPostRecord[] = Array.isArray(data) ? data : [];
+    localPostsCache = valid;
+    localPostsMtime = stat.mtimeMs;
+    return valid;
+  } catch (err) {
+    console.warn('[supabaseBlog] getLocalPosts error:', err);
+    return localPostsCache || [];
+  }
+}
+
+function getLocalPostBySlug(slug: string): BlogPostRecord | null {
+  const posts = getLocalPosts();
+  return posts.find((p) => p.slug.toLowerCase() === slug.toLowerCase()) || null;
+}
+
 export function invalidateBlogCache(slug?: string): void {
   postsListCache = null;
+  localPostsCache = null;
+  localPostsMtime = 0;
   if (slug) {
     postBySlugCache.delete(slug.toLowerCase().trim());
   } else {

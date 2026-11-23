@@ -313,14 +313,14 @@ export default function GalleryPage() {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs font-bold rounded-xl"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs font-bold rounded-xl"
                   >
                     <MessageCircle size={15} />
                     <span>WhatsApp</span>
                   </a>
                   <a
                     href={`tel:${siteConfig.phone}`}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs font-bold rounded-xl"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs font-bold rounded-xl"
                   >
                     <Phone size={14} className="text-luxury-gold" />
                     <span>Call Now</span>
@@ -361,7 +361,7 @@ export default function GalleryPage() {
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
                 
                 <div className="absolute top-4 right-4 bg-primary-wine/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow">
                   {cat.count}

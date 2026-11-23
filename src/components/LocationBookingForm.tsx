@@ -52,7 +52,7 @@ export default function LocationBookingForm({ locationName, locationCity }: Loca
       {submissionStatus === 'success' && (
         <div className="p-4 bg-emerald-950/80 border border-emerald-500/60 rounded-xl text-xs space-y-2 text-left animate-fade-in">
           <div className="flex items-start gap-2.5">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-emerald-300">
                 {statusMessage}
@@ -77,7 +77,7 @@ export default function LocationBookingForm({ locationName, locationCity }: Loca
 
       {submissionStatus === 'error' && (
         <div className="p-4 bg-red-900/40 border border-red-500/50 rounded-xl text-xs flex items-start gap-2 text-red-300 text-left">
-          <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+          <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
           <div>
             <p className="font-semibold">{statusMessage || 'An unexpected error occurred.'}</p>
             <p className="text-gray-300 mt-1">
@@ -100,7 +100,7 @@ export default function LocationBookingForm({ locationName, locationCity }: Loca
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder-gray-500 focus:border-primary-wine focus:outline-none transition-colors"
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder-gray-500 focus:border-primary-wine focus:outline-hidden transition-colors"
           placeholder="Enter your name"
         />
       </div>
@@ -115,7 +115,7 @@ export default function LocationBookingForm({ locationName, locationCity }: Loca
           required
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder-gray-500 focus:border-primary-wine focus:outline-none transition-colors"
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder-gray-500 focus:border-primary-wine focus:outline-hidden transition-colors"
           placeholder="+91 Your Phone Number"
         />
       </div>
@@ -129,7 +129,7 @@ export default function LocationBookingForm({ locationName, locationCity }: Loca
           type="text"
           readOnly
           value={`${locationName}, ${locationCity}`}
-          className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-luxury-gold font-semibold focus:outline-none cursor-default"
+          className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-luxury-gold font-semibold focus:outline-hidden cursor-default"
         />
       </div>
 
@@ -142,7 +142,7 @@ export default function LocationBookingForm({ locationName, locationCity }: Loca
           rows={3}
           value={formData.requirements}
           onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder-gray-500 focus:border-primary-wine focus:outline-none transition-colors resize-none"
+          className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder-gray-500 focus:border-primary-wine focus:outline-hidden transition-colors resize-none"
           placeholder={`Preferences for ${locationName} (hotel, category, timing)...`}
         />
       </div>

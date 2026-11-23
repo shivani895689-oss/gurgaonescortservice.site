@@ -70,7 +70,7 @@ export default function TrustStandardsSection() {
                 const Icon = tp.icon;
                 return (
                   <div key={idx} className="style-8">
-                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-[#FFD700]">
+                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-[#FFD700]">
                       <Icon size={24} />
                     </div>
                     <div>
@@ -103,7 +103,7 @@ export default function TrustStandardsSection() {
               const Icon = std.icon;
               return (
                 <div key={idx} className="style-8">
-                  <div className="w-12 h-12 rounded-full bg-[#FCE7EB] flex items-center justify-center flex-shrink-0 text-[#671725]">
+                  <div className="w-12 h-12 rounded-full bg-[#FCE7EB] flex items-center justify-center shrink-0 text-[#671725]">
                     <Icon size={22} />
                   </div>
                   <div>

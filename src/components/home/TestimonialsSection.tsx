@@ -67,7 +67,7 @@ export default function TestimonialsSection() {
               </div>
 
               <div className="pt-4 border-t border-gray-100 flex items-center gap-3">
-                <div className="relative w-11 h-11 rounded-full overflow-hidden border border-gray-200 shadow-xs flex-shrink-0">
+                <div className="relative w-11 h-11 rounded-full overflow-hidden border border-gray-200 shadow-xs shrink-0">
                   <Image
                     src={getAssetUrl('/images/assets/Dummy.jpg')}
                     alt={rev.name}

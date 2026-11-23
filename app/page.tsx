@@ -82,49 +82,7 @@ export default function HomePage() {
     },
   };
 
-  const localBusinessSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: siteConfig.name,
-    alternateName: `${siteConfig.name} Escort Service in ${siteConfig.city}`,
-    description: siteConfig.description,
-    image: `${siteConfig.url}/og-image.jpg`,
-    url: siteConfig.url,
-    telephone: siteConfig.phone,
-    priceRange: '₹₹₹₹',
-    currenciesAccepted: 'INR',
-    paymentAccepted: 'Cash, Cash on Delivery',
-    areaServed: [
-      {
-        '@type': 'City',
-        name: siteConfig.city,
-      },
-    ],
-    address: {
-      '@type': 'PostalAddress',
-      ...siteConfig.structuredAddress,
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      ...siteConfig.geo,
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ],
-      opens: '00:00',
-      closes: '23:59',
-    },
-  };
-
-  const faqSchema = {
+    const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: generalFaqs.map((faq) => ({
@@ -142,7 +100,6 @@ export default function HomePage() {
     '@graph': [
       organizationSchema,
       websiteSchema,
-      localBusinessSchema,
       faqSchema,
     ],
   };

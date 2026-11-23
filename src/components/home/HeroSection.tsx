@@ -38,7 +38,7 @@ export default function HeroSection() {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-3">
               <a
                 href={"tel:" + siteConfig.phone}
-                className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 font-semibold text-sm rounded-xl"
+                className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 font-semibold text-sm rounded-xl"
               >
                 <Phone size={16} />
                 <span>Call Now</span>
@@ -49,7 +49,7 @@ export default function HeroSection() {
                 href={"https://wa.me/" + siteConfig.whatsapp + "?text=Hello%20ALINA%20VIP,%20I%20would%20like%20to%20inquire%20about%20your%20escort%20services%20in%20Gurgaon."}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 font-bold text-sm rounded-xl"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 font-bold text-sm rounded-xl"
               >
                 <MessageCircle size={17} />
                 <span>WhatsApp</span>
@@ -76,7 +76,7 @@ export default function HeroSection() {
                   className="rounded-full object-cover shadow-lg border-4 border-white"
                   sizes="(max-width: 768px) 45vw, 220px"
                 />
-                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-linear-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
                   Russian VIP
                 </span>
               </div>
@@ -90,7 +90,7 @@ export default function HeroSection() {
                   className="rounded-full object-cover shadow-lg border-4 border-white"
                   sizes="(max-width: 768px) 45vw, 220px"
                 />
-                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-linear-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
                   VIP Models
                 </span>
               </div>
@@ -103,7 +103,7 @@ export default function HeroSection() {
                   className="rounded-full object-cover shadow-lg border-4 border-white"
                   sizes="(max-width: 768px) 45vw, 220px"
                 />
-                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-linear-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
                   Independent
                 </span>
               </div>
@@ -116,7 +116,7 @@ export default function HeroSection() {
                   className="rounded-full object-cover shadow-lg border-4 border-white"
                   sizes="(max-width: 768px) 45vw, 220px"
                 />
-                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-linear-to-r from-[#671725] to-[#420c16] text-[#FFD700] border border-[#FFD700]/30 text-[11px] font-semibold px-3.5 py-0.5 rounded-full shadow-md whitespace-nowrap">
                   Air Hostess
                 </span>
               </div>

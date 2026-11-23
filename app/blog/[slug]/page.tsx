@@ -269,7 +269,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <article className="min-h-screen bg-stone-50/60 text-gray-900">
         {/* Article Hero Header (Growth Service locked luxury gradient & ambient glow) */}
-        <header className="bg-gradient-to-br from-[#120508] via-[#2D0A14] to-[#0A0407] py-16 sm:py-24 px-6 relative overflow-hidden text-white border-b border-[#671725]/40">
+        <header className="bg-linear-to-br from-[#120508] via-[#2D0A14] to-[#0A0407] py-16 sm:py-24 px-6 relative overflow-hidden text-white border-b border-[#671725]/40">
           {/* Ambient glow */}
           <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-96 bg-[#FFD700]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#671725]/30 rounded-full blur-3xl pointer-events-none" />
@@ -394,7 +394,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
 
           {/* Bottom Conversion CTA Banner (Growth Service Layout) */}
-          <div className="mt-16 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#120508] via-[#2D0A14] to-[#0A0407] border border-[#671725]/60 text-center space-y-6 shadow-2xl shadow-black/30 text-white relative overflow-hidden">
+          <div className="mt-16 p-8 sm:p-12 rounded-3xl bg-linear-to-br from-[#120508] via-[#2D0A14] to-[#0A0407] border border-[#671725]/60 text-center space-y-6 shadow-2xl shadow-black/30 text-white relative overflow-hidden">
             {/* Ambient glow inside CTA */}
             <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#FFD700]/10 rounded-full blur-3xl pointer-events-none" />
 

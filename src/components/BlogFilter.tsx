@@ -89,7 +89,7 @@ export default function BlogFilter({ posts, categories }: BlogFilterProps) {
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search articles by keyword, topic, or tag..."
-            className="w-full bg-white border border-gray-200 rounded-full pl-12 pr-12 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:bg-white focus:outline-none transition-all shadow-sm"
+            className="w-full bg-white border border-gray-200 rounded-full pl-12 pr-12 py-3.5 text-sm text-gray-800 placeholder-gray-400 focus:border-primary-wine focus:bg-white focus:outline-hidden transition-all shadow-sm"
           />
           {searchQuery && (
             <button
@@ -166,7 +166,7 @@ export default function BlogFilter({ posts, categories }: BlogFilterProps) {
             className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-primary-wine/40 flex flex-col justify-between"
           >
             <Link href={`/blog/${post.slug}`} className="block">
-              <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+              <div className="relative aspect-[16/10] overflow-hidden bg-linear-to-br from-gray-800 to-gray-900">
                 <Image
                   src={getAssetUrl(post.image || `/images/blog/${post.slug}.webp`)}
                   alt={`${post.title} - Escort Service in Gurgaon | Call Girls`}
@@ -179,7 +179,7 @@ export default function BlogFilter({ posts, categories }: BlogFilterProps) {
                 <span className="absolute top-4 left-4 bg-primary-wine text-white text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
                   {post.category}
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
 
               <div className="p-6">
@@ -240,7 +240,7 @@ export default function BlogFilter({ posts, categories }: BlogFilterProps) {
           <button
             type="button"
             onClick={handleClearFilters}
-            className="px-6 py-2.5 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 rounded-full text-sm font-semibold"
+            className="px-6 py-2.5 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-semibold text-sm rounded-full shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300"
           >
             Clear Filters &amp; View All Articles
           </button>

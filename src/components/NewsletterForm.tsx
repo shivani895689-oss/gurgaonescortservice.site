@@ -53,14 +53,14 @@ export default function NewsletterForm() {
 
       {submissionStatus === 'success' && (
         <div className="mb-4 p-3.5 bg-emerald-50 border border-emerald-500/60 text-emerald-950 rounded-2xl text-xs max-w-lg mx-auto flex items-center justify-center gap-2 animate-fade-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>{statusMessage || 'Subscription initiated via WhatsApp concierge!'}</span>
         </div>
       )}
 
       {submissionStatus === 'error' && (
         <div className="mb-4 p-3.5 bg-red-50 border border-red-500/60 text-red-950 rounded-2xl text-xs max-w-lg mx-auto flex items-center justify-center gap-2">
-          <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+          <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
           <span>{statusMessage}</span>
         </div>
       )}
@@ -76,7 +76,7 @@ export default function NewsletterForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your private email"
           required
-          className="flex-1 px-6 py-3.5 rounded-full border-2 border-gray-300 focus:border-primary-wine focus:outline-none transition-colors text-sm text-gray-800"
+          className="flex-1 px-6 py-3.5 rounded-full border-2 border-gray-300 focus:border-primary-wine focus:outline-hidden transition-colors text-sm text-gray-800"
         />
         <button
           type="submit"

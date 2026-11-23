@@ -206,7 +206,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="flex flex-wrap gap-4">
                 <a
                   href={`tel:${siteConfig.phone}`}
-                  className="px-8 py-4 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-base flex items-center gap-2"
+                  className="px-8 py-4 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-base flex items-center gap-2"
                 >
                   <Phone className="w-5 h-5" /> Book Now
                 </a>
@@ -294,7 +294,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   {category.keyHighlights && category.keyHighlights.length > 0 ? (
                     category.keyHighlights.map((hl, idx) => (
                       <div key={idx} className="flex items-start gap-3 p-4 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                        <ShieldCheck className="w-5 h-5 text-primary-wine flex-shrink-0 mt-1" />
+                        <ShieldCheck className="w-5 h-5 text-primary-wine shrink-0 mt-1" />
                         <div>
                           <h4 className="font-bold text-[#111827] text-sm">{hl.title}</h4>
                           <p className="text-gray-600 text-xs mt-1">{hl.desc}</p>
@@ -304,7 +304,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   ) : (
                     <>
                       <div className="flex items-start gap-3 p-4 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                        <ShieldCheck className="w-5 h-5 text-primary-wine flex-shrink-0 mt-1" />
+                        <ShieldCheck className="w-5 h-5 text-primary-wine shrink-0 mt-1" />
                         <div>
                           <h4 className="font-bold text-[#111827] text-sm">Verified Call Girls</h4>
                           <p className="text-gray-600 text-xs mt-1">
@@ -314,7 +314,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                       </div>
 
                       <div className="flex items-start gap-3 p-4 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                        <Lock className="w-5 h-5 text-primary-wine flex-shrink-0 mt-1" />
+                        <Lock className="w-5 h-5 text-primary-wine shrink-0 mt-1" />
                         <div>
                           <h4 className="font-bold text-[#111827] text-sm">100% Discreet</h4>
                           <p className="text-gray-600 text-xs mt-1">
@@ -324,7 +324,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                       </div>
 
                       <div className="flex items-start gap-3 p-4 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                        <Clock className="w-5 h-5 text-primary-wine flex-shrink-0 mt-1" />
+                        <Clock className="w-5 h-5 text-primary-wine shrink-0 mt-1" />
                         <div>
                           <h4 className="font-bold text-[#111827] text-sm">24/7 Availability</h4>
                           <p className="text-gray-600 text-xs mt-1">
@@ -334,7 +334,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                       </div>
 
                       <div className="flex items-start gap-3 p-4 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                        <MapPin className="w-5 h-5 text-primary-wine flex-shrink-0 mt-1" />
+                        <MapPin className="w-5 h-5 text-primary-wine shrink-0 mt-1" />
                         <div>
                           <h4 className="font-bold text-[#111827] text-sm">All {siteConfig.city} Areas</h4>
                           <p className="text-gray-600 text-xs mt-1">
@@ -389,22 +389,22 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   {category.occasions && category.occasions.length > 0 ? (
                     category.occasions.map((occ, idx) => (
                       <li key={idx} className="flex items-start gap-2.5">
-                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 shrink-0" />
                         <span>{occ}</span>
                       </li>
                     ))
                   ) : (
                     <>
                       <li className="flex items-start gap-2.5">
-                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 shrink-0" />
                         <span><strong>Fine Dining &amp; Gala Evenings:</strong> Impeccable formal dressing, graceful social etiquette, and engaging conversation at Gurgaon&apos;s finest Michelin-star and luxury restaurants.</span>
                       </li>
                       <li className="flex items-start gap-2.5">
-                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 shrink-0" />
                         <span><strong>Executive Travel &amp; Retreats:</strong> Dependable, well-travelled accompaniment for business conferences, luxury resorts, and weekend getaways across NCR and beyond.</span>
                       </li>
                       <li className="flex items-start gap-2.5">
-                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 bg-primary-wine rounded-full mt-2 shrink-0" />
                         <span><strong>Private Hotel Outcalls:</strong> Effortless, confidential escort service tailored for relaxing stays at premier five-star hospitality suites.</span>
                       </li>
                     </>
@@ -528,7 +528,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <h4 className="text-white font-bold text-lg mb-3 font-sans font-bold">Reserve Now</h4>
                 <a
                   href={`tel:${siteConfig.phone}`}
-                  className="block py-3.5 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-sm"
+                  className="block py-3.5 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-sm"
                 >
                   Call Now: {siteConfig.phoneDisplay}
                 </a>
@@ -536,7 +536,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   href={`https://wa.me/${siteConfig.whatsapp}?text=Hello%20ALINA%20VIP,%20I%20am%20interested%20in%20booking%20${encodeURIComponent(category.name)}.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block mt-2.5 py-3.5 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white font-bold rounded-xl shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-sm"
+                  className="block mt-2.5 py-3.5 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white font-bold rounded-xl shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-sm"
                 >
                   WhatsApp Booking
                 </a>
@@ -636,7 +636,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <div className="flex flex-wrap justify-center gap-4">
               <a
                 href={`tel:${siteConfig.phone}`}
-                className="px-8 py-4 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-base flex items-center gap-2"
+                className="px-8 py-4 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-base flex items-center gap-2"
               >
                 <Phone className="w-5 h-5" /> Book Now
               </a>

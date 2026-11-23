@@ -282,7 +282,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                   <div className="grid sm:grid-cols-2 gap-3 mt-4">
                     {location.about.landmarks.map((landmark, idx) => (
                       <div key={idx} className="flex items-center gap-2.5 text-sm text-gray-700 bg-white p-3 rounded-xl border border-gray-100">
-                        <CheckCircle2 size={16} className="text-primary-wine flex-shrink-0" />
+                        <CheckCircle2 size={16} className="text-primary-wine shrink-0" />
                         <span className="font-semibold">{landmark}</span>
                       </div>
                     ))}
@@ -458,7 +458,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                               href={`/locations/${subSlug}`}
                               className="flex items-center gap-2 p-2.5 bg-white border border-gray-200 hover:border-primary-wine rounded-lg text-xs text-gray-700 hover:text-primary-wine transition-colors font-medium"
                             >
-                              <Navigation size={12} className="text-primary-wine flex-shrink-0" />
+                              <Navigation size={12} className="text-primary-wine shrink-0" />
                               <span className="truncate">{subLoc ? subLoc.name : subSlug.replace(/-/g, ' ')}</span>
                             </Link>
                           );
@@ -577,7 +577,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                     href={`/locations/${loc.slug}`}
                     className="flex items-center gap-2.5 p-4 bg-white border border-gray-200 hover:border-primary-wine hover:shadow-md transition-all rounded-xl group"
                   >
-                    <Navigation size={15} className="text-primary-wine flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <Navigation size={15} className="text-primary-wine shrink-0 group-hover:scale-110 transition-transform" />
                     <span className="text-xs text-gray-700 group-hover:text-primary-wine font-semibold transition-colors">
                       {loc.name}
                     </span>

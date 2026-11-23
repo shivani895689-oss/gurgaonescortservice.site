@@ -45,21 +45,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Extended area pages — directly served at /{slug} (from catalog_pages)
-const moreAreaPages = [
-  { title: 'Cyber City Escorts', slug: 'escorts-in-cyber-city', area: 'DLF Cyber City' },
-  { title: 'Nirvana Country Escorts', slug: 'escorts-in-nirvana-country', area: 'Sohna Road' },
-  { title: 'Sector 54 Call Girls', slug: 'call-girls-in-sector-54-gurgaon', area: 'Golf Course Road' },
-  { title: 'South City Escorts', slug: 'call-girls-in-south-city', area: 'South Gurgaon' },
-  { title: 'Sushant Lok Call Girls', slug: 'call-girls-in-sushant-lok', area: 'MG Road' },
-  { title: 'Sector 82 Call Girls', slug: 'call-girls-in-sector-82-gurgaon', area: 'New Gurgaon' },
-  { title: 'Sector 70 Call Girls', slug: 'call-girls-in-sector-70-gurgaon', area: 'New Gurgaon' },
-  { title: 'Aunty Escorts Gurgaon', slug: 'aunty-escorts-in-gurgaon', area: 'All Areas' },
-  { title: 'Sector 53 Call Girls', slug: 'call-girls-in-sector-53-gurgaon', area: 'Golf Course Road' },
-  { title: 'Sector 60 Call Girls', slug: 'call-girls-in-sector-60-gurgaon', area: 'Golf Course Ext.' },
-  { title: 'Foreigner Call Girls', slug: 'foreigner-call-girls-gurgaon', area: 'Pan-Gurgaon' },
-];
-
 
 const topLocationCards = [
   {
@@ -264,7 +249,7 @@ export default function LocationsPage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
                   href={`tel:${siteConfig.phone}`}
-                  className="px-6 py-3 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs"
+                  className="px-6 py-3 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs"
                 >
                   Call: {siteConfig.phoneDisplay}
                 </a>
@@ -272,7 +257,7 @@ export default function LocationsPage() {
                   href={`https://wa.me/${siteConfig.whatsapp}?text=Hello%20${encodeURIComponent(siteConfig.name)},%20I%20need%20hotel%20outcall%20in%20${encodeURIComponent(siteConfig.city)}.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs font-bold rounded-xl"
+                  className="px-6 py-3 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs font-bold rounded-xl"
                 >
                   WhatsApp Booking
                 </a>

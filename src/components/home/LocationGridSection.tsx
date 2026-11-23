@@ -94,7 +94,7 @@ export default function LocationGridSection() {
 
               <div className="text-left">
                 <h3 className="font-bold text-[#671725] text-base mb-1.5 group-hover:underline flex items-center gap-1.5">
-                  <MapPin size={15} className="flex-shrink-0" />
+                  <MapPin size={15} className="shrink-0" />
                   <span>{loc.name}</span>
                 </h3>
                 <p className="text-xs text-gray-700 leading-relaxed mb-3 line-clamp-3">
@@ -112,7 +112,7 @@ export default function LocationGridSection() {
         <div className="text-center mt-12">
           <Link
             href="/locations"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs sm:text-sm font-bold"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs sm:text-sm font-bold"
           >
             <span>Explore All 108 Gurgaon &amp; NCR Locations</span>
             <ArrowRight size={15} />

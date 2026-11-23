@@ -91,7 +91,7 @@ export default function ContactPage() {
               {/* Phone Channel Card */}
               <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center shrink-0 mt-1">
                     <Phone className="w-6 h-6 text-primary-wine" />
                   </div>
                   <div>
@@ -114,7 +114,7 @@ export default function ContactPage() {
               {/* WhatsApp Channel Card */}
               <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
                     <MessageCircle className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
@@ -139,7 +139,7 @@ export default function ContactPage() {
               {/* Location Card */}
               <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center shrink-0 mt-1">
                     <MapPin className="w-6 h-6 text-primary-wine" />
                   </div>
                   <div>
@@ -159,7 +159,7 @@ export default function ContactPage() {
               {/* Operating Hours Card */}
               <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center shrink-0 mt-1">
                     <Clock className="w-6 h-6 text-primary-wine" />
                   </div>
                   <div>
@@ -183,15 +183,15 @@ export default function ContactPage() {
                 </h4>
                 <ul className="space-y-2 text-xs text-gray-700">
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary-wine flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-primary-wine shrink-0" />
                     <span>Complete privacy: Client details are never stored or shared</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary-wine flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-primary-wine shrink-0" />
                     <span>100% genuine, photo-authenticated profiles</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary-wine flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-primary-wine shrink-0" />
                     <span>Chauffeur-driven private arrivals at luxury hotel suites</span>
                   </li>
                 </ul>
@@ -286,7 +286,7 @@ export default function ContactPage() {
               </p>
               <div className="space-y-4 my-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center flex-shrink-0 text-sm mt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center shrink-0 text-sm mt-0.5">
                     1
                   </div>
                   <div>
@@ -312,7 +312,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center flex-shrink-0 text-sm mt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center shrink-0 text-sm mt-0.5">
                     2
                   </div>
                   <div>
@@ -338,7 +338,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center flex-shrink-0 text-sm mt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center shrink-0 text-sm mt-0.5">
                     3
                   </div>
                   <div>

@@ -14,6 +14,20 @@ export default function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   return (
     <header id="page-header" className="sticky top-0 z-50 bg-white border-b border-[#eaeaea] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,8 +37,10 @@ export default function Header() {
           <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-md text-gray-700 hover:text-[#671725] focus:outline-none"
+              className="p-2 rounded-md text-gray-700 hover:text-[#671725] focus:outline-hidden"
               aria-label="Toggle Menu"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav-drawer"
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -63,7 +79,7 @@ export default function Header() {
               >
                 Escorts <ChevronDown size={13} className="group-hover:rotate-180 transition-transform duration-200" />
               </Link>
-              <div className="absolute top-full left-0 w-60 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block transition-all z-50">
+              <div className="absolute top-full left-0 w-60 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block group-focus-within:block transition-all z-50">
                 <Link href="/gallery" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#671725]">
                   Photo Gallery
                 </Link>
@@ -96,7 +112,7 @@ export default function Header() {
               >
                 Categories <ChevronDown size={13} className="group-hover:rotate-180 transition-transform duration-200" />
               </Link>
-              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block transition-all z-50">
+              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block group-focus-within:block transition-all z-50">
                 <Link href="/category/russian-call-girls" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#671725]">
                   Russian Call Girls
                 </Link>
@@ -129,7 +145,7 @@ export default function Header() {
               >
                 Services <ChevronDown size={13} className="group-hover:rotate-180 transition-transform duration-200" />
               </Link>
-              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block transition-all z-50">
+              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block group-focus-within:block transition-all z-50">
                 <Link href="/services/1-2-3-hours" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#671725]">
                   Escort Service for 1/2/3 Hours
                 </Link>
@@ -167,7 +183,7 @@ export default function Header() {
               >
                 Hotels <ChevronDown size={13} className="group-hover:rotate-180 transition-transform duration-200" />
               </Link>
-              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block transition-all z-50">
+              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block group-focus-within:block transition-all z-50">
                 <Link href="/hotels/escort-service-near-the-oberoi-hotel" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#671725]">
                   Near The Oberoi Hotel
                 </Link>
@@ -197,7 +213,7 @@ export default function Header() {
               >
                 Locations <ChevronDown size={13} className="group-hover:rotate-180 transition-transform duration-200" />
               </Link>
-              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block transition-all z-50">
+              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-md py-2 hidden group-hover:block group-focus-within:block transition-all z-50">
                 <Link href="/locations/cyber-city" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#671725]">
                   Cyber City Escorts
                 </Link>
@@ -252,7 +268,7 @@ export default function Header() {
 
       {/* Mobile Drawer Menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-2.5 max-h-[80vh] overflow-y-auto">
+        <div id="mobile-nav-drawer" className="lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-2.5 max-h-[80vh] overflow-y-auto">
           <Link href="/" className="block py-2 text-sm font-semibold text-gray-800 hover:text-[#671725]">
             Home
           </Link>

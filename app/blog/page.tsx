@@ -103,9 +103,9 @@ export default async function BlogPage() {
       </section>
 
       {/* Featured Article Section */}
-      <section className="py-16 bg-gradient-to-br from-[#faf6f2] to-white">
+      <section className="py-16 bg-linear-to-br from-[#faf6f2] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-gold-50 to-amber-50 rounded-3xl p-8 md:p-12 border-2 border-gray-200 shadow-md">
+          <div className="bg-linear-to-r from-gold-50 to-amber-50 rounded-3xl p-8 md:p-12 border-2 border-gray-200 shadow-md">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <span className="inline-block bg-primary-wine text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">

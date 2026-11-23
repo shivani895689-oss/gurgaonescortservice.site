@@ -272,7 +272,7 @@ export function normalizeContentToHtml(raw: string | string[]): string {
 
 /**
  * Converts rich semantic HTML into clean, human-readable Markdown.
- * Perfect for the admin Visual Writer textarea so editors don't see raw HTML tags.
+ * Useful for editor textareas that should display readable markdown instead of raw HTML.
  */
 export function htmlToMarkdown(html: string): string {
   if (!html || typeof html !== 'string') return '';

@@ -89,7 +89,7 @@ export const generalFaqs = [
   },
   {
     question: 'How fast can an escort arrive at Gurgaon hotels or Cyber City residences?',
-    answer: 'Our average outcall arrival time is 20 to 30 minutes across DLF Phase 1â€“5, Cyber City, Golf Course Road, Golf Course Extension, Sohna Road, and MG Road. We maintain a strategically positioned fleet across Gurugram luxury corridors for rapid response.',
+    answer: 'Our average outcall arrival time is 20 to 30 minutes across DLF Phase 1–5, Cyber City, Golf Course Road, Golf Course Extension, Sohna Road, and MG Road. We maintain a strategically positioned fleet across Gurugram luxury corridors for rapid response.',
   },
   {
     question: 'Is client confidentiality and privacy protected?',
@@ -97,7 +97,7 @@ export const generalFaqs = [
   },
   {
     question: 'Do you offer cash on delivery (COD) payment for escort service in Gurgaon?',
-    answer: 'Yes, we support cash on delivery directly upon your escortâ€™s arrival. We believe in transparent, honest service without deceptive advance fee demands. You may inspect and confirm your escort before settling the agreed service fee in person.',
+    answer: 'Yes, we support cash on delivery directly upon your escort’s arrival. We believe in transparent, honest service without deceptive advance fee demands. You may inspect and confirm your escort before settling the agreed service fee in person.',
   },
   {
     question: 'Which 5-star hotels in Gurgaon do you provide outcall escorts to?',

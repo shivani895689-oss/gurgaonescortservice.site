@@ -24,7 +24,7 @@
   }
 
   ::selection {
-    background-color: #671725;
+    background-color: #2f3338;
     color: #ffffff;
   }
 }
@@ -35,15 +35,15 @@
   }
 
   .btn-luxury, .btn-wine, .btn-luxury-primary {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-3 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] text-white font-semibold text-sm rounded-xl shadow-md shadow-rose-950/20 hover:from-[#7d1c2e] hover:to-[#55101d] hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 bg-linear-to-r from-[#2f3338] via-[#2a2e33] to-[#1c1f23] text-white font-semibold text-sm rounded-xl shadow-md shadow-gray-900/20 hover:from-[#3a3f46] hover:to-[#25282d] hover:shadow-lg hover:shadow-gray-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
   }
 
   .btn-outline-wine, .btn-luxury-outline {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white/90 hover:bg-white text-[#671725] font-semibold text-xs rounded-xl border border-rose-200/80 hover:border-[#671725] shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white/90 hover:bg-white text-[#2f3338] font-semibold text-xs rounded-xl border border-gray-300/80 hover:border-[#2f3338] shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
   }
 
   .btn-navy {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-3 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 bg-linear-to-r from-[#2f3338] via-[#2a2e33] to-[#1c1f23] text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
   }
 
   .btn-whatsapp, .btn-luxury-whatsapp {
@@ -51,7 +51,7 @@
   }
 
   .btn-luxury-gold {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-linear-to-r from-[#D4AF37] via-[#F3E5AB] to-[#AA771C] text-[#2A0808] font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-amber-900/20 hover:from-[#e5c04b] hover:to-[#bb8524] hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-linear-to-r from-[#B8BDC4] via-[#D8DCE2] to-[#8A9099] text-[#1c1f23] font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-gray-900/20 hover:from-[#CACFD6] hover:to-[#9AA1AA] hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
   }
 
   .section-title, .alina-title {
@@ -72,7 +72,7 @@
   font-weight: 900;
   font-size: clamp(32px, 5vw, 64px);
   line-height: 0.95;
-  color: #671725;
+  color: #2f3338;
 }
 
 .new-banner h1 span {
@@ -80,7 +80,7 @@
   text-transform: capitalize;
   font-size: clamp(22px, 2.5vw, 36px);
   line-height: 1.4;
-  color: #671725;
+  color: #2f3338;
   font-weight: 700;
 }
 
@@ -92,7 +92,7 @@
 }
 
 .banner-bottom-text {
-  background-color: #671725;
+  background-color: #2f3338;
   color: #e1e1e1;
 }
 
@@ -147,7 +147,7 @@
   width: 60px;
   height: 60px;
   margin: -30px auto 0;
-  background: #671725;
+  background: #2f3338;
   border-radius: 50%;
   position: relative;
   z-index: 2;
@@ -183,7 +183,7 @@
 }
 
 .call-girls-profile-main-box {
-  border: 3px solid #671725;
+  border: 3px solid #2f3338;
   border-radius: 10px;
   padding: 12px;
   background-color: #ffffff;
@@ -192,7 +192,7 @@
 }
 
 .call-girls-profile-main-box:hover {
-  box-shadow: 0 10px 25px -5px rgba(103, 23, 37, 0.2);
+  box-shadow: 0 10px 25px -5px rgba(47, 51, 56, 0.2);
   transform: translateY(-3px);
 }
 
@@ -204,7 +204,7 @@
 }
 
 .call-girls-profile-main-box .content-box h3 {
-  color: #671725;
+  color: #2f3338;
   font-size: 20px;
   font-weight: 700;
   margin-top: 14px;
@@ -246,7 +246,7 @@
 
 .profissional-main-box .style-8:hover {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  border-color: #671725;
+  border-color: #2f3338;
 }
 
 .booking-process-main {
@@ -257,7 +257,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #671725;
+  background: #2f3338;
   text-align: center;
   line-height: 36px;
   color: #ffffff;
@@ -279,22 +279,22 @@
   justify-content: center;
   margin: 0 auto 16px;
   border: 5px solid #e4e3e3;
-  color: #671725;
+  color: #2f3338;
 }
 
 .location-section-card {
-  border: 3px solid #671725;
+  border: 3px solid #2f3338;
   border-radius: 15px;
   padding: 20px;
-  background: #f9e1e5;
+  background: #eef0f3;
   text-align: center;
   transition: all 0.3s ease;
 }
 
 .location-section-card:hover {
-  background: #f3cbd2;
+  background: #e2e6eb;
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(103, 23, 37, 0.2);
+  box-shadow: 0 10px 15px -3px rgba(47, 51, 56, 0.2);
 }
 
 .glint-effect {
@@ -339,7 +339,7 @@
   margin-top: 2.75rem;
   margin-bottom: 1.25rem;
   padding-left: 1rem;
-  border-left: 4px solid #671725;
+  border-left: 4px solid #2f3338;
   letter-spacing: -0.02em;
 }
 
@@ -350,7 +350,7 @@
 }
 
 .article-content h3 {
-  color: #671725;
+  color: #2f3338;
   font-size: 1.35rem;
   font-weight: 700;
   line-height: 1.35;
@@ -366,18 +366,18 @@
 }
 
 .article-content a {
-  color: #671725;
+  color: #2f3338;
   font-weight: 600;
   text-decoration: underline;
-  text-decoration-color: rgba(103, 23, 37, 0.4);
+  text-decoration-color: rgba(47, 51, 56, 0.4);
   text-underline-offset: 4px;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .article-content a:hover {
-  color: #9f1239;
-  text-decoration-color: #9f1239;
+  color: #5a6068;
+  text-decoration-color: #5a6068;
 }
 
 .article-content ul {
@@ -401,12 +401,12 @@
 }
 
 .article-content li::marker {
-  color: #671725;
+  color: #2f3338;
   font-weight: bold;
 }
 
 .article-content blockquote {
-  border-left: 4px solid #FFD700;
+  border-left: 4px solid #B8BDC4;
   background: #FAF8F5;
   padding: 1.25rem 1.75rem;
   border-radius: 0 0.75rem 0.75rem 0;
@@ -426,7 +426,7 @@
 }
 
 .article-content em {
-  color: #671725;
+  color: #2f3338;
   font-style: italic;
 }
 

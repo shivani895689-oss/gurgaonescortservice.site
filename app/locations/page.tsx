@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import PageHero from '@/components/PageHero';
 import LocationCard from '@/components/LocationCard';
 import TrustBar from '@/components/home/TrustBar';
@@ -19,14 +20,31 @@ export const metadata: Metadata = {
       'Explore premium escort service coverage across Gurgaon including DLF phases, Cyber City, Golf Course Road, MG Road, Udyog Vihar, Sohna Road, and Dwarka Expressway.',
     url: `${siteConfig.url}/locations`,
     type: 'website',
-    images: [{ url: '/images/hero/hero-main.webp', width: 1200, height: 630, alt: 'Gurgaon Escort Service Areas' }],
+    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'Gurgaon Escort Service Areas' }],
   },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Service Areas in Gurgaon | Gurgaon Escort Service',
+      description: 'Explore premium escort service coverage across Gurgaon including DLF phases, Cyber City, Golf Course Road, MG Road, Udyog Vihar, Sohna Road, and Dwarka Expressway.',
+      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
+    },
 };
 
 export default function LocationsPage() {
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Gurgaon Escort Service Locations',
+    itemListElement: locations.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      url: `${siteConfig.url}/locations/${item.slug}`,
+    })),
+  };
+
   const locationPages = landingPages
-    .filter((p) => p.type === 'location')
-    .slice(0, 12);
+    .filter((p) => p.type === 'location');
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -39,6 +57,7 @@ export default function LocationsPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <PageHero
         eyebrow="Service Areas"
@@ -47,11 +66,11 @@ export default function LocationsPage() {
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Locations' }]}
       />
 
-      <section className="section-padding bg-[#fffaf9]">
+      <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Where We Serve</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d]">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Where We Serve</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52]">
               Serving All Premium <span className="gradient-text-gold">Gurgaon Locations</span>
             </h2>
           </div>
@@ -66,9 +85,9 @@ export default function LocationsPage() {
       <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">All Gurgaon Areas</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d]">
-              Explore Every <span className="gradient-text-gold">Location Page</span>
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">All Gurgaon Areas</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52]">
+              Explore <span className="gradient-text-gold">Location Pages</span>
             </h2>
             <p className="mt-4 text-gray-600 leading-relaxed">
               Browse our detailed area pages for specific sectors, neighborhoods, and local coverage across Gurugram. Select your area for fast, discreet, and premium companion service.
@@ -77,10 +96,10 @@ export default function LocationsPage() {
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {locationPages.map((p) => (
               <li key={p.slug}>
-                <a href={`/${p.slug}`} className="flex items-center justify-between bg-white rounded-xl px-5 py-4 border border-rose-100/60 hover:border-[#671725]/20 hover:shadow-sm transition-all">
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-[#671725] transition-colors">{p.locationName || p.title}</span>
-                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#671725] transition-colors shrink-0" />
-                </a>
+                <Link href={`/${p.slug}`} className="group flex items-center justify-between bg-white rounded-xl px-5 py-4 border border-gray-200/60 hover:border-[#2f3338]/20 hover:shadow-sm transition-all">
+                  <span className="text-sm font-medium text-gray-700 group-hover:text-[#2f3338] transition-colors">{p.locationName || p.title}</span>
+                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#2f3338] transition-colors shrink-0" />
+                </Link>
               </li>
             ))}
           </ul>

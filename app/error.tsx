@@ -23,11 +23,11 @@ export default function GlobalError({ error, reset }: ErrorProps) {
       aria-live="assertive"
     >
       <div className="max-w-md w-full text-center bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
-        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[#671725]/10 text-[#671725] flex items-center justify-center">
+        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[#2f3338]/10 text-[#2f3338] flex items-center justify-center">
           <AlertTriangle className="w-8 h-8" />
         </div>
 
-        <span className="text-[#671725] text-xs font-bold uppercase tracking-wider mb-2 block">
+        <span className="text-[#2f3338] text-xs font-bold uppercase tracking-wider mb-2 block">
           Notice
         </span>
 
@@ -42,7 +42,7 @@ export default function GlobalError({ error, reset }: ErrorProps) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={() => reset()}
-            className="w-full sm:w-auto bg-[#671725] hover:bg-[#50121d] text-white text-xs font-bold rounded-xl py-3 px-6 flex items-center justify-center gap-2 cursor-pointer transition-colors shadow"
+            className="w-full sm:w-auto bg-[#2f3338] hover:bg-[#50121d] text-white text-xs font-bold rounded-xl py-3 px-6 flex items-center justify-center gap-2 cursor-pointer transition-colors shadow"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Try Again</span>
@@ -50,7 +50,7 @@ export default function GlobalError({ error, reset }: ErrorProps) {
 
           <Link
             href="/"
-            className="w-full sm:w-auto border border-[#671725] text-[#111827] hover:bg-[#671725] hover:text-white text-xs font-bold rounded-xl py-3 px-6 flex items-center justify-center gap-2 transition-colors"
+            className="w-full sm:w-auto border border-[#2f3338] text-[#111827] hover:bg-[#2f3338] hover:text-white text-xs font-bold rounded-xl py-3 px-6 flex items-center justify-center gap-2 transition-colors"
           >
             <Home className="w-3.5 h-3.5" />
             <span>Return Home</span>

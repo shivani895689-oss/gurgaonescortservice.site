@@ -1,21 +1,43 @@
 {
-  "name": "Gurgaon Escort Service",
+  "id": "/",
+  "name": "Gurgaon Escort Service | Alina",
   "short_name": "Gurgaon Escorts",
-  "description": "Premium, discreet, and verified Gurgaon Escort Service across Gurugram with fast outcall to hotels and residences.",
+  "description": "Premium, discreet, and verified Gurgaon escort service across Gurugram with fast outcall to hotels and residences.",
+  "lang": "en-IN",
+  "dir": "ltr",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
-  "theme_color": "#671725",
+  "theme_color": "#2f3338",
+  "categories": ["lifestyle", "travel"],
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "/favicon.png",
+      "sizes": "977x977",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
+      "sizes": "977x977",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book Now",
+      "short_name": "Booking",
+      "url": "/booking",
+      "description": "Book a premium companion in Gurgaon"
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "url": "/contact",
+      "description": "Contact Gurgaon Escort Service"
     }
   ]
 }

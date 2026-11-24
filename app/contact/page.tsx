@@ -14,8 +14,14 @@ export const metadata: Metadata = {
       'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram. Call or WhatsApp for quick availability and 24/7 private support.',
     url: `${siteConfig.url}/contact`,
     type: 'website',
-    images: [{ url: '/images/hero/hero-main.webp', width: 1200, height: 630, alt: 'Contact Gurgaon Escort Service' }],
+    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'Contact Gurgaon Escort Service' }],
   },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Contact Us | Book Gurgaon Escort Service',
+      description: 'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram. Call or WhatsApp for quick availability and 24/7 private support.',
+      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
+    },
 };
 
 const contactMethods = [
@@ -94,7 +100,7 @@ export default function ContactPage() {
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
       />
 
-      <section className="section-padding bg-[#fffaf9]">
+      <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {contactMethods.map((method) => {
@@ -105,13 +111,13 @@ export default function ContactPage() {
                   href={method.href}
                   target={method.external ? '_blank' : undefined}
                   rel={method.external ? 'noopener noreferrer' : undefined}
-                  className="group bg-white rounded-2xl p-6 border border-rose-100/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all duration-300 text-center"
+                  className="group bg-white rounded-2xl p-6 border border-gray-200/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all duration-300 text-center"
                 >
-                  <div className="w-14 h-14 mx-auto rounded-2xl bg-[#671725]/8 flex items-center justify-center mb-4 group-hover:bg-[#671725] transition-colors duration-300">
-                    <Icon className="w-6 h-6 text-[#671725] group-hover:text-white transition-colors duration-300" />
+                  <div className="w-14 h-14 mx-auto rounded-2xl bg-[#2f3338]/8 flex items-center justify-center mb-4 group-hover:bg-[#2f3338] transition-colors duration-300">
+                    <Icon className="w-6 h-6 text-[#2f3338] group-hover:text-white transition-colors duration-300" />
                   </div>
                   <h2 className="font-serif text-lg font-bold text-gray-900 mb-1">{method.title}</h2>
-                  <p className="text-sm font-semibold text-[#671725] mb-2 break-all">{method.value}</p>
+                  <p className="text-sm font-semibold text-[#2f3338] mb-2 break-all">{method.value}</p>
                   <p className="text-xs text-gray-500 leading-relaxed">{method.description}</p>
                 </a>
               );
@@ -119,31 +125,31 @@ export default function ContactPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-10">
-            <div className="bg-white rounded-3xl p-8 md:p-10 border border-rose-100/60 shadow-sm">
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Before You Reach Out</p>
-              <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-4">For a Faster, Smoother Response</h2>
+            <div className="bg-white rounded-3xl p-8 md:p-10 border border-gray-200/60 shadow-sm">
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Before You Reach Out</p>
+              <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-4">For a Faster, Smoother Response</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
                 A clear message helps us confirm availability quickly and coordinate the right companion for your location and timing in Gurgaon.
               </p>
               <ul className="space-y-4">
                 {bookingTips.map((tip) => (
                   <li key={tip} className="flex items-start gap-3 text-sm text-gray-700 leading-relaxed">
-                    <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-[#2f3338] shrink-0 mt-0.5" />
                     <span>{tip}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-[#671725] to-[#4e1420] rounded-3xl p-8 md:p-10 text-white">
+            <div className="bg-gradient-to-br from-[#2f3338] to-[#4e1420] rounded-3xl p-8 md:p-10 text-white">
               <div className="flex items-center gap-3 mb-6">
-                <Clock className="w-6 h-6 text-[#F3E5AB]" />
+                <Clock className="w-6 h-6 text-[#D8DCE2]" />
                 <div>
                   <h2 className="font-serif text-2xl font-bold">Available 24/7</h2>
-                  <p className="text-rose-100/80 text-sm">Always here when you need us</p>
+                  <p className="text-gray-200/80 text-sm">Always here when you need us</p>
                 </div>
               </div>
-              <p className="text-rose-100/90 leading-relaxed mb-6">
+              <p className="text-gray-100/90 leading-relaxed mb-6">
                 Whether you&apos;re planning ahead or looking for same-day availability, our team is ready to assist with prompt, discreet coordination across all premium areas of Gurgaon.
               </p>
               <div className="space-y-4">
@@ -151,9 +157,9 @@ export default function ContactPage() {
                   href={`tel:${siteConfig.phone}`}
                   className="flex items-center gap-4 bg-white/10 hover:bg-white/15 border border-white/10 rounded-xl p-4 transition-colors"
                 >
-                  <Phone className="w-5 h-5 text-[#F3E5AB]" />
+                  <Phone className="w-5 h-5 text-[#D8DCE2]" />
                   <div>
-                    <p className="text-xs text-rose-200/70 uppercase tracking-wider">Call Now</p>
+                    <p className="text-xs text-gray-300/70 uppercase tracking-wider">Call Now</p>
                     <p className="font-semibold">{siteConfig.phone}</p>
                   </div>
                 </a>
@@ -165,13 +171,13 @@ export default function ContactPage() {
                 >
                   <MessageCircle className="w-5 h-5 text-[#25D366]" />
                   <div>
-                    <p className="text-xs text-rose-200/70 uppercase tracking-wider">WhatsApp</p>
+                    <p className="text-xs text-gray-300/70 uppercase tracking-wider">WhatsApp</p>
                     <p className="font-semibold">+{siteConfig.whatsapp}</p>
                   </div>
                 </a>
               </div>
-              <div className="mt-6 pt-6 border-t border-white/10 flex items-center gap-2 text-sm text-rose-100/80">
-                <Shield className="w-4 h-4 text-[#F3E5AB]" /> 100% private and confidential communication
+              <div className="mt-6 pt-6 border-t border-white/10 flex items-center gap-2 text-sm text-gray-200/80">
+                <Shield className="w-4 h-4 text-[#D8DCE2]" /> 100% private and confidential communication
               </div>
             </div>
           </div>

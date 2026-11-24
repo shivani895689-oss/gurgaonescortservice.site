@@ -9,7 +9,7 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    slug: 'hotel-outcall',
+    slug: 'hotel-outcall-gurgaon',
     name: 'Luxury Hotel Outcall',
     shortDescription: 'Discreet and timely companion arrivals at premium hotels across Gurugram.',
     description:
@@ -18,7 +18,7 @@ export const services: Service[] = [
     features: ['5-star hotel coverage', 'Discreet arrival', 'Fast coordination', '24/7 availability'],
   },
   {
-    slug: 'dinner-social-companion',
+    slug: 'dinner-social-companion-gurgaon',
     name: 'Dinner & Social Companion',
     shortDescription: 'A graceful companion for dinners, lounges, and social evenings.',
     description:
@@ -27,7 +27,7 @@ export const services: Service[] = [
     features: ['Fine dining etiquette', 'Social confidence', 'Elegant presentation', 'Engaging conversation'],
   },
   {
-    slug: 'business-event-companion',
+    slug: 'business-event-companion-gurgaon',
     name: 'Business & Event Companion',
     shortDescription: 'Polished companions for corporate gatherings and networking events.',
     description:
@@ -36,7 +36,7 @@ export const services: Service[] = [
     features: ['Professional demeanor', 'Event-ready', 'Corporate friendly', 'Confident presence'],
   },
   {
-    slug: 'travel-companion',
+    slug: 'travel-companion-gurgaon',
     name: 'Travel Companion',
     shortDescription: 'Comfortable and engaging companionship for getaways and city visits.',
     description:
@@ -45,7 +45,7 @@ export const services: Service[] = [
     features: ['Weekend getaways', 'City visits', 'Comfortable company', 'Planned arrangements'],
   },
   {
-    slug: 'private-companionship',
+    slug: 'private-companionship-gurgaon',
     name: 'Private Companionship',
     shortDescription: 'A relaxed, respectful, and personal experience tailored to you.',
     description:
@@ -54,7 +54,7 @@ export const services: Service[] = [
     features: ['Privacy-first', 'Personalized experience', 'Verified companions', 'Comfortable setting'],
   },
   {
-    slug: 'vip-experience',
+    slug: 'vip-experience-gurgaon',
     name: 'VIP Personalized Experience',
     shortDescription: 'Bespoke companion arrangements designed around your expectations.',
     description:
@@ -67,3 +67,4 @@ export const services: Service[] = [
 export function getServiceBySlug(slug: string) {
   return services.find((s) => s.slug === slug);
 }
+

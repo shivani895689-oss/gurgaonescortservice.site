@@ -31,6 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [{ url: service.image, width: 1200, height: 630, alt: service.name }],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Gurgaon Escort Service',
+      description: siteConfig.description,
+      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
+    },
   };
 }
 
@@ -78,22 +84,22 @@ export default async function ServiceDetailPage({ params }: Props) {
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services' }, { label: service.name }]}
       />
 
-      <section className="section-padding bg-[#fffaf9]">
+      <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="relative rounded-3xl overflow-hidden shadow-luxury">
               <Image src={service.image} alt={service.name} width={800} height={600} className="w-full h-auto object-cover" priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a0d]/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#4a4d52]/20 to-transparent" />
             </div>
             <div>
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Service Details</p>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] mb-5">{service.name}</h2>
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Service Details</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52] mb-5">{service.name}</h2>
               <p className="text-gray-600 leading-relaxed mb-8">{service.description}</p>
 
               <div className="space-y-3 mb-8">
                 {service.features.map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-[#2f3338] shrink-0" />
                     <span className="text-gray-700">{feature}</span>
                   </div>
                 ))}
@@ -115,15 +121,15 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="text-center mb-10">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">More Services</p>
-            <h2 className="font-serif text-3xl font-bold text-[#1a0a0d]">Explore Other Services</h2>
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">More Services</p>
+            <h2 className="font-serif text-3xl font-bold text-[#4a4d52]">Explore Other Services</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {others.map((s) => (
-              <Link key={s.slug} href={`/services/${s.slug}`} className="group bg-white rounded-2xl p-6 border border-rose-100/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all">
-                <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[#671725] transition-colors mb-2">{s.name}</h3>
+              <Link key={s.slug} href={`/services/${s.slug}`} className="group bg-white rounded-2xl p-6 border border-gray-200/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all">
+                <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[#2f3338] transition-colors mb-2">{s.name}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed mb-3 line-clamp-2">{s.shortDescription}</p>
-                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#671725]">Learn More <ArrowRight className="w-4 h-4" /></span>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2f3338]">Learn More <ArrowRight className="w-4 h-4" /></span>
               </Link>
             ))}
           </div>

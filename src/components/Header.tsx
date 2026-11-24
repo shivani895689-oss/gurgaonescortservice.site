@@ -2,17 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Phone } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
+  { href: '/profiles', label: 'Profiles' },
+  { href: '/categories', label: 'Categories' },
   { href: '/locations', label: 'Areas' },
   { href: '/booking', label: 'Booking' },
   { href: '/contact', label: 'Contact' },
-  { href: '/faq', label: 'FAQ' },
 ];
 
 export default function Header() {
@@ -34,7 +37,7 @@ export default function Header() {
           <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-md text-gray-700 hover:text-[#671725] focus:outline-none"
+              className="p-2 rounded-md text-gray-700 hover:text-[#2f3338] focus:outline-none"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
             >
@@ -44,8 +47,16 @@ export default function Header() {
 
           {/* Branding */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-1.5" aria-label={`${siteConfig.name} home`}>
-              <span className="font-sans font-black text-2xl tracking-wide text-[#671725]">
+            <Link href="/" className="flex items-center gap-2" aria-label={`${siteConfig.name} home`}>
+              <Image
+                src="/gurgaon-escort-service-logo.png"
+                alt="Gurgaon Escort Service logo"
+                width={52}
+                height={52}
+                className="h-12 w-12 rounded-full object-cover"
+                priority
+              />
+              <span className="font-sans font-black text-xl sm:text-2xl tracking-wide text-[#2f3338] leading-tight">
                 GURGAON <span className="text-[#0B2154] font-light">ESCORT</span>
               </span>
             </Link>
@@ -57,7 +68,8 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`transition-colors ${pathname === link.href ? 'text-[#671725]' : 'hover:text-[#671725]'}`}
+                aria-current={pathname === link.href ? 'page' : undefined}
+                className={`transition-colors ${pathname === link.href ? 'text-[#2f3338]' : 'hover:text-[#2f3338]'}`}
               >
                 {link.label}
               </Link>
@@ -68,7 +80,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <a
               href={`tel:${siteConfig.phone}`}
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-[#671725] hover:bg-[#52121d] text-white text-xs font-semibold rounded shadow-md glint-effect transition-all duration-300"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-[#2f3338] hover:bg-[#25282d] text-white text-xs font-semibold rounded shadow-md glint-effect transition-all duration-300"
               aria-label="Call now"
             >
               <Phone size={13} className="text-white" />
@@ -85,7 +97,8 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`block py-2 text-sm font-semibold ${pathname === link.href ? 'text-[#671725]' : 'text-gray-800 hover:text-[#671725]'}`}
+              aria-current={pathname === link.href ? 'page' : undefined}
+              className={`block py-2 text-sm font-semibold ${pathname === link.href ? 'text-[#2f3338]' : 'text-gray-800 hover:text-[#2f3338]'}`}
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
@@ -95,7 +108,7 @@ export default function Header() {
           <div className="pt-4 border-t border-gray-100 flex gap-2">
             <a
               href={`tel:${siteConfig.phone}`}
-              className="flex-1 text-center py-2.5 bg-[#671725] text-white text-xs font-bold rounded shadow"
+              className="flex-1 text-center py-2.5 bg-[#2f3338] text-white text-xs font-bold rounded shadow"
             >
               Call {siteConfig.phoneDisplay}
             </a>

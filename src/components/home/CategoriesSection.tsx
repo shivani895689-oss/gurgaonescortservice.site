@@ -9,15 +9,15 @@ export default function CategoriesSection() {
       <div className="container-luxury">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Categories</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] leading-tight">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Categories</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52] leading-tight">
               Explore Our Companion Categories
             </h2>
             <p className="mt-4 text-gray-600 leading-relaxed">
               Browse by category to find the companion experience that matches your preference — from VIP elegance to friendly independent companions in Gurugram.
             </p>
           </div>
-          <Link href="/categories" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#671725] hover:gap-2.5 transition-all shrink-0">
+          <Link href="/categories" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2f3338] hover:gap-2.5 transition-all shrink-0">
             View All Categories <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

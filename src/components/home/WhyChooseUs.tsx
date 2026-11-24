@@ -45,16 +45,16 @@ export default function WhyChooseUs() {
       <div className="container-luxury">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           <div className="lg:col-span-4 lg:sticky lg:top-28">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Why Choose Us</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] leading-tight">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Why Choose Us</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52] leading-tight">
               Why People Trust Our Gurgaon Escort Service
             </h2>
             <p className="mt-5 text-gray-600 leading-relaxed">
               In a city as fast-moving as Gurugram, clients want a service that is reliable, discreet, and easy to book. 
               We&apos;ve built our reputation by focusing on the details that matter most: authenticity, privacy, and a genuinely premium experience.
             </p>
-            <div className="mt-8 p-6 rounded-2xl bg-[#fffaf9] border border-rose-100">
-              <p className="font-serif text-xl font-semibold text-[#671725] mb-2">A local service you can rely on</p>
+            <div className="mt-8 p-6 rounded-2xl bg-[#fdf8f5] border border-gray-200">
+              <p className="font-serif text-xl font-semibold text-[#2f3338] mb-2">A local service you can rely on</p>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Whether you&apos;re searching for a <strong className="text-gray-800">Gurgaon Escort Service near me</strong> or planning ahead for a special evening, 
                 our team delivers a smooth, respectful, and confidential experience.
@@ -68,9 +68,9 @@ export default function WhyChooseUs() {
               return (
                 <div
                   key={reason.title}
-                  className="rounded-2xl border border-rose-100/80 p-6 hover:border-rose-200 hover:shadow-md hover:shadow-rose-950/5 transition-all duration-300"
+                  className="rounded-2xl border border-gray-200/80 p-6 hover:border-gray-300 hover:shadow-md hover:shadow-gray-900/5 transition-all duration-300"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-[#671725]/8 text-[#671725] flex items-center justify-center mb-4">
+                  <div className="w-11 h-11 rounded-xl bg-[#2f3338]/8 text-[#2f3338] flex items-center justify-center mb-4">
                     <Icon className="w-5 h-5" />
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">{reason.title}</h3>

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { Phone, MessageCircle, Shield, Clock, MapPin, CheckCircle2, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import PageHero from '@/components/PageHero';
@@ -46,7 +46,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'website',
       siteName: siteConfig.name,
       locale: 'en_IN',
-      images: [{ url: '/images/hero/hero-main.webp', width: 1200, height: 630, alt: page.locationName || page.title }],
+      images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: page.locationName || page.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: page.metaTitle,
+      description: page.metaDescription,
+      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
     },
   };
 }
@@ -57,6 +63,7 @@ export default async function LandingPage({ params }: PageProps) {
   if (!resolved) notFound();
 
   const { page, canonicalSlug } = resolved;
+  if (slug !== canonicalSlug) redirect(`/${canonicalSlug}`);
   const rich = locationPageContent[canonicalSlug];
   const isLocation = page.type === 'location';
   const locationName = page.locationName || 'Gurgaon';
@@ -122,11 +129,11 @@ export default async function LandingPage({ params }: PageProps) {
                 { icon: Clock, title: '24/7 Availability', text: 'Round-the-clock booking support with fast response across Gurgaon locations.' },
                 { icon: MapPin, title: isLocation ? `Serving ${locationName}` : 'All Gurgaon Areas', text: isLocation ? `Fast, discreet outcall service across ${locationName} and nearby areas.` : 'Coverage across DLF, Cyber City, Golf Course Road, and all major Gurugram sectors.' },
               ].map((item) => (
-                <div key={item.title} className="bg-[#fffaf9] rounded-2xl border border-rose-100/80 p-6 text-center">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-[#671725]/10 flex items-center justify-center mb-4">
-                    <item.icon className="w-6 h-6 text-[#671725]" />
+                <div key={item.title} className="bg-[#fdf8f5] rounded-2xl border border-gray-200/80 p-6 text-center">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-[#2f3338]/10 flex items-center justify-center mb-4">
+                    <item.icon className="w-6 h-6 text-[#2f3338]" />
                   </div>
-                  <h3 className="font-serif text-lg font-semibold text-[#1a0a0d] mb-2">{item.title}</h3>
+                  <h3 className="font-serif text-lg font-semibold text-[#4a4d52] mb-2">{item.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{item.text}</p>
                 </div>
               ))}
@@ -142,7 +149,7 @@ export default async function LandingPage({ params }: PageProps) {
 
                 {rich.sections.map((section, idx) => (
                   <div key={idx} className="mt-12">
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-5 leading-tight">{section.heading}</h2>
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-5 leading-tight">{section.heading}</h2>
                     <div className="space-y-4 text-gray-700 leading-relaxed text-[17px]">
                       {section.paragraphs.map((para, i) => (
                         <p key={i}>{para}</p>
@@ -152,7 +159,7 @@ export default async function LandingPage({ params }: PageProps) {
                       <ul className="mt-6 space-y-3">
                         {section.bullets.map((b, i) => (
                           <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
-                            <CheckCircle2 className="w-5 h-5 text-[#671725] mt-0.5 shrink-0" />
+                            <CheckCircle2 className="w-5 h-5 text-[#2f3338] mt-0.5 shrink-0" />
                             <span>{b}</span>
                           </li>
                         ))}
@@ -163,15 +170,15 @@ export default async function LandingPage({ params }: PageProps) {
 
                 {rich.faqs.length > 0 && (
                   <div className="mt-14">
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-6 leading-tight">
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-6 leading-tight">
                       Frequently Asked Questions About {isLocation ? `Escort Service in ${locationName}` : page.title}
                     </h2>
                     <div className="space-y-4">
                       {rich.faqs.map((faq, i) => (
-                        <details key={i} className="group bg-[#fffaf9] rounded-2xl border border-rose-100/80 p-5 open:shadow-sm">
-                          <summary className="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold text-[#1a0a0d]">
+                        <details key={i} className="group bg-[#fdf8f5] rounded-2xl border border-gray-200/80 p-5 open:shadow-sm">
+                          <summary className="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold text-[#4a4d52]">
                             <span>{faq.question}</span>
-                            <ChevronDown className="w-5 h-5 text-[#671725] shrink-0 transition-transform group-open:rotate-180" />
+                            <ChevronDown className="w-5 h-5 text-[#2f3338] shrink-0 transition-transform group-open:rotate-180" />
                           </summary>
                           <p className="mt-3 text-gray-700 leading-relaxed">{faq.answer}</p>
                         </details>
@@ -182,7 +189,7 @@ export default async function LandingPage({ params }: PageProps) {
 
                 {rich.nearbyAreas.length > 0 && (
                   <div className="mt-14">
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-5 leading-tight">
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-5 leading-tight">
                       Nearby Areas We Also Serve
                     </h2>
                     <p className="text-gray-700 leading-relaxed mb-6">
@@ -193,7 +200,7 @@ export default async function LandingPage({ params }: PageProps) {
                         <Link
                           key={area.slug}
                           href={`/${area.slug}`}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#671725]/5 border border-[#671725]/15 text-[#671725] text-sm font-medium hover:bg-[#671725] hover:text-white transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2f3338]/5 border border-[#2f3338]/15 text-[#2f3338] text-sm font-medium hover:bg-[#2f3338] hover:text-white transition-colors"
                         >
                           <MapPin className="w-3.5 h-3.5" /> {area.name}
                         </Link>
@@ -204,7 +211,7 @@ export default async function LandingPage({ params }: PageProps) {
               </article>
             ) : (
               <div className="prose prose-lg max-w-none text-gray-700">
-                <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-4">
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-4">
                   About {page.title}
                 </h2>
                 <p className="leading-relaxed mb-6">{page.description}</p>
@@ -222,7 +229,7 @@ export default async function LandingPage({ params }: PageProps) {
               </div>
             )}
 
-            <div className="flex flex-wrap gap-3 mt-12 pt-8 border-t border-rose-100">
+            <div className="flex flex-wrap gap-3 mt-12 pt-8 border-t border-gray-200">
               <a href={`tel:${siteConfig.phone}`} className="btn-luxury">
                 <Phone className="w-4 h-4" /> Call {siteConfig.phoneDisplay}
               </a>

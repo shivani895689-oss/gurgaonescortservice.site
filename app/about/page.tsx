@@ -18,8 +18,14 @@ export const metadata: Metadata = {
       'Learn about Gurgaon Escort Service by Alina — premium, discreet companionship with verified profiles, privacy-first coordination, and 24/7 support across Gurugram.',
     url: `${siteConfig.url}/about`,
     type: 'website',
-    images: [{ url: '/images/hero/hero-main.webp', width: 1200, height: 630, alt: 'About Gurgaon Escort Service' }],
+    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'About Gurgaon Escort Service' }],
   },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'About Us | Premium Gurgaon Escort Service',
+      description: 'Learn about Gurgaon Escort Service by Alina — premium, discreet companionship with verified profiles, privacy-first coordination, and 24/7 support across Gurugram.',
+      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
+    },
 };
 
 const values = [
@@ -80,8 +86,8 @@ export default function AboutPage() {
       <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Our Values</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d]">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Our Values</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52]">
               The Standards Behind <span className="gradient-text-gold">Our Service</span>
             </h2>
             <p className="mt-4 text-gray-600 leading-relaxed">
@@ -92,9 +98,9 @@ export default function AboutPage() {
             {values.map((value) => {
               const Icon = value.icon;
               return (
-                <div key={value.title} className="bg-white rounded-2xl p-6 border border-rose-100/60 shadow-sm">
-                  <div className="w-12 h-12 rounded-xl bg-[#671725]/8 flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-[#671725]" />
+                <div key={value.title} className="bg-white rounded-2xl p-6 border border-gray-200/60 shadow-sm">
+                  <div className="w-12 h-12 rounded-xl bg-[#2f3338]/8 flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-[#2f3338]" />
                   </div>
                   <h3 className="font-serif text-lg font-bold text-gray-900 mb-2">{value.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{value.description}</p>

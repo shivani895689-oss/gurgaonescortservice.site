@@ -33,6 +33,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [{ url: location.image, width: 1200, height: 630, alt: `Escort Service in ${location.name}, Gurgaon` }],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Gurgaon Escort Service',
+      description: siteConfig.description,
+      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
+    },
   };
 }
 
@@ -106,20 +112,20 @@ export default async function LocationDetailPage({ params }: Props) {
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Locations', href: '/locations' }, { label: location.name }]}
       />
 
-      <section className="section-padding bg-[#fffaf9]">
+      <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="relative rounded-3xl overflow-hidden shadow-luxury">
               <Image src={location.image} alt={`Escort Service in ${location.name}, Gurgaon`} width={800} height={600} className="w-full h-auto object-cover" priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a0d]/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#4a4d52]/20 to-transparent" />
               <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
-                <MapPin className="w-4 h-4 text-[#671725]" />
+                <MapPin className="w-4 h-4 text-[#2f3338]" />
                 <span className="text-sm font-semibold text-gray-800">{location.name}, Gurugram</span>
               </div>
             </div>
             <div>
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Area Details</p>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] mb-5">Premium Companions in {location.name}</h2>
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Area Details</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52] mb-5">Premium Companions in {location.name}</h2>
               <p className="text-gray-600 leading-relaxed mb-8">{location.description}</p>
 
               {location.landmarks && location.landmarks.length > 0 && (
@@ -127,7 +133,7 @@ export default async function LocationDetailPage({ params }: Props) {
                   <p className="text-sm font-semibold text-gray-900 mb-3">Nearby Landmarks &amp; Areas</p>
                   <div className="flex flex-wrap gap-2">
                     {location.landmarks.map((lm) => (
-                      <span key={lm} className="px-3 py-1.5 bg-white border border-rose-100/60 rounded-full text-xs text-gray-600">{lm}</span>
+                      <span key={lm} className="px-3 py-1.5 bg-white border border-gray-200/60 rounded-full text-xs text-gray-600">{lm}</span>
                     ))}
                   </div>
                 </div>
@@ -136,7 +142,7 @@ export default async function LocationDetailPage({ params }: Props) {
               <div className="space-y-3 mb-8">
                 {['Verified premium companions', 'Fast, discreet coordination', '24/7 availability in this area', 'Hotel & private residence outcall'].map((item) => (
                   <div key={item} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-[#2f3338] shrink-0" />
                     <span className="text-gray-700 text-sm">{item}</span>
                   </div>
                 ))}
@@ -155,8 +161,8 @@ export default async function LocationDetailPage({ params }: Props) {
         <section className="section-padding bg-[#fdf8f5]">
           <div className="container-luxury">
             <div className="max-w-4xl mx-auto">
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Local Guide</p>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] mb-6">About {location.name} Companion Service</h2>
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Local Guide</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52] mb-6">About {location.name} Companion Service</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 {content.intro.map((p, i) => <p key={i}>{p}</p>)}
               </div>
@@ -168,17 +174,17 @@ export default async function LocationDetailPage({ params }: Props) {
       )}
 
       {relatedPages.length > 0 && (
-        <section className="section-padding bg-[#fffaf9]">
+        <section className="section-padding bg-[#fdf8f5]">
           <div className="container-luxury">
             <div className="text-center mb-10">
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Detailed Area Pages</p>
-              <h2 className="font-serif text-3xl font-bold text-[#1a0a0d]">{location.name} Service Pages</h2>
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Detailed Area Pages</p>
+              <h2 className="font-serif text-3xl font-bold text-[#4a4d52]">{location.name} Service Pages</h2>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {relatedPages.map((p) => (
-                <Link key={p.slug} href={`/${p.slug}`} className="group flex items-center justify-between bg-white rounded-xl px-5 py-4 border border-rose-100/60 hover:border-[#671725]/20 hover:shadow-sm transition-all">
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-[#671725] transition-colors">{p.locationName || p.title}</span>
-                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#671725] transition-colors shrink-0" />
+                <Link key={p.slug} href={`/${p.slug}`} className="group flex items-center justify-between bg-white rounded-xl px-5 py-4 border border-gray-200/60 hover:border-[#2f3338]/20 hover:shadow-sm transition-all">
+                  <span className="text-sm font-medium text-gray-700 group-hover:text-[#2f3338] transition-colors">{p.locationName || p.title}</span>
+                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#2f3338] transition-colors shrink-0" />
                 </Link>
               ))}
             </div>
@@ -189,18 +195,18 @@ export default async function LocationDetailPage({ params }: Props) {
       <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
           <div className="text-center mb-10">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">More Areas</p>
-            <h2 className="font-serif text-3xl font-bold text-[#1a0a0d]">Explore Other Locations</h2>
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">More Areas</p>
+            <h2 className="font-serif text-3xl font-bold text-[#4a4d52]">Explore Other Locations</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {others.map((l) => (
-              <Link key={l.slug} href={`/locations/${l.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-rose-100/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all">
+              <Link key={l.slug} href={`/locations/${l.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-gray-200/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image src={l.image} alt={l.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 100vw, 25vw" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-serif text-base font-bold text-gray-900 group-hover:text-[#671725] transition-colors mb-1">{l.name}</h3>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#671725]">View Area <ArrowRight className="w-4 h-4" /></span>
+                  <h3 className="font-serif text-base font-bold text-gray-900 group-hover:text-[#2f3338] transition-colors mb-1">{l.name}</h3>
+                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2f3338]">View Area <ArrowRight className="w-4 h-4" /></span>
                 </div>
               </Link>
             ))}

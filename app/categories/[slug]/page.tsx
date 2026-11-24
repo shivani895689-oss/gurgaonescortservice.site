@@ -1,43 +1,59 @@
-import type { Metadata } from 'next';
+import { getCategoryBySlug, categories } from '@/data/categories';
+import { Faq } from '@/components/Faq';
 import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { CheckCircle2, ArrowRight, Phone, MessageCircle } from 'lucide-react';
-import PageHero from '@/components/PageHero';
-import CtaSection from '@/components/home/CtaSection';
-import { categories, getCategoryBySlug } from '@/data/categories';
 import { siteConfig } from '@/data/siteConfig';
 
-interface Props { params: Promise<{ slug: string }> }
+interface Params {
+  params: Promise<{ slug: string }> | { slug: string };
+}
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const category = getCategoryBySlug(slug);
-  if (!category) return {};
-  const title = `${category.name} in Gurgaon | ${siteConfig.name}`;
-  const description = category.shortDescription;
+export async function generateMetadata({ params }: Params) {
+  const resolved = await params;
+  const category = getCategoryBySlug(resolved.slug);
+  if (!category) return { title: 'Category Not Found' };
+  const canonical = `/categories/${category.slug}`;
+  const title = category.seoTitle ?? `${category.name} in Gurgaon | ${siteConfig.name}`;
+  const description = category.seoDescription ?? category.shortDescription;
   return {
     title,
     description,
-    alternates: { canonical: `/categories/${category.slug}` },
+    keywords: category.keywords,
+    alternates: { canonical },
     openGraph: {
       title,
       description,
-      url: `${siteConfig.url}/categories/${category.slug}`,
+      url: canonical,
       type: 'website',
-      images: [{ url: category.image, width: 1200, height: 630, alt: category.name }],
+      images: [{ url: category.image, alt: `${category.name} in Gurgaon` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [category.image],
     },
   };
 }
 
-export default async function CategoryDetailPage({ params }: Props) {
-  const { slug } = await params;
-  const category = getCategoryBySlug(slug);
-  if (!category) notFound();
+export default async function CategoryPage({ params }: Params) {
+  const resolved = await params;
+  const category = getCategoryBySlug(resolved.slug);
+
+  if (!category) {
+    return <div className="p-8 text-center text-gray-500">Category not found.</div>;
+  }
+
+  const faqs = category.faqs ?? [];
+  const introContent = category.introContent ?? [category.description];
+  const whyChoose = category.whyChoose ?? category.highlights;
+  const idealFor = category.idealFor ?? [];
+  const localAreas = category.localAreas ?? [];
+  const keywords = category.keywords ?? [];
+  const seoDescription = category.seoDescription ?? category.shortDescription;
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -53,84 +69,135 @@ export default async function CategoryDetailPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: `${category.name} in Gurgaon`,
-    description: category.description,
-    provider: {
-      '@type': 'LocalBusiness',
-      name: siteConfig.name,
-      telephone: siteConfig.phone,
-      url: siteConfig.url,
-    },
+    description: seoDescription,
+    provider: { '@type': 'LocalBusiness', name: siteConfig.name, telephone: siteConfig.phone, url: siteConfig.url },
     areaServed: { '@type': 'City', name: 'Gurgaon' },
     url: `${siteConfig.url}/categories/${category.slug}`,
     image: category.image,
   };
 
-  const others = categories.filter((c) => c.slug !== category.slug).slice(0, 3);
+  const faqSchema = faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  } : null;
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-      <PageHero
-        eyebrow="Category"
-        title={category.name}
-        description={category.shortDescription}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Categories', href: '/categories' }, { label: category.name }]}
-      />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
-      <section className="section-padding bg-[#fffaf9]">
-        <div className="container-luxury">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div className="relative rounded-3xl overflow-hidden shadow-luxury">
-              <Image src={category.image} alt={category.name} width={800} height={600} className="w-full h-auto object-cover" priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a0d]/20 to-transparent" />
+      <section className="relative overflow-hidden bg-[#4a4d52] text-white py-16 md:py-24">
+        <div className="absolute inset-0 opacity-20">
+          <Image src={category.image} alt={category.name} fill className="object-cover" priority />
+        </div>
+        <div className="container-luxury relative z-10">
+          <nav className="text-sm text-gray-300 mb-4" aria-label="Breadcrumb">
+            <ol className="flex flex-wrap items-center gap-2">
+              <li><a href="/" className="hover:text-white">Home</a></li>
+              <li>/</li>
+              <li><a href="/categories" className="hover:text-white">Categories</a></li>
+              <li>/</li>
+              <li className="text-white">{category.name}</li>
+            </ol>
+          </nav>
+          <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#D8DCE2] mb-3">Premium Category</p>
+          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight mb-4">{category.name} in Gurgaon</h1>
+          <p className="max-w-3xl text-gray-200 text-lg leading-relaxed">{category.shortDescription}</p>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-luxury grid gap-12 lg:grid-cols-[1fr_360px]">
+          <div>
+            <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm mb-8">
+              <Image src={category.image} alt={`${category.name} in Gurgaon`} width={1200} height={700} className="w-full h-auto object-cover" />
             </div>
-            <div>
-              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Category Details</p>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] mb-5">{category.name}</h2>
-              <p className="text-gray-600 leading-relaxed mb-8">{category.description}</p>
 
-              <div className="space-y-3 mb-8">
-                {category.highlights.map((highlight) => (
-                  <div key={highlight} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0" />
-                    <span className="text-gray-700">{highlight}</span>
-                  </div>
+            <h2 className="font-serif text-3xl font-bold text-[#2f3338] mb-4">{category.introHeading ?? `About ${category.name}`}</h2>
+            <div className="space-y-4 text-gray-700 leading-relaxed">
+              {introContent.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+
+            {whyChoose.length > 0 && (
+              <div className="mt-10">
+                <h3 className="font-serif text-2xl font-semibold text-[#2f3338] mb-4">Why Choose This Category</h3>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {whyChoose.map((reason, i) => (
+                    <li key={i} className="flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-gray-700">
+                      <span className="mt-0.5 text-[#4a4d52]">✓</span>
+                      <span>{reason}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {idealFor.length > 0 && (
+              <div className="mt-10">
+                <h3 className="font-serif text-2xl font-semibold text-[#2f3338] mb-4">Ideal For</h3>
+                <div className="flex flex-wrap gap-3">
+                  {idealFor.map((item, i) => (
+                    <span key={i} className="px-4 py-2 rounded-full bg-[#4a4d52]/10 text-[#2f3338] text-sm font-medium">{item}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {localAreas.length > 0 && (
+              <div className="mt-10">
+                <h3 className="font-serif text-2xl font-semibold text-[#2f3338] mb-4">Popular Areas in Gurgaon</h3>
+                <div className="flex flex-wrap gap-2">
+                  {localAreas.map((area, i) => (
+                    <span key={i} className="px-3 py-1.5 rounded-md border border-gray-200 text-sm text-gray-600 bg-white">{area}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {keywords.length > 0 && (
+              <div className="mt-10">
+                <h3 className="font-serif text-2xl font-semibold text-[#2f3338] mb-4">Related Searches</h3>
+                <div className="flex flex-wrap gap-2">
+                  {keywords.map((kw, i) => (
+                    <span key={i} className="px-3 py-1.5 rounded-md bg-gray-100 text-sm text-gray-600">{kw}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {faqs.length > 0 && (
+              <div className="mt-12">
+                <h3 className="font-serif text-2xl font-semibold text-[#2f3338] mb-6">Frequently Asked Questions</h3>
+                {faqs.map((faq, i) => (
+                  <Faq key={i} q={faq.question} a={faq.answer} />
                 ))}
               </div>
+            )}
+          </div>
 
-              <div className="flex flex-wrap gap-4">
-                <a href={`tel:${siteConfig.phone}`} className="btn-luxury">
-                  <Phone className="w-4 h-4" /> Call Now
-                </a>
-                <a href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${category.name} in Gurgaon.`)}`} target="_blank" rel="noopener noreferrer" className="btn-luxury-whatsapp">
-                  <MessageCircle className="w-4 h-4" /> WhatsApp
-                </a>
+          <aside className="space-y-6">
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6 sticky top-24">
+              <h3 className="font-serif text-xl font-semibold text-[#2f3338] mb-2">Book This Category</h3>
+              <p className="text-sm text-gray-600 mb-5">Contact us for discreet availability, pricing, and personalized recommendations in Gurgaon.</p>
+              <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="block w-full text-center bg-[#25D366] text-white font-semibold py-3 rounded-full mb-3 hover:brightness-110 transition">WhatsApp Now</a>
+              <a href={`tel:${siteConfig.phone}`} className="block w-full text-center bg-[#2f3338] text-white font-semibold py-3 rounded-full hover:bg-[#4a4d52] transition">Call Now</a>
+              <div className="mt-5 pt-5 border-t border-gray-200 text-sm text-gray-600 space-y-2">
+                <p><span className="font-medium text-[#2f3338]">Location:</span> {siteConfig.city}</p>
+                <p><span className="font-medium text-[#2f3338]">Availability:</span> 24/7</p>
+                <p><span className="font-medium text-[#2f3338]">Privacy:</span> 100% Discreet</p>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
       </section>
-
-      <section className="section-padding bg-[#fdf8f5]">
-        <div className="container-luxury">
-          <div className="text-center mb-10">
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">More Categories</p>
-            <h2 className="font-serif text-3xl font-bold text-[#1a0a0d]">Explore Other Categories</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {others.map((c) => (
-              <Link key={c.slug} href={`/categories/${c.slug}`} className="group bg-white rounded-2xl p-6 border border-rose-100/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all">
-                <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[#671725] transition-colors mb-2">{c.name}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-3 line-clamp-2">{c.shortDescription}</p>
-                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#671725]">View Category <ArrowRight className="w-4 h-4" /></span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CtaSection />
     </>
   );
 }

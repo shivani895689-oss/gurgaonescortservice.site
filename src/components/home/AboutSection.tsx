@@ -15,7 +15,7 @@ export default function AboutSection() {
       <div className="container-luxury">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="relative">
-            <div className="relative rounded-[2rem] overflow-hidden shadow-xl shadow-rose-950/10">
+            <div className="relative rounded-[2rem] overflow-hidden shadow-xl shadow-gray-950/10">
               <div className="aspect-[4/4.5] relative">
                 <Image
                   src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
@@ -25,17 +25,17 @@ export default function AboutSection() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute inset-0 bg-linear-to-t from-[#1a0a0d]/25 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-[#4a4d52]/25 to-transparent" />
             </div>
-            <div className="absolute -bottom-5 -right-2 sm:right-6 bg-white rounded-2xl border border-rose-100 shadow-lg p-5 max-w-[260px]">
-              <p className="font-serif text-3xl font-bold text-[#671725]">Gurugram</p>
+            <div className="absolute -bottom-5 -right-2 sm:right-6 bg-white rounded-2xl border border-gray-200 shadow-lg p-5 max-w-[260px]">
+              <p className="font-serif text-3xl font-bold text-[#2f3338]">Gurugram</p>
               <p className="text-sm text-gray-600 mt-1">Serving premium locations with a local, responsive team.</p>
             </div>
           </div>
 
           <div>
-            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">About Us</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] leading-tight">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">About Us</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52] leading-tight">
               A Modern Gurgaon Escort Service Built on Trust &amp; Discretion
             </h2>
             <div className="mt-6 space-y-4 text-gray-600 leading-relaxed">
@@ -59,7 +59,7 @@ export default function AboutSection() {
             <ul className="mt-8 grid sm:grid-cols-2 gap-3">
               {points.map((point) => (
                 <li key={point} className="flex items-start gap-2.5 text-sm text-gray-700">
-                  <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-[#2f3338] shrink-0 mt-0.5" />
                   <span>{point}</span>
                 </li>
               ))}

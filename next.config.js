@@ -58,7 +58,7 @@ const nextConfig = {
         ],
       },  
       {
-        source: '/(favicon.svg|apple-touch-icon.png|manifest.json|robots.txt)',
+        source: '/(favicon.png|apple-touch-icon.png|manifest.json|robots.txt)',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' },
         ],

@@ -25,7 +25,7 @@ const items = [
 
 export default function TrustBar() {
   return (
-    <section className="bg-[#671725] text-white py-10 md:py-12" aria-label="Service highlights">
+    <section className="bg-[#2f3338] text-white py-10 md:py-12" aria-label="Service highlights">
       <div className="container-luxury">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {items.map((item) => {
@@ -33,11 +33,11 @@ export default function TrustBar() {
             return (
               <div key={item.title} className="flex gap-4 items-start">
                 <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5 text-[#F3E5AB]" />
+                  <Icon className="w-5 h-5 text-[#D8DCE2]" />
                 </div>
                 <div>
                   <h2 className="text-sm font-semibold text-white mb-1">{item.title}</h2>
-                  <p className="text-xs text-rose-100/80 leading-relaxed">{item.desc}</p>
+                  <p className="text-xs text-gray-200/80 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             );

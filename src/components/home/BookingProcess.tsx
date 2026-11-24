@@ -36,8 +36,8 @@ export default function BookingProcess() {
     <section id="booking" className="section-padding bg-white">
       <div className="container-luxury">
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-14">
-          <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Booking Process</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] leading-tight">
+          <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Booking Process</p>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#4a4d52] leading-tight">
             Simple, Private &amp; Quick Booking
           </h2>
           <p className="mt-4 text-gray-600 leading-relaxed">
@@ -51,18 +51,18 @@ export default function BookingProcess() {
             const Icon = item.icon;
             return (
               <div key={item.step} className="relative">
-                <div className="bg-[#fffaf9] border border-rose-100/80 rounded-2xl p-6 h-full hover:shadow-lg hover:shadow-rose-950/5 transition-all duration-300">
+                <div className="bg-[#fdf8f5] border border-gray-200/80 rounded-2xl p-6 h-full hover:shadow-lg hover:shadow-gray-900/5 transition-all duration-300">
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#671725] text-white flex items-center justify-center shadow-md shadow-rose-950/20">
+                    <div className="w-12 h-12 rounded-xl bg-[#2f3338] text-white flex items-center justify-center shadow-md shadow-gray-900/20">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <span className="font-serif text-3xl font-bold text-rose-100">{item.step}</span>
+                    <span className="font-serif text-3xl font-bold text-gray-100">{item.step}</span>
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-12 -right-3 w-6 h-px bg-rose-200" aria-hidden="true" />
+                  <div className="hidden lg:block absolute top-12 -right-3 w-6 h-px bg-gray-200" aria-hidden="true" />
                 )}
               </div>
             );

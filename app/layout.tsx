@@ -31,10 +31,42 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: siteConfig.keywords,
   applicationName: siteConfig.name,
-  authors: [{ name: siteConfig.name, url: siteConfig.url }],
-  creator: siteConfig.name,
+  authors: [{ name: siteConfig.brand, url: siteConfig.url }],
+  creator: siteConfig.brand,
   publisher: siteConfig.name,
-  category: 'Companionship Services',
+  category: 'Lifestyle',
+  referrer: 'origin-when-cross-origin',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: '/',
+    languages: getAlternateLanguages('/'),
+  },
+  openGraph: {
+    type: 'website',
+    locale: siteConfig.locale,
+    url: canonicalUrl,
+    siteName: siteConfig.name,
+    title: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
+    description: siteConfig.description,
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+        width: 1200,
+        height: 630,
+        alt: 'Premium Gurgaon Escort Service',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
+    description: siteConfig.description,
+    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
+  },
   robots: {
     index: true,
     follow: true,
@@ -46,28 +78,15 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: 'KqLeD8o1LR_ZibCg4RIXaaxp_WnZzurebaMinxgNDHI',
+  },
   icons: {
-    icon: '/favicon.svg',
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
     apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
-  alternates: {
-    canonical: canonicalUrl,
-    languages: getAlternateLanguages(''),
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: canonicalUrl,
-    siteName: siteConfig.name,
-    title: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
-    description: siteConfig.description,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
-    description: siteConfig.description,
-  },
   other: {
     'geo.region': 'IN-HR',
     'geo.placename': 'Gurgaon',
@@ -77,7 +96,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#671725',
+  themeColor: '#2f3338',
   width: 'device-width',
   initialScale: 1,
   colorScheme: 'light',
@@ -88,15 +107,21 @@ const businessSchema = {
   '@type': 'LocalBusiness',
   '@id': `${siteConfig.url}/#business`,
   name: siteConfig.name,
-  url: canonicalUrl,
-  telephone: siteConfig.phone,
-  email: siteConfig.email,
   description: siteConfig.description,
-  priceRange: '₹₹₹',
-  image: `${siteConfig.url}/apple-touch-icon.png`,
+  url: siteConfig.url,
+  telephone: `+${siteConfig.whatsapp}`,
+  email: siteConfig.email,
+  image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteConfig.url}/gurgaon-escort-service-logo.png`,
+  },
+  priceRange: siteConfig.priceRange,
   address: {
     '@type': 'PostalAddress',
     ...siteConfig.structuredAddress,
+    addressRegion: siteConfig.state,
+    addressCountry: siteConfig.country,
   },
   geo: {
     '@type': 'GeoCoordinates',
@@ -104,20 +129,25 @@ const businessSchema = {
     longitude: siteConfig.geo.longitude,
   },
   areaServed: [
-    { '@type': 'City', name: 'Gurgaon' },
-    { '@type': 'City', name: 'Gurugram' },
-    { '@type': 'Place', name: 'DLF Cyber City' },
-    { '@type': 'Place', name: 'Golf Course Road' },
+    { '@type': 'City', name: siteConfig.city },
+    { '@type': 'State', name: siteConfig.state },
   ],
-  openingHoursSpecification: [
+  openingHoursSpecification: siteConfig.openingHours.map((hours) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: hours.dayOfWeek,
+    opens: hours.opens,
+    closes: hours.closes,
+  })),
+  contactPoint: [
     {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      opens: '00:00',
-      closes: '23:59',
+      '@type': 'ContactPoint',
+      telephone: `+${siteConfig.whatsapp}`,
+      contactType: 'customer service',
+      areaServed: 'IN',
+      availableLanguage: ['English', 'Hindi'],
     },
   ],
-  sameAs: siteConfig.socialLinks.map((s) => s.url),
+  sameAs: (siteConfig.socialLinks || []).map((s) => s.url).filter(Boolean),
 };
 
 const websiteSchema = {
@@ -125,12 +155,12 @@ const websiteSchema = {
   '@type': 'WebSite',
   '@id': `${siteConfig.url}/#website`,
   name: siteConfig.name,
-  url: canonicalUrl,
+  url: siteConfig.url,
   description: siteConfig.description,
+  inLanguage: 'en-IN',
   publisher: {
     '@id': `${siteConfig.url}/#business`,
   },
-  inLanguage: 'en-IN',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -139,7 +169,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-white text-[#2B2B2B] antialiased">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-[#671725] focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-[#2f3338] focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
         >
           Skip to content
         </a>

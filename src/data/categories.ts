@@ -5,6 +5,15 @@ export interface Category {
   description: string;
   image: string;
   highlights: string[];
+  seoTitle?: string;
+  seoDescription?: string;
+  keywords?: string[];
+  introHeading?: string;
+  introContent?: string[];
+  whyChoose?: string[];
+  idealFor?: string[];
+  localAreas?: string[];
+  faqs?: { question: string; answer: string }[];
 }
 
 export const categories: Category[] = [

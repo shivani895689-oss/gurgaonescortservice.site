@@ -28,7 +28,6 @@ const nextConfig = {
     outputFileTracingIncludes: {
     '/**': [
       './node_modules/next/dist/compiled/source-map/**/*',
-      './src/data/local_posts.json',
     ],
   },
   outputFileTracingExcludes: {
@@ -73,38 +72,7 @@ const nextConfig = {
     ];
   },
   async redirects() {
-    return [
-      { source: '/blog/gurgaon-escort-service', destination: '/blog/best-escort-service-gurgaon-guide', permanent: true },
-      { source: '/call-girls', destination: '/services', permanent: true },
-      { source: '/russian-escorts', destination: '/category/russian-call-girls', permanent: true },
-      { source: '/vip-escorts', destination: '/category/vip-call-girls', permanent: true },
-      { source: '/model-escorts', destination: '/category/model-escorts', permanent: true },
-      { source: '/college-girls', destination: '/category/college-girls', permanent: true },
-      { source: '/housewife-escorts', destination: '/category/housewife-escorts', permanent: true },
-      { source: '/independent-escorts', destination: '/category/independent-girls', permanent: true },
-      { source: '/air-hostess-escorts', destination: '/category/air-hostess', permanent: true },
-      { source: '/celebrity-escorts', destination: '/category/celebrity-escorts', permanent: true },
-      { source: '/category/celebrity-call-girls', destination: '/category/celebrity-escorts', permanent: true },
-      { source: '/travel-escorts', destination: '/category/travel-escorts', permanent: true },
-      { source: '/vip-call-girls', destination: '/category/vip-call-girls', permanent: true },
-      { source: '/category', destination: '/services', permanent: true },
-      { source: '/robot.txt', destination: '/robots.txt', permanent: true },
-      { source: '/llm.txt', destination: '/llms.txt', permanent: true },
-      { source: '/locations/sector-41', destination: '/locations/south-city', permanent: true },
-      { source: '/locations/sector-58', destination: '/locations/golf-course-extension-road', permanent: true },
-      // Duplicate alias pages → canonical
-      { source: '/about-us', destination: '/about', permanent: true },
-      { source: '/contact-us', destination: '/contact', permanent: true },
-      { source: '/faqs', destination: '/faq', permanent: true },
-      { source: '/escorts-categories', destination: '/categories', permanent: true },
-      { source: '/gurgaon-escorts-rates', destination: '/rates', permanent: true },
-      { source: '/gurgaon-escorts-phone-number', destination: '/phone-number', permanent: true },
-      { source: '/location', destination: '/locations', permanent: true },
-            { source: '/terms-and-conditions', destination: '/terms', permanent: true },
-      { source: '/why-escorts-can-be-your-best-call%20girl', destination: '/why-escorts-can-be-your-best-call-girl', permanent: true },
-      { source: '/the-ultimate-guide-to-booking-beautiful-call%20girls', destination: '/the-ultimate-guide-to-booking-beautiful-call-girls', permanent: true },
-      { source: '/top-locations-to-seek-quality-escort%20service-in-gurgaon-find-escorts-near-you', destination: '/top-locations-to-seek-quality-escort-service-in-gurgaon-find-escorts-near-you', permanent: true },
-    ];
+    return [];
   },
 };
 

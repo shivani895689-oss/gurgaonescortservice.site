@@ -1,321 +1,136 @@
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, MessageCircle, Shield, CheckCircle, Heart, Sparkles, Clock, ArrowRight } from 'lucide-react';
-import Breadcrumb from '@/components/Breadcrumb';
-import CTASection from '@/components/CTASection';
-import { siteConfig, getAlternateLanguages } from '@/data/siteConfig';
-import { escortModels } from '@/data/models';
-import { getAssetUrl } from '@/lib/assets';
-import exactManifest from '@/data/exact_manifest.json';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { CheckCircle2, ArrowRight, Phone, MessageCircle } from 'lucide-react';
+import PageHero from '@/components/PageHero';
+import CtaSection from '@/components/home/CtaSection';
+import { services, getServiceBySlug } from '@/data/services';
+import { siteConfig } from '@/data/siteConfig';
 
-interface ManifestItem {
-  title: string;
-  h1: string;
-  sections: {
-    tag: string;
-    title: string;
-    paragraphs: string[];
-    listItems: string[];
-  }[];
+interface Props { params: Promise<{ slug: string }> }
+
+export async function generateStaticParams() {
+  return services.map((s) => ({ slug: s.slug }));
 }
 
-const slugToManifestKey: Record<string, keyof typeof exactManifest> = {
-  'girlfriend-experience': 'girlfriendExperience',
-  'girlfriend-experience-in-gurgaon': 'girlfriendExperience',
-  'erotic-massage': 'eroticMassage',
-  'erotic-massage-in-gurgaon': 'eroticMassage',
-  'sensual-massage': 'eroticMassage',
-  'in-out-call': 'inOutCall',
-  'in-out-call-girls': 'inOutCall',
-  'in-out-call-girls-gurgaon': 'inOutCall',
-  '1-2-3-hours': 'hours123',
-  'escort-service-for-1-2-3-hours': 'hours123',
-  'full-night': 'fullNight',
-  'escort-service-full-night': 'fullNight',
-};
-
-const serviceImages: Record<string, string> = {
-  girlfriendExperience: '/images/assets/Girlfriend_Experience.png',
-  eroticMassage: '/images/assets/Erotic_Massage.jpg',
-  inOutCall: '/images/assets/In_Call_And_Out_Call_Services.png',
-  hours123: '/images/assets/Independent_Escorts_To_Meet_On_Hourly_Basis.jpg',
-  fullNight: '/images/assets/Escort_At_Night_24x7_Service.png',
-};
-
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return [
-    { slug: 'girlfriend-experience' },
-    { slug: 'girlfriend-experience-in-gurgaon' },
-    { slug: 'erotic-massage' },
-    { slug: 'erotic-massage-in-gurgaon' },
-    { slug: 'sensual-massage' },
-    { slug: 'in-out-call' },
-    { slug: 'in-out-call-girls' },
-    { slug: 'in-out-call-girls-gurgaon' },
-    { slug: '1-2-3-hours' },
-    { slug: 'escort-service-for-1-2-3-hours' },
-    { slug: 'full-night' },
-    { slug: 'escort-service-full-night' },
-  ];
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const key = slugToManifestKey[slug];
-  const item = key ? (exactManifest[key] as ManifestItem) : null;
-
-  if (!item) {
-    return {
-      title: `Luxury Escort Services in ${siteConfig.city} | ${siteConfig.name}`,
-    };
-  }
-
+  const service = getServiceBySlug(slug);
+  if (!service) return {};
+  const title = `${service.name} in Gurgaon | ${siteConfig.name}`;
+  const description = service.shortDescription;
   return {
-    title: `${item.title} | ${siteConfig.name}`,
-    description: `Discover premium ${item.h1} in ${siteConfig.city}. 100% real verified call girls, 20-30 min hotel arrival, cash on delivery with ${siteConfig.name}.`,
-    alternates: {
-      canonical: `${siteConfig.url}/services/${slug}`,
-      languages: getAlternateLanguages(`/services/${slug}`),
-    },
+    title,
+    description,
+    alternates: { canonical: `/services/${service.slug}` },
     openGraph: {
-      title: `${item.title} | ${siteConfig.name}`,
-      description: `Discover premium ${item.h1} in ${siteConfig.city}. 100% real verified call girls, 20-30 min hotel arrival, cash on delivery with ${siteConfig.name}.`,
-      url: `${siteConfig.url}/services/${slug}`,
+      title,
+      description,
+      url: `${siteConfig.url}/services/${service.slug}`,
       type: 'website',
-      images: [{ url: '/og-image.jpg' }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${item.title} | ${siteConfig.name}`,
-      description: `Discover premium ${item.h1} in ${siteConfig.city}. 100% real verified call girls.`,
-      images: ['/og-image.jpg'],
+      images: [{ url: service.image, width: 1200, height: 630, alt: service.name }],
     },
   };
 }
 
-export default async function ServiceDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const key = slugToManifestKey[slug];
-  const item = key ? (exactManifest[key] as ManifestItem) : null;
+  const service = getServiceBySlug(slug);
+  if (!service) notFound();
 
-  if (!item) {
-    notFound();
-  }
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${siteConfig.url}/services` },
+      { '@type': 'ListItem', position: 3, name: service.name, item: `${siteConfig.url}/services/${service.slug}` },
+    ],
+  };
 
-  const heroImage = serviceImages[key as string] || '/images/assets/Diverse_Portfolio.jpg';
-  const availableModels = escortModels.slice(0, 6);
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `${service.name} in Gurgaon`,
+    description: service.description,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: siteConfig.name,
+      telephone: siteConfig.phone,
+      url: siteConfig.url,
+    },
+    areaServed: { '@type': 'City', name: 'Gurgaon' },
+    url: `${siteConfig.url}/services/${service.slug}`,
+    image: service.image,
+  };
 
-  // Filter out empty or duplicate nav sections
-  const validSections = item.sections.filter((s) => {
-    if (!s.title && s.paragraphs.length === 0) return false;
-    const t = s.title.toLowerCase();
-    if (t.includes('main menu') || t.includes('categories') || t.includes('gurgaon locations') || t.includes('contact details') || t.includes('age verification') || t.includes('feeling naughty?')) {
-      return false;
-    }
-    return true;
-  });
+  const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-[#FFFDF6] text-[#333333]">
-      {/* 1. Hero Header Banner */}
-      <div className="bg-[#671725] text-white py-12 px-4 sm:px-6 lg:px-8 border-b-4 border-[#FFD700] shadow-md">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-4">
-            <Breadcrumb
-              items={[
-                { label: 'Home', href: '/' },
-                { label: 'Services', href: '/services' },
-                { label: item.h1 },
-              ]}
-            />
-          </div>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <PageHero
+        eyebrow="Our Services"
+        title={service.name}
+        description={service.shortDescription}
+        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services' }, { label: service.name }]}
+      />
 
-          <span className="inline-block px-4 py-1 rounded-full bg-white/10 text-[#FFD700] text-xs font-semibold uppercase tracking-wider mb-3">
-            ★ VIP Escort Services in {siteConfig.city}
-          </span>
+      <section className="section-padding bg-[#fffaf9]">
+        <div className="container-luxury">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="relative rounded-3xl overflow-hidden shadow-luxury">
+              <Image src={service.image} alt={service.name} width={800} height={600} className="w-full h-auto object-cover" priority />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a0d]/20 to-transparent" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Service Details</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] mb-5">{service.name}</h2>
+              <p className="text-gray-600 leading-relaxed mb-8">{service.description}</p>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            {item.h1}
-          </h1>
+              <div className="space-y-3 mb-8">
+                {service.features.map((feature) => (
+                  <div key={feature} className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0" />
+                    <span className="text-gray-700">{feature}</span>
+                  </div>
+                ))}
+              </div>
 
-          <p className="mt-3 text-sm sm:text-base text-rose-100/90 font-light max-w-3xl leading-relaxed">
-            Experience the finest luxury escort escort service in {siteConfig.city}. 100% verified profiles, 24/7 outcalls, zero advance payment.
-          </p>
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <a
-              href={`https://wa.me/${siteConfig.whatsapp}?text=Hi%20ALINA%20VIP,%20I%20am%20inquiring%20about%20${encodeURIComponent(item.h1)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-2.5 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2"
-            >
-              <MessageCircle size={16} /> Book via WhatsApp
-            </a>
-            <a
-              href={`tel:${siteConfig.phone}`}
-              className="px-6 py-2.5 bg-white/90 hover:bg-white text-[#671725] border border-rose-200/90 hover:border-[#671725] shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2"
-            >
-              <Phone size={16} /> Direct Call: {siteConfig.phoneDisplay}
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Trust Bar */}
-      <div className="bg-[#52121d] text-white py-3.5 px-4 shadow-sm border-b border-white/10">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-around gap-4 text-xs sm:text-sm">
-          <span className="flex items-center gap-2">
-            <Shield size={16} className="text-[#FFD700]" />
-            <strong>100% Real &amp; Verified Profiles</strong>
-          </span>
-          <span className="flex items-center gap-2">
-            <CheckCircle size={16} className="text-[#FFD700]" />
-            <strong>Zero Advance Payment – Pay on Arrival</strong>
-          </span>
-          <span className="flex items-center gap-2">
-            <Clock size={16} className="text-[#FFD700]" />
-            <strong>24/7 Rapid Outcall in 20-30 Mins</strong>
-          </span>
-        </div>
-      </div>
-
-      {/* 3. Main Content Grid */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
-        {/* Featured Image & Highlight Box */}
-        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200/80 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          <div className="md:col-span-7 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#671725]">
-              Exclusive Adult Entertainment
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#111827]">
-              Premium {item.h1} with {siteConfig.name}
-            </h2>
-            <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-              Indulge in an unmatched encounter of passion, intimacy, and complete relaxation. Our female call girls are hand-selected for high etiquette, exceptional beauty, and genuine passion.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="px-3 py-1 bg-rose-50 text-[#671725] text-xs font-semibold rounded-full border border-rose-200">
-                100% Cash on Delivery
-              </span>
-              <span className="px-3 py-1 bg-rose-50 text-[#671725] text-xs font-semibold rounded-full border border-rose-200">
-                5-Star Hotel Outcalls
-              </span>
-              <span className="px-3 py-1 bg-rose-50 text-[#671725] text-xs font-semibold rounded-full border border-rose-200">
-                24/7 Available
-              </span>
+              <div className="flex flex-wrap gap-4">
+                <a href={`tel:${siteConfig.phone}`} className="btn-luxury">
+                  <Phone className="w-4 h-4" /> Call Now
+                </a>
+                <a href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${service.name} in Gurgaon.`)}`} target="_blank" rel="noopener noreferrer" className="btn-luxury-whatsapp">
+                  <MessageCircle className="w-4 h-4" /> WhatsApp
+                </a>
+              </div>
             </div>
           </div>
-          <div className="md:col-span-5 relative aspect-[4/3] w-full rounded-xl overflow-hidden shadow-md bg-gray-100">
-            <Image
-              src={getAssetUrl(heroImage)}
-              alt={`${item.h1} in ${siteConfig.city}`}
-              fill
-              sizes="(max-width: 768px) 100vw, 450px"
-              className="object-cover"
-              priority
-            />
-          </div>
         </div>
+      </section>
 
-        {/* All Authentic Scraped Sections from editorial catalog */}
-        <div className="space-y-8">
-          {validSections.map((sec, idx) => (
-            <article
-              key={idx}
-              className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200/80 shadow-sm space-y-4"
-            >
-              {sec.title && (
-                <h2 className="text-xl sm:text-2xl font-bold text-[#111827] border-b border-gray-100 pb-3 flex items-center gap-2">
-                  <Heart size={18} className="text-[#671725] shrink-0" />
-                  <span>{sec.title}</span>
-                </h2>
-              )}
-
-              {sec.paragraphs.map((p, pIdx) => (
-                <p key={pIdx} className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                  {p}
-                </p>
-              ))}
-
-              {sec.listItems && sec.listItems.length > 0 && (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                  {sec.listItems.map((li, lIdx) => (
-                    <li key={lIdx} className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
-                      <Sparkles size={13} className="text-[#FFD700] shrink-0" />
-                      <span>{li}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </article>
-          ))}
-        </div>
-
-        {/* Top Escort Profiles Available for Appointment */}
-        <section className="space-y-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#671725]">
-              Verified Roster
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111827] mt-1">
-              Top Escort Profiles Available for Appointment
-            </h2>
-            <div className="w-16 h-1 bg-[#671725] mx-auto mt-2 rounded-full" />
+      <section className="section-padding bg-[#fdf8f5]">
+        <div className="container-luxury">
+          <div className="text-center mb-10">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">More Services</p>
+            <h2 className="font-serif text-3xl font-bold text-[#1a0a0d]">Explore Other Services</h2>
           </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {availableModels.map((m) => (
-              <div
-                key={m.slug}
-                className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-xs hover:shadow-md transition-all text-center group"
-              >
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100">
-                  <Image
-                    src={m.image}
-                    alt={`${m.name} - ${m.category} in ${siteConfig.city}`}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
-                    VERIFIED
-                  </div>
-                </div>
-                <div className="p-3">
-                  <h3 className="font-bold text-xs sm:text-sm text-[#111827] truncate">{m.name}</h3>
-                  <p className="text-[11px] text-[#671725] font-semibold truncate">{m.category}</p>
-                  <p className="text-[10px] text-gray-500 mt-0.5">{m.rates.oneShot}</p>
-                </div>
-              </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {others.map((s) => (
+              <Link key={s.slug} href={`/services/${s.slug}`} className="group bg-white rounded-2xl p-6 border border-rose-100/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all">
+                <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[#671725] transition-colors mb-2">{s.name}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed mb-3 line-clamp-2">{s.shortDescription}</p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#671725]">Learn More <ArrowRight className="w-4 h-4" /></span>
+              </Link>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center pt-2">
-            <Link
-              href="/escorts"
-              className="inline-flex items-center gap-1.5 px-6 py-2.5 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] hover:from-[#7d1c2e] hover:to-[#55101d] text-white font-bold rounded-xl shadow-md shadow-rose-950/20 hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs sm:text-sm"
-            >
-              <span>View All 200+ Escort Profiles</span>
-              <ArrowRight size={15} />
-            </Link>
-          </div>
-        </section>
-      </div>
-
-      <CTASection />
-    </div>
+      <CtaSection />
+    </>
   );
 }

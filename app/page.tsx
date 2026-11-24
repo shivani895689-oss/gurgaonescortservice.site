@@ -1,156 +1,38 @@
 import type { Metadata } from 'next';
-import { siteConfig, generalFaqs, getAlternateLanguages } from '@/data/siteConfig';
-
-import HeroSection from '@/components/home/HeroSection';
-import TrustBannerSection from '@/components/home/TrustBannerSection';
-import FeaturedProfilesSection from '@/components/home/FeaturedProfilesSection';
-import CategoriesGridSection from '@/components/home/CategoriesGridSection';
-import ServicesOfferedSection from '@/components/home/ServicesOfferedSection';
-import TrustStandardsSection from '@/components/home/TrustStandardsSection';
-import BookingProcessSection from '@/components/home/BookingProcessSection';
-import TestimonialsSection from '@/components/home/TestimonialsSection';
-import LocationGridSection from '@/components/home/LocationGridSection';
-import EditorialGuideSection from '@/components/home/EditorialGuideSection';
-import HomeFaqSection from '@/components/home/HomeFaqSection';
-import HomeBlogSection from '@/components/home/HomeBlogSection';
-import CTASection from '@/components/CTASection';
+import Hero from '@/components/home/Hero';
+import TrustBar from '@/components/home/TrustBar';
+import AboutSection from '@/components/home/AboutSection';
+import CategoriesSection from '@/components/home/CategoriesSection';
+import ServicesSection from '@/components/home/ServicesSection';
+import WhyChooseUs from '@/components/home/WhyChooseUs';
+import AreasSection from '@/components/home/AreasSection';
+import BookingProcess from '@/components/home/BookingProcess';
+import CtaSection from '@/components/home/CtaSection';
+import FaqSection from '@/components/home/FaqSection';
+import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
-  title: `${siteConfig.tagline} | ${siteConfig.name}`,
-  description: siteConfig.description,
-  keywords: siteConfig.keywords,
-  alternates: {
-    canonical: siteConfig.url,
-    languages: getAlternateLanguages(''),
-  },
+  alternates: { canonical: '/' },
   openGraph: {
-    title: `${siteConfig.tagline} | ${siteConfig.name}`,
-    description: siteConfig.description,
     url: siteConfig.url,
-    siteName: siteConfig.name,
     type: 'website',
-    images: [
-      {
-        url: `${siteConfig.url}/og-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.name} - ${siteConfig.tagline}`,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${siteConfig.tagline} | ${siteConfig.name}`,
-    description: siteConfig.description,
-    images: [`${siteConfig.url}/og-image.jpg`],
+    images: [{ url: '/images/hero/hero-main.webp', width: 1200, height: 630, alt: 'Gurgaon Escort Service' }],
   },
 };
 
-export default function HomePage() {
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: siteConfig.name,
-    alternateName: [
-      `${siteConfig.name} Escorts Service`,
-      `${siteConfig.name} Agency`,
-    ],
-    url: siteConfig.url,
-    phone: siteConfig.phone,
-    email: siteConfig.email,
-    areaServed: [siteConfig.city, 'Delhi NCR'],
-    knowsAbout: [
-      siteConfig.tagline,
-      'VIP Call Girls',
-      'Escort Service',
-    ],
-    address: {
-      '@type': 'PostalAddress',
-      ...siteConfig.structuredAddress,
-    },
-  };
-
-  const websiteSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteConfig.name,
-    url: siteConfig.url,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${siteConfig.url}/blog?search={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
-  };
-
-    const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: generalFaqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
-
-  const homeSchema = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      organizationSchema,
-      websiteSchema,
-      faqSchema,
-    ],
-  };
-
+export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(homeSchema),
-        }}
-      />
-
-      {/* 1. Hero Banner */}
-      <HeroSection />
-
-      {/* 2. 4-Pillar Trust Banner */}
-      <TrustBannerSection />
-
-      {/* 3. Featured Profiles (3x3 Grid) */}
-      <FeaturedProfilesSection />
-
-      {/* 4. Browse Escorts by Category */}
-      <CategoriesGridSection />
-
-      {/* 5. Services Offered */}
-      <ServicesOfferedSection />
-
-      {/* 6. Trust & Professional Standards */}
-      <TrustStandardsSection />
-
-      {/* 7. Simple Booking Process */}
-      <BookingProcessSection />
-
-      {/* 8. Testimonials */}
-      <TestimonialsSection />
-
-      {/* 9. Top Locations Grid */}
-      <LocationGridSection />
-
-      {/* 10. Editorial Guides & Sensual Getaway */}
-      <EditorialGuideSection />
-
-      {/* 11. Frequently Asked Questions */}
-      <HomeFaqSection />
-
-      {/* 12. Latest Blog Articles */}
-      <HomeBlogSection />
-
-      {/* 13. Bottom CTA Banner */}
-      <CTASection />
+      <Hero />
+      <TrustBar />
+      <AboutSection />
+      <CategoriesSection />
+      <ServicesSection />
+      <WhyChooseUs />
+      <AreasSection />
+      <BookingProcess />
+      <CtaSection />
+      <FaqSection />
     </>
   );
 }

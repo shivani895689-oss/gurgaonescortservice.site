@@ -1,11 +1,11 @@
 {
   "name": "Gurgaon Escort Service",
-  "short_name": "GurgaonEscorts",
-  "description": "Premier VIP Call Girls & 5-Star Hotel Escort Service in Gurgaon (Gurugram).",
+  "short_name": "Gurgaon Escorts",
+  "description": "Premium, discreet, and verified Gurgaon Escort Service across Gurugram with fast outcall to hotels and residences.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0A0A0B",
-  "theme_color": "#D4AF37",
+  "background_color": "#ffffff",
+  "theme_color": "#671725",
   "icons": [
     {
       "src": "/favicon.svg",

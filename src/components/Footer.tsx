@@ -1,189 +1,108 @@
-'use client';
-
 import Link from 'next/link';
-import { Phone } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, Shield, Clock, Heart } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
+
+const quickLinks = [
+  { href: '/about', label: 'About Us' },
+  { href: '/services', label: 'Services' },
+  { href: '/categories', label: 'Categories' },
+  { href: '/locations', label: 'Areas' },
+  { href: '/booking', label: 'How to Book' },
+  { href: '/faq', label: 'FAQs' },
+  { href: '/contact', label: 'Contact' },
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-[#121212] text-gray-300 pt-16 pb-8 border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-
-          {/* Col 1: About ALINA VIP */}
-          <div className="space-y-4 lg:col-span-2">
-            <h3 className="font-sans font-black text-2xl tracking-wide text-white">
-              ALINA <span className="text-[#FFD700] font-light">VIP</span>
-            </h3>
-            <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
-              ALINA VIP is Gurgaon’s premier luxury escort agency. We offer in-person verified Indian, Russian, and independent models for 5-star hotel and suite rendezvous across Cyber City, Golf Course Road, and Delhi NCR.
+    <footer className="bg-[#1a0a0d] text-white" role="contentinfo">
+      <div className="container-luxury section-padding pb-10!">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-2 mb-4">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-[#671725] to-[#420c16] text-white font-serif text-lg font-bold">
+                G
+              </span>
+              <div className="leading-tight">
+                <span className="block font-serif text-lg font-bold text-white">Gurgaon<span className="text-[#D4AF37]">.</span></span>
+                <span className="block text-[10px] uppercase tracking-[0.22em] text-rose-200/70">Escort Service</span>
+              </div>
+            </Link>
+            <p className="text-sm text-gray-300 leading-relaxed mb-5">
+              A premium Gurgaon Escort Service focused on discretion, verified profiles, and refined companionship experiences across Gurugram&apos;s most prestigious locations.
             </p>
-            <div className="pt-2 flex flex-wrap gap-4 items-center">
-              <a
-                href={"tel:" + siteConfig.phone}
-                className="inline-flex items-center gap-2 text-sm font-bold text-[#FFD700] hover:underline"
-              >
-                <Phone size={15} />
-                <span>{siteConfig.phoneDisplay}</span>
+            <div className="flex gap-3">
+              <a href={`https://wa.me/${siteConfig.whatsapp}`} aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#25D366] flex items-center justify-center transition">
+                <MessageCircle className="w-4 h-4" />
               </a>
-              <Link href="/rates" className="text-xs font-bold text-rose-300 hover:text-white underline">
-                Check Rates &amp; Pricing &rarr;
-              </Link>
+              <a href={`tel:${siteConfig.phone}`} aria-label="Call" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#671725] flex items-center justify-center transition">
+                <Phone className="w-4 h-4" />
+              </a>
+              <a href={`mailto:${siteConfig.email}`} aria-label="Email" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#671725] flex items-center justify-center transition">
+                <Mail className="w-4 h-4" />
+              </a>
             </div>
           </div>
 
-          {/* Col 2: Categories */}
           <div>
-            <h4 className="font-bold text-white text-base mb-4 border-b border-gray-800 pb-2">
-              Categories
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <Link href="/category/russian-call-girls" className="text-gray-400 hover:text-white transition-colors">
-                  Russian Escorts
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/vip-call-girls" className="text-gray-400 hover:text-white transition-colors">
-                  VIP Call Girls
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/high-profile-girls" className="text-gray-400 hover:text-white transition-colors">
-                  High Profile Escorts
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/college-girls" className="text-gray-400 hover:text-white transition-colors">
-                  College Girls
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/air-hostess" className="text-gray-400 hover:text-white transition-colors">
-                  Air Hostess Escorts
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/celebrity-escorts" className="text-gray-400 hover:text-white transition-colors">
-                  Celebrity Call Girls
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className="text-[#FFD700] font-semibold hover:underline">
-                  View All Categories &rarr;
-                </Link>
-              </li>
+            <h3 className="font-serif text-lg font-semibold mb-4 text-white">Quick Links</h3>
+            <ul className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-gray-300 hover:text-[#D4AF37] transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 3: Services & Hotels */}
           <div>
-            <h4 className="font-bold text-white text-base mb-4 border-b border-gray-800 pb-2">
-              Services &amp; Hotels
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <Link href="/services/1-2-3-hours" className="text-gray-400 hover:text-white transition-colors">
-                  1/2/3 Hours Escorts
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/full-night" className="text-gray-400 hover:text-white transition-colors">
-                  Full Night Escorts
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/sensual-massage" className="text-gray-400 hover:text-white transition-colors">
-                  Sensual Massage
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/girlfriend-experience" className="text-gray-400 hover:text-white transition-colors">
-                  GFE Experience
-                </Link>
-              </li>
-              <li>
-                <Link href="/hotels" className="text-gray-400 hover:text-white transition-colors">
-                  5-Star Hotel Escorts
-                </Link>
-              </li>
-              <li>
-                <Link href="/rates" className="text-gray-400 hover:text-white transition-colors">
-                  Rates &amp; Packages
-                </Link>
-              </li>
-              <li>
-                <Link href="/phone-number" className="text-[#FFD700] font-semibold hover:underline">
-                  VIP Booking Hotline &rarr;
-                </Link>
-              </li>
+            <h3 className="font-serif text-lg font-semibold mb-4 text-white">Popular Areas</h3>
+            <ul className="space-y-2.5">
+              {['DLF Phase 1-5', 'Cyber City', 'Golf Course Road', 'MG Road', 'Sohna Road', 'Udyog Vihar'].map((area) => (
+                <li key={area} className="text-sm text-gray-300 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                  {area}
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 4: Locations */}
           <div>
-            <h4 className="font-bold text-white text-base mb-4 border-b border-gray-800 pb-2">
-              Top Locations
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <Link href="/locations/cyber-city" className="text-gray-400 hover:text-white transition-colors">
-                  Cyber City
-                </Link>
+            <h3 className="font-serif text-lg font-semibold mb-4 text-white">Contact</h3>
+            <ul className="space-y-3 text-sm text-gray-300">
+              <li className="flex gap-3">
+                <Phone className="w-4 h-4 mt-0.5 text-[#D4AF37] shrink-0" />
+                <a href={`tel:${siteConfig.phone}`} className="hover:text-white transition">{siteConfig.phoneDisplay}</a>
               </li>
-              <li>
-                <Link href="/locations/golf-course-road" className="text-gray-400 hover:text-white transition-colors">
-                  Golf Course Road
-                </Link>
+              <li className="flex gap-3">
+                <Mail className="w-4 h-4 mt-0.5 text-[#D4AF37] shrink-0" />
+                <a href={`mailto:${siteConfig.email}`} className="hover:text-white transition break-all">{siteConfig.email}</a>
               </li>
-              <li>
-                <Link href="/locations/mg-road" className="text-gray-400 hover:text-white transition-colors">
-                  MG Road
-                </Link>
+              <li className="flex gap-3">
+                <MapPin className="w-4 h-4 mt-0.5 text-[#D4AF37] shrink-0" />
+                <span>{siteConfig.address}</span>
               </li>
-              <li>
-                <Link href="/locations/aerocity" className="text-gray-400 hover:text-white transition-colors">
-                  Aerocity
-                </Link>
-              </li>
-              <li>
-                <Link href="/locations/dwarka" className="text-gray-400 hover:text-white transition-colors">
-                  Dwarka
-                </Link>
-              </li>
-              <li>
-                <Link href="/locations/sohna-road" className="text-gray-400 hover:text-white transition-colors">
-                  Sohna Road
-                </Link>
-              </li>
-              <li>
-                <Link href="/locations" className="text-[#FFD700] font-semibold hover:underline">
-                  View All Sectors &rarr;
-                </Link>
+              <li className="flex gap-3">
+                <Clock className="w-4 h-4 mt-0.5 text-[#D4AF37] shrink-0" />
+                <span>Available 24/7 across Gurugram</span>
               </li>
             </ul>
           </div>
-
         </div>
 
-        {/* Age Verification Required Banner matching agency design */}
-        <div className="border-t border-gray-800 pt-6 pb-6 text-center text-xs text-gray-400 max-w-3xl mx-auto leading-relaxed">
-          <p className="font-bold text-gray-300 mb-1">Age Verification Required (18+ Only)</p>
-          <p>
-            This website is intended strictly for consenting adults aged 18 and older. By accessing this platform, you certify that you are of legal age in your jurisdiction and agree to our terms and privacy policy. All models featured on this site are independent consenting adults aged 21 or older.
+        <div className="mt-12 pt-8 border-t border-white/10">
+          <div className="flex flex-col md:flex-row gap-4 md:items-center md:justify-between text-xs text-gray-400">
+            <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <span className="inline-flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-[#D4AF37]" /> 100% Discreet</span>
+              <span className="inline-flex items-center gap-1.5"><Heart className="w-3.5 h-3.5 text-[#D4AF37]" /> Premium Service</span>
+            </div>
+          </div>
+          <p className="mt-4 text-[11px] leading-relaxed text-gray-500 max-w-4xl">
+            Disclaimer: This website is intended for adults aged 18+ only. All content is for informational and companionship service purposes. We promote respectful, lawful, and consensual interactions. By accessing this site, you confirm that you are of legal age in your jurisdiction.
           </p>
         </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
-            <Link href="/disclaimer" className="hover:text-gray-300 transition-colors">Disclaimer</Link>
-            <Link href="/terms" className="hover:text-gray-300 transition-colors">Terms of Service</Link>
-          </div>
-        </div>
-
       </div>
     </footer>
   );

@@ -1,453 +1,182 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-import {
-  Phone,
-  MessageCircle,
-  MapPin,
-  Clock,
-  ShieldCheck,
-  CheckCircle2,
-  ArrowRight,
-  Building2,
-} from 'lucide-react';
-import Breadcrumb from '@/components/Breadcrumb';
-import CTASection from '@/components/CTASection';
-import ContactForm from '@/components/ContactForm';
-import { siteConfig, getAlternateLanguages } from '@/data/siteConfig';
+import type { Metadata } from 'next';
+import { Phone, Mail, MapPin, Clock, MessageCircle, Shield, CheckCircle2 } from 'lucide-react';
+import PageHero from '@/components/PageHero';
+import { siteConfig } from '@/data/siteConfig';
 
 export const metadata: Metadata = {
-  title: `Book ${siteConfig.city} Escorts | 24/7 Private Concierge | ${siteConfig.name}`,
-  description: `Connect with ${siteConfig.name} for verified call girl reservations in ${siteConfig.city}. Call ${siteConfig.phone} or WhatsApp for confidential 20-30 min hotel outcalls.`,
-  keywords: [
-    ...siteConfig.keywords.slice(0, 10),
-    'contact concierge, 24/7 escort booking, whatsapp call girls',
-  ],
-  alternates: {
-    canonical: `${siteConfig.url}/contact`,
-    languages: getAlternateLanguages('/contact'),
-  },
+  title: 'Contact Us | Book Gurgaon Escort Service',
+  description:
+    'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram. Call or WhatsApp for quick availability, premium companion options, and 24/7 private support.',
+  alternates: { canonical: '/contact' },
   openGraph: {
-    title: `Book ${siteConfig.city} Escorts | 24/7 Private Concierge | ${siteConfig.name}`,
-    description: `Connect with ${siteConfig.name} for verified call girl reservations in ${siteConfig.city}. Call ${siteConfig.phone} or WhatsApp for confidential 20-30 min hotel outcalls.`,
+    title: 'Contact Us | Book Gurgaon Escort Service',
+    description:
+      'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram. Call or WhatsApp for quick availability and 24/7 private support.',
     url: `${siteConfig.url}/contact`,
     type: 'website',
-    images: [{ url: '/og-image.jpg' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `Book ${siteConfig.city} Escorts | 24/7 Private Concierge | ${siteConfig.name}`,
-    description: `Connect with ${siteConfig.name} for verified call girl reservations in ${siteConfig.city}. 20-30 min hotel outcall arrival.`,
-    images: ['/og-image.jpg'],
+    images: [{ url: '/images/hero/hero-main.webp', width: 1200, height: 630, alt: 'Contact Gurgaon Escort Service' }],
   },
 };
 
+const contactMethods = [
+  {
+    icon: Phone,
+    title: 'Call Us',
+    value: siteConfig.phone,
+    href: `tel:${siteConfig.phone}`,
+    description: 'Speak directly with our coordination team for immediate assistance.',
+  },
+  {
+    icon: MessageCircle,
+    title: 'WhatsApp',
+    value: `+${siteConfig.whatsapp}`,
+    href: `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent('Hi, I would like to inquire about your premium companion services in Gurgaon.')}`,
+    description: 'Quick, discreet WhatsApp communication for availability and booking details.',
+    external: true,
+  },
+  {
+    icon: Mail,
+    title: 'Email',
+    value: siteConfig.email,
+    href: `mailto:${siteConfig.email}`,
+    description: 'Send us your inquiry and we\'ll respond with care and discretion.',
+  },
+  {
+    icon: MapPin,
+    title: 'Service Area',
+    value: `${siteConfig.structuredAddress.streetAddress}, ${siteConfig.structuredAddress.addressLocality}`,
+    href: '/locations',
+    description: 'Serving DLF, Cyber City, Golf Course Road, and all premium Gurugram areas.',
+  },
+];
+
+const bookingTips = [
+  'Share your preferred location, hotel, or neighborhood in Gurgaon.',
+  'Let us know your expected time, duration, and any companion preference.',
+  'Use call or WhatsApp for the fastest response and discreet coordination.',
+  'Our team handles every inquiry with privacy, respect, and clear communication.',
+];
+
 export default function ContactPage() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: `${siteConfig.url}/contact` },
+    ],
+  };
+
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Gurgaon Escort Service',
+    description: 'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram.',
+    url: `${siteConfig.url}/contact`,
+    mainEntity: {
+      '@type': 'LocalBusiness',
+      name: siteConfig.name,
+      telephone: siteConfig.phone,
+      email: siteConfig.email,
+      areaServed: 'Gurgaon, Haryana, India',
+      url: siteConfig.url,
+    },
+  };
+
   return (
     <>
-      <Breadcrumb items={[{ name: 'Home', path: '/' }, { name: 'Contact' }]} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }} />
+      <PageHero
+        eyebrow="Contact Us"
+        title="Get in Touch Discreetly"
+        description="We're available 24/7 for discreet inquiries, availability checks, and premium companion booking coordination across Gurgaon and Gurugram."
+        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
+      />
 
-      {/* Hero Section */}
-      <section className="relative bg-[#671725] text-white py-14 px-4 sm:px-6 lg:px-8 border-b-4 border-luxury-gold shadow-md">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="inline-block px-6 py-2 border border-luxury-gold/50 rounded-full text-luxury-gold text-sm font-semibold tracking-wider uppercase mb-6 bg-[#FFFDF6]0/10 backdrop-blur-sm">
-            ★ 24/7 Concierge Support
-          </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-sans font-bold tracking-wide">
-            Contact <span className="text-gradient-gold">{siteConfig.name}</span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Reserve verified escorts,{' '}
-            <Link href="/category/russian-call-girls" className="text-luxury-gold hover:underline font-medium">
-              Russian models
-            </Link>
-            , and{' '}
-            <Link href="/category/celebrity-escorts" className="text-luxury-gold hover:underline font-medium">
-              elite social escorts
-            </Link>{' '}
-            with 100% confidentiality and prompt outcall delivery across all {siteConfig.city} luxury hotel suites.
-          </p>
-          <div className="w-16 h-1 bg-[#671725] rounded-full my-4 mx-auto mt-8" />
-        </div>
-      </section>
-
-      {/* Main Contact Channels & Form */}
-      <section className="py-16 md:py-24 bg-white text-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
-            {/* Left Column: Direct Concierge & Channels */}
-            <div className="lg:col-span-5 space-y-6">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-[#111827] mb-2 font-sans font-bold">
-                  Direct VIP Hotline
-                </h2>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                  Our private booking coordinators are standing by 24 hours a day to assist with your booking requirements.
-                </p>
-              </div>
-
-              {/* Phone Channel Card */}
-              <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center shrink-0 mt-1">
-                    <Phone className="w-6 h-6 text-primary-wine" />
-                  </div>
-                  <div>
-                    <span className="text-xs uppercase font-bold tracking-wider text-primary-wine block mb-1">
-                      Direct Phone
-                    </span>
-                    <a
-                      href={`tel:${siteConfig.phone}`}
-                      className="text-2xl font-bold text-[#111827] hover:text-primary-wine transition-colors font-sans font-bold"
-                    >
-                      {siteConfig.phoneDisplay}
-                    </a>
-                    <p className="text-gray-500 text-xs mt-1">
-                      Instant response • Available 24/7 across all {siteConfig.city} areas
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* WhatsApp Channel Card */}
-              <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0 mt-1">
-                    <MessageCircle className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <span className="text-xs uppercase font-bold tracking-wider text-green-700 block mb-1">
-                      WhatsApp
-                    </span>
-                    <a
-                      href={`https://wa.me/${siteConfig.whatsapp}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xl font-bold text-[#111827] hover:text-primary-wine transition-colors inline-flex items-center gap-1.5"
-                    >
-                      Chat on WhatsApp <ArrowRight className="w-4 h-4 text-primary-wine" />
-                    </a>
-                    <p className="text-gray-500 text-xs mt-1">
-                      Discreet profile sharing, rates &amp; rapid verification
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Location Card */}
-              <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center shrink-0 mt-1">
-                    <MapPin className="w-6 h-6 text-primary-wine" />
-                  </div>
-                  <div>
-                    <span className="text-xs uppercase font-bold tracking-wider text-primary-wine block mb-1">
-                      Service Areas
-                    </span>
-                    <p className="text-base font-semibold text-[#111827]">
-                      {siteConfig.address}
-                    </p>
-                    <p className="text-gray-500 text-xs mt-1">
-                      Prompt outcall to Cyber City, Golf Course Road, DLF 1–5, Aerocity &amp; NCR
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Operating Hours Card */}
-              <div className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FFFDF6]0/10 flex items-center justify-center shrink-0 mt-1">
-                    <Clock className="w-6 h-6 text-primary-wine" />
-                  </div>
-                  <div>
-                    <span className="text-xs uppercase font-bold tracking-wider text-primary-wine block mb-1">
-                      Operating Schedule
-                    </span>
-                    <p className="text-base font-semibold text-[#111827]">
-                      24 Hours a Day • 7 Days a Week
-                    </p>
-                    <p className="text-gray-500 text-xs mt-1">
-                      Late-night hospitality &amp; early morning dispatches
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Privacy & Discretion Card */}
-              <div className="p-6 bg-[#FFFDF6] rounded-2xl border-2 border-gray-200">
-                <h4 className="font-bold text-[#111827] text-base mb-3 flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-primary-wine" /> {siteConfig.name} Discretion Guarantee
-                </h4>
-                <ul className="space-y-2 text-xs text-gray-700">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary-wine shrink-0" />
-                    <span>Complete privacy: Client details are never stored or shared</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary-wine shrink-0" />
-                    <span>100% genuine, photo-authenticated profiles</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary-wine shrink-0" />
-                    <span>Chauffeur-driven private arrivals at luxury hotel suites</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Right Column: High-End Confidential Booking Form */}
-            <ContactForm />
-          </div>
-        </div>
-      </section>
-
-      {/* Hotel Partners & Coverage Quick Reference */}
-      <section className="py-12 bg-[#FFFDF6] border-t border-b border-gray-200/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h3 className="text-xl md:text-2xl font-bold text-[#111827] font-sans font-bold">
-              Rapid Five-Star Hotel Outcall Coverage
-            </h3>
-            <p className="text-gray-600 text-xs mt-1">
-              Guaranteed discrete doorstep arrival at premier hospitality destinations within 20–30 minutes
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <div className="bg-white p-5 rounded-2xl text-center shadow-sm border border-gray-200/50">
-              <Building2 className="w-8 h-8 text-primary-wine mx-auto mb-2" />
-              <h4 className="font-bold text-[#111827] text-sm">The Oberoi</h4>
-              <p className="text-xs text-gray-500 mt-1">Udyog Vihar</p>
-              <span className="text-[11px] text-green-700 font-semibold mt-2 inline-block bg-green-50 px-2 py-0.5 rounded-full">
-                20-25 min arrival
-              </span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl text-center shadow-sm border border-gray-200/50">
-              <Building2 className="w-8 h-8 text-primary-wine mx-auto mb-2" />
-              <h4 className="font-bold text-[#111827] text-sm">Trident Hotel</h4>
-              <p className="text-xs text-gray-500 mt-1">DLF Cyber City</p>
-              <span className="text-[11px] text-green-700 font-semibold mt-2 inline-block bg-green-50 px-2 py-0.5 rounded-full">
-                20-25 min arrival
-              </span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl text-center shadow-sm border border-gray-200/50">
-              <Building2 className="w-8 h-8 text-primary-wine mx-auto mb-2" />
-              <h4 className="font-bold text-[#111827] text-sm">The Leela</h4>
-              <p className="text-xs text-gray-500 mt-1">Ambience Island</p>
-              <span className="text-[11px] text-green-700 font-semibold mt-2 inline-block bg-green-50 px-2 py-0.5 rounded-full">
-                15-20 min arrival
-              </span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl text-center shadow-sm border border-gray-200/50">
-              <Building2 className="w-8 h-8 text-primary-wine mx-auto mb-2" />
-              <h4 className="font-bold text-[#111827] text-sm">Grand Hyatt</h4>
-              <p className="text-xs text-gray-500 mt-1">Golf Course Road</p>
-              <span className="text-[11px] text-green-700 font-semibold mt-2 inline-block bg-green-50 px-2 py-0.5 rounded-full">
-                25-30 min arrival
-              </span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl text-center shadow-sm border border-gray-200/50">
-              <Building2 className="w-8 h-8 text-primary-wine mx-auto mb-2" />
-              <h4 className="font-bold text-[#111827] text-sm">ITC Grand</h4>
-              <p className="text-xs text-gray-500 mt-1">Hassanpur</p>
-              <span className="text-[11px] text-green-700 font-semibold mt-2 inline-block bg-green-50 px-2 py-0.5 rounded-full">
-                35-45 min arrival
-              </span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl text-center shadow-sm border border-gray-200/50">
-              <Building2 className="w-8 h-8 text-primary-wine mx-auto mb-2" />
-              <h4 className="font-bold text-[#111827] text-sm">JW Marriott</h4>
-              <p className="text-xs text-gray-500 mt-1">Aerocity (IGI)</p>
-              <span className="text-[11px] text-green-700 font-semibold mt-2 inline-block bg-green-50 px-2 py-0.5 rounded-full">
-                20-25 min arrival
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SEO Editorial Guide: How to Book */}
-      <section className="py-16 md:py-20 bg-white text-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <div className="space-y-6 bg-[#FFFDF6] p-8 md:p-12 rounded-2xl border border-gray-200/60 shadow-sm">
-            <h2 className="text-3xl font-bold text-[#111827] mb-6 font-sans font-bold">
-              How to Book Escort Service in {siteConfig.city} with {siteConfig.name}
-            </h2>
-            <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
-              <p>
-                Booking escort service with <strong>{siteConfig.name}</strong> is designed to be effortless, sophisticated, and completely discreet. We respect your schedule and privacy at every stage of the engagement.
-              </p>
-              <div className="space-y-4 my-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center shrink-0 text-sm mt-0.5">
-                    1
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#111827] text-base mb-1">
-                      Choose Your Preferred Profile
-                    </h4>
-                    <p className="text-gray-600 text-sm">
-                      Browse our verified collection of{' '}
-                      <Link href="/services" className="text-primary-wine hover:underline font-semibold">
-                        call girls in Gurgaon
-                      </Link>
-                      ,{' '}
-                      <Link href="/category/russian-call-girls" className="text-primary-wine hover:underline font-semibold">
-                        Russian escorts
-                      </Link>
-                      , or{' '}
-                      <Link href="/category/celebrity-escorts" className="text-primary-wine hover:underline font-semibold">
-                        model escorts
-                      </Link>
-                      . Each profile features authentic photos and detailed attributes.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center shrink-0 text-sm mt-0.5">
-                    2
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#111827] text-base mb-1">
-                      Share Your Time &amp; Location
-                    </h4>
-                    <p className="text-gray-600 text-sm">
-                      Specify whether you require an outcall to your 5-star hotel suite or luxury apartment in{' '}
-                      <Link href="/locations/cyber-city" className="text-primary-wine hover:underline font-semibold">
-                        Cyber City
-                      </Link>
-                      ,{' '}
-                      <Link href="/locations/golf-course-road" className="text-primary-wine hover:underline font-semibold">
-                        Golf Course Road
-                      </Link>
-                      , or{' '}
-                      <Link href="/locations/dlf-phase-1" className="text-primary-wine hover:underline font-semibold">
-                        DLF Phase 1–5
-                      </Link>
-                      .
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-primary-wine text-white font-bold flex items-center justify-center shrink-0 text-sm mt-0.5">
-                    3
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#111827] text-base mb-1">
-                      Private &amp; Confidential Confirmation
-                    </h4>
-                    <p className="text-gray-600 text-sm">
-                      Contact our VIP booking manager via telephone at{' '}
-                      <a href={`tel:${siteConfig.phone}`} className="text-primary-wine hover:underline font-bold">
-                        {siteConfig.phoneDisplay}
-                      </a>{' '}
-                      or through our secure form. Your escort will arrive punctually with total discretion.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Privacy & Zero-Trace Policy */}
-              <div className="mt-8 pt-6 border-t border-gray-200/60 space-y-4">
-                <h3 className="text-xl font-bold text-[#111827] font-sans font-bold">
-                  Zero-Trace Privacy &amp; Data Safeguards
-                </h3>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  Discretion is the core tenet of {siteConfig.name}. We understand that our clientele includes high-ranking corporate leaders, diplomats, entrepreneurs, and discerning individuals who require total confidentiality. We implement an ephemeral data workflow: your contact information, messages, and meeting specifics are never stored in permanent databases, marketing mailing lists, or shared with third parties. Once your engagement concludes, all communication history is promptly purged.
-                </p>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  Furthermore, our escorts arrive in unmarked, private executive vehicles. They dress in sophisticated contemporary attire appropriate for luxury hotel lobbies or fine residential buildings, ensuring your privacy is safeguarded from doorstep to suite.
-                </p>
-              </div>
-
-              {/* Five-Star Hotel Arrival Procedures */}
-              <div className="mt-8 pt-6 border-t border-gray-200/60 space-y-4">
-                <h3 className="text-xl font-bold text-[#111827] font-sans font-bold">
-                  Five-Star Hotel Outcall Protocols
-                </h3>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  For clients residing in premier hospitality properties such as The Oberoi Gurgaon, The Trident, The Leela Ambience, Grand Hyatt, or ITC Grand Bharat, our concierge coordinates seamless outcall dispatch. When submitting your reservation, simply mention your hotel property and room or suite number. Our escorts are well-versed in luxury hospitality environments and know how to navigate hotel elevator key systems, concierge checkpoints, and private floors with effortless grace.
-                </p>
-              </div>
-
-              {/* Cash on Delivery & Fraud Protection */}
-              <div className="mt-8 pt-6 border-t border-gray-200/60 space-y-4">
-                <h3 className="text-xl font-bold text-[#111827] font-sans font-bold">
-                  Transparent Pricing &amp; Cash on Delivery Protection
-                </h3>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  The escort industry in Gurgaon unfortunately has unregulated actors who demand advance booking deposits or gift cards and then fail to deliver. At {siteConfig.name}, we maintain an ethical, transparent booking process. We support direct Cash on Delivery (COD), allowing you to verify your call girl upon arrival before settling the booking fee. No hidden surcharges, no misleading photos, and no advance payment traps.
-                </p>
-              </div>
-
-              {/* Concierge Reservation FAQ */}
-              <div className="mt-8 pt-6 border-t border-gray-200/60 space-y-4">
-                <h3 className="text-xl font-bold text-[#111827] font-sans font-bold">
-                  Concierge Booking Assistance &amp; FAQs
-                </h3>
-                <div className="space-y-3">
-                  <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
-                    <h4 className="font-bold text-[#111827] text-sm mb-1">
-                      How far in advance should I confirm my booking?
-                    </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      While we accommodate immediate on-demand dispatches within 20 to 30 minutes across central Gurgaon, we recommend placing your reservation 1 to 2 hours in advance. For specific high-demand profiles such as Russian escorts, celebrity escorts, or overnight travel escorts, booking 4 to 6 hours ahead guarantees availability.
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
-                    <h4 className="font-bold text-[#111827] text-sm mb-1">
-                      Are late-night and 24/7 outcalls supported across all Gurgaon sectors?
-                    </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      Yes. Our concierge operates continuously 24 hours a day, 7 days a week. We arrange safe, punctual chauffeur transport to luxury hotels, corporate guest suites, and gated condominiums in DLF Phases 1–5, Golf Course Road, Sohna Road, and Cyber City at any hour of the night.
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
-                    <h4 className="font-bold text-[#111827] text-sm mb-1">
-                      Can I book call girl accompaniment for multi-day travel or conferences?
-                    </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      Yes, many of our escorts are experienced travel partners available for weekend getaways, outstation business conferences, and resort stays. Please contact our desk directly with your travel itinerary to arrange travel logistics and bespoke packages with absolute confidentiality.
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-xs">
-                    <h4 className="font-bold text-[#111827] text-sm mb-1">
-                      What is the policy for rescheduling or modifying a reservation?
-                    </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      We understand that corporate meetings and flight itineraries change. If you need to adjust your meeting time, venue, or profile preference, simply notify our concierge desk via phone or WhatsApp at least 45 minutes prior to dispatch. We accommodate schedule shifts seamlessly without penalties.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-sm text-gray-500 pt-6 border-t border-gray-200/60">
-                Official Reservation Portal:{' '}
+      <section className="section-padding bg-[#fffaf9]">
+        <div className="container-luxury">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {contactMethods.map((method) => {
+              const Icon = method.icon;
+              return (
                 <a
-                  href={siteConfig.url}
-                  className="text-primary-wine hover:underline font-bold"
+                  key={method.title}
+                  href={method.href}
+                  target={method.external ? '_blank' : undefined}
+                  rel={method.external ? 'noopener noreferrer' : undefined}
+                  className="group bg-white rounded-2xl p-6 border border-rose-100/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all duration-300 text-center"
                 >
-                  {siteConfig.domain}
+                  <div className="w-14 h-14 mx-auto rounded-2xl bg-[#671725]/8 flex items-center justify-center mb-4 group-hover:bg-[#671725] transition-colors duration-300">
+                    <Icon className="w-6 h-6 text-[#671725] group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h2 className="font-serif text-lg font-bold text-gray-900 mb-1">{method.title}</h2>
+                  <p className="text-sm font-semibold text-[#671725] mb-2 break-all">{method.value}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{method.description}</p>
                 </a>
+              );
+            })}
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-10">
+            <div className="bg-white rounded-3xl p-8 md:p-10 border border-rose-100/60 shadow-sm">
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Before You Reach Out</p>
+              <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-4">For a Faster, Smoother Response</h2>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                A clear message helps us confirm availability quickly and coordinate the right companion for your location and timing in Gurgaon.
               </p>
+              <ul className="space-y-4">
+                {bookingTips.map((tip) => (
+                  <li key={tip} className="flex items-start gap-3 text-sm text-gray-700 leading-relaxed">
+                    <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0 mt-0.5" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-gradient-to-br from-[#671725] to-[#4e1420] rounded-3xl p-8 md:p-10 text-white">
+              <div className="flex items-center gap-3 mb-6">
+                <Clock className="w-6 h-6 text-[#F3E5AB]" />
+                <div>
+                  <h2 className="font-serif text-2xl font-bold">Available 24/7</h2>
+                  <p className="text-rose-100/80 text-sm">Always here when you need us</p>
+                </div>
+              </div>
+              <p className="text-rose-100/90 leading-relaxed mb-6">
+                Whether you&apos;re planning ahead or looking for same-day availability, our team is ready to assist with prompt, discreet coordination across all premium areas of Gurgaon.
+              </p>
+              <div className="space-y-4">
+                <a
+                  href={`tel:${siteConfig.phone}`}
+                  className="flex items-center gap-4 bg-white/10 hover:bg-white/15 border border-white/10 rounded-xl p-4 transition-colors"
+                >
+                  <Phone className="w-5 h-5 text-[#F3E5AB]" />
+                  <div>
+                    <p className="text-xs text-rose-200/70 uppercase tracking-wider">Call Now</p>
+                    <p className="font-semibold">{siteConfig.phone}</p>
+                  </div>
+                </a>
+                <a
+                  href={`https://wa.me/${siteConfig.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 bg-[#25D366]/15 hover:bg-[#25D366]/20 border border-[#25D366]/20 rounded-xl p-4 transition-colors"
+                >
+                  <MessageCircle className="w-5 h-5 text-[#25D366]" />
+                  <div>
+                    <p className="text-xs text-rose-200/70 uppercase tracking-wider">WhatsApp</p>
+                    <p className="font-semibold">+{siteConfig.whatsapp}</p>
+                  </div>
+                </a>
+              </div>
+              <div className="mt-6 pt-6 border-t border-white/10 flex items-center gap-2 text-sm text-rose-100/80">
+                <Shield className="w-4 h-4 text-[#F3E5AB]" /> 100% private and confidential communication
+              </div>
             </div>
           </div>
         </div>
       </section>
-
-      <CTASection />
     </>
   );
 }

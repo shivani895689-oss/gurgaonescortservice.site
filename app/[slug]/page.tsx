@@ -1,327 +1,245 @@
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { Phone, MessageCircle, Shield, Clock, MapPin, CheckCircle2, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import { Phone, MessageCircle, Shield, CheckCircle, BookOpen } from 'lucide-react';
-import Breadcrumb from '@/components/Breadcrumb';
-import CTASection from '@/components/CTASection';
+import PageHero from '@/components/PageHero';
+import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
-import { escortModels } from '@/data/models';
-import pagesData from '@/data/catalog_pages.json';
-import postsData from '@/data/catalog_posts.json';
-import { getLocationManifestEntry } from '@/data/locationManifest';
+import { getLandingAlias, getLandingPageBySlug, landingPageAliases, landingPages } from '@/data/landingPages';
+import { locationPageContent } from '@/data/locationPageContent';
 
-interface Section {
-  heading: string;
-  level: number;
-  paragraphs: string[];
-  listItems: string[];
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
-
-interface ContentItem {
-  slug: string;
-  url: string;
-  title: string;
-  metaDescription: string;
-  h1: string;
-  type: string;
-  sections: Section[];
-  images?: { src: string; alt: string }[];
-}
-
-const reserved = new Set([
-  'about', 'about-us', 'blog', 'categories', 'category', 'contact', 'contact-us', 'disclaimer',
-  'erotic-massage-in-gurgaon', 'escort-service-for-1-2-3-hours', 'escort-service-full-night',
-  'escort-service-in-gurgaon', 'escorts', 'escorts-categories', 'faq', 'faqs',
-  'full-body-sensual-massage', 'gallery', 'girlfriend-experience-in-gurgaon',
-  'gurgaon-escorts-phone-number', 'gurgaon-escorts-rates', 'hotels',
-  'in-out-call-girls-gurgaon', 'locations', 'phone-number', 'privacy-policy',
-  'rates', 'services', 'terms', 'shop'
-]);
-
-const validPages = (pagesData as ContentItem[]).filter(
-  (p) => !p.slug.includes('/') && !reserved.has(p.slug) && p.slug !== ''
-);
-
-const validPosts = (postsData as ContentItem[]).filter(
-  (p) => !p.slug.includes('/') && !reserved.has(p.slug) && p.slug !== ''
-);
-
-const allItems = [...validPages, ...validPosts];
-const itemsBySlug = new Map(allItems.map((item) => [item.slug, item]));
-
-export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return allItems.map((item) => ({
-    slug: item.slug,
-  }));
+  const aliasSlugs = Object.keys(landingPageAliases).map((slug) => ({ slug }));
+  return [...landingPages.map((p) => ({ slug: p.slug })), ...aliasSlugs];
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const item = itemsBySlug.get(slug);
-
-  if (!item) {
-    return {
-      title: `${siteConfig.city} Escorts – ${siteConfig.name}`,
-    };
+function resolvePage(slug: string) {
+  const direct = getLandingPageBySlug(slug);
+  if (direct) return { page: direct, canonicalSlug: direct.slug };
+  const aliasTarget = getLandingAlias(slug);
+  if (aliasTarget) {
+    const targetSlug = aliasTarget.replace(/^\//, '');
+    const target = getLandingPageBySlug(targetSlug);
+    if (target) return { page: target, canonicalSlug: target.slug };
   }
+  return null;
+}
 
-
-  // Guard: noindex for REDIRECT/NOINDEX locations
-  const entry = getLocationManifestEntry(slug);
-  const robots = (entry && entry.indexable === false) ? { index: false, follow: false } : undefined;
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const resolved = resolvePage(slug);
+  if (!resolved) return {};
+  const { page, canonicalSlug } = resolved;
+  const url = `${siteConfig.url}/${canonicalSlug}`;
   return {
-    ...(robots ? { robots } : {}),
-    title: item.title,
-    description: item.metaDescription || `${item.h1} – 24/7 Verified In-Call & Out-Call Escort Service in ${siteConfig.city} with ${siteConfig.name}.`,
-    alternates: {
-      canonical: `${siteConfig.url}/${slug}`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: item.title,
-      description: item.metaDescription || `${item.h1} – Verified Escort Service in ${siteConfig.city}`,
-      images: ['/og-image.jpg'],
-    },
+    title: page.metaTitle,
+    description: page.metaDescription,
+    alternates: { canonical: `/${canonicalSlug}` },
     openGraph: {
-      title: item.title,
-      description: item.metaDescription || `${item.h1} – Verified Escort Service in ${siteConfig.city}`,
-      url: `${siteConfig.url}/${slug}`,
-      images: [{ url: '/og-image.jpg' }],
+      title: page.metaTitle,
+      description: page.metaDescription,
+      url,
       type: 'website',
+      siteName: siteConfig.name,
+      locale: 'en_IN',
+      images: [{ url: '/images/hero/hero-main.webp', width: 1200, height: 630, alt: page.locationName || page.title }],
     },
   };
 }
 
-export default async function DynamicSlugPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function LandingPage({ params }: PageProps) {
   const { slug } = await params;
-  const item = itemsBySlug.get(slug);
+  const resolved = resolvePage(slug);
+  if (!resolved) notFound();
 
-  if (!item) {
-    notFound();
-  }
+  const { page, canonicalSlug } = resolved;
+  const rich = locationPageContent[canonicalSlug];
+  const isLocation = page.type === 'location';
+  const locationName = page.locationName || 'Gurgaon';
 
-  const isPost = item.type === 'post';
-  const availableModels = escortModels.slice(0, 4);
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+      { '@type': 'ListItem', position: 2, name: isLocation ? 'Locations' : 'Categories', item: `${siteConfig.url}/${isLocation ? 'locations' : 'categories'}` },
+      { '@type': 'ListItem', position: 3, name: page.title, item: `${siteConfig.url}/${canonicalSlug}` },
+    ],
+  };
+
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: page.metaTitle,
+    description: page.metaDescription,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: siteConfig.name,
+      telephone: siteConfig.phone,
+      url: siteConfig.url,
+      address: {
+        '@type': 'PostalAddress',
+        ...siteConfig.structuredAddress,
+      },
+    },
+    areaServed: {
+      '@type': 'Place',
+      name: isLocation ? `${locationName}, Gurgaon, Haryana, India` : 'Gurgaon, Haryana, India',
+    },
+    url: `${siteConfig.url}/${canonicalSlug}`,
+  };
+
+  const faqSchema = rich?.faqs?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: rich.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.question,
+          acceptedAnswer: { '@type': 'Answer', text: f.answer },
+        })),
+      }
+    : null;
 
   return (
-    <div className="min-h-screen bg-[#FFFDF6] text-[#333333]">
-      {/* 1. Header Hero Banner */}
-      <div className="bg-[#671725] text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-rose-900/40">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-4">
-            <Breadcrumb
-              items={[
-                { label: 'Home', href: '/' },
-                isPost ? { label: 'Blog', href: '/blog' } : { label: 'Escorts', href: '/escorts' },
-                { label: item.h1 },
-              ]}
-            />
-          </div>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#FFD700] text-xs font-semibold uppercase tracking-wider mb-3">
-            {isPost ? (
-              <>
-                <BookOpen size={14} /> VIP Escort &amp; Dating Guide
-              </>
-            ) : (
-              <>
-                <Shield size={14} /> 100% Real &amp; Verified Service
-              </>
-            )}
-          </div>
+      <PageHero eyebrow={page.eyebrow} title={page.title} description={page.description} />
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            {item.h1}
-          </h1>
-
-          <p className="mt-3 text-sm sm:text-base text-rose-100/90 font-light max-w-3xl leading-relaxed">
-            {isPost
-              ? 'Expert advice, romantic tips, and insider knowledge from Gurgaon’s premier escort agency.'
-              : 'Top-class female escort service in Gurgaon with doorstep outcalls to luxury hotels and residences.'}
-          </p>
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <a
-              href={`https://wa.me/${siteConfig.whatsapp}?text=Hi%20ALINA%20VIP,%20I%20am%20inquiring%20about%20${encodeURIComponent(item.h1)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-2.5 bg-linear-to-r from-[#25D366] to-[#128C7E] hover:from-[#22bf5b] hover:to-[#0f7569] text-white shadow-md shadow-emerald-900/20 hover:shadow-lg hover:shadow-emerald-900/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2"
-            >
-              <MessageCircle size={16} />
-              <span>Book via WhatsApp</span>
-            </a>
-            <a
-              href={`tel:${siteConfig.phone}`}
-              className="px-6 py-2.5 bg-white/90 hover:bg-white text-[#671725] border border-rose-200/90 hover:border-[#671725] shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2"
-            >
-              <Phone size={16} />
-              <span>Direct Call: {siteConfig.phoneDisplay}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Main Content Layout */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Main Article Body (8 cols) */}
-          <div className="lg:col-span-8 space-y-8">
-            {item.sections.map((sec, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-6 sm:p-8 rounded-xl border border-gray-100 shadow-sm space-y-4"
-              >
-                {sec.heading && (
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#111827] border-b border-gray-100 pb-3">
-                    {sec.heading}
-                  </h2>
-                )}
-
-                {sec.paragraphs.map((p, pIdx) => (
-                  <p
-                    key={pIdx}
-                    className="text-gray-700 text-sm sm:text-base leading-relaxed"
-                  >
-                    {p}
-                  </p>
-                ))}
-
-                {sec.listItems.length > 0 && (
-                  <ul className="space-y-2 pt-2">
-                    {sec.listItems.map((li, lIdx) => (
-                      <li
-                        key={lIdx}
-                        className="flex items-start gap-2.5 text-sm sm:text-base text-gray-700"
-                      >
-                        <CheckCircle
-                          size={17}
-                          className="text-[#671725] shrink-0 mt-0.5"
-                        />
-                        <span>{li}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-
-            {/* Rates Table (if location/service page) */}
-            {!isPost && (
-              <div className="bg-white p-6 sm:p-8 rounded-xl border border-gray-100 shadow-sm space-y-4">
-                <h3 className="text-xl font-bold text-[#111827]">
-                  {siteConfig.city} Escort Service Rates &amp; Packages
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                  <div className="bg-[#FFFDF6] p-4 rounded-lg border border-gray-200 text-center">
-                    <span className="block text-xs text-gray-500 font-medium">1 - 2 Hours</span>
-                    <span className="text-lg font-black text-[#671725]">₹15,000</span>
+      <section className="section-padding bg-white">
+        <div className="container-luxury">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid sm:grid-cols-3 gap-6 mb-12">
+              {[
+                { icon: Shield, title: 'Verified & Discreet', text: 'Every companion is verified and every booking handled with absolute confidentiality.' },
+                { icon: Clock, title: '24/7 Availability', text: 'Round-the-clock booking support with fast response across Gurgaon locations.' },
+                { icon: MapPin, title: isLocation ? `Serving ${locationName}` : 'All Gurgaon Areas', text: isLocation ? `Fast, discreet outcall service across ${locationName} and nearby areas.` : 'Coverage across DLF, Cyber City, Golf Course Road, and all major Gurugram sectors.' },
+              ].map((item) => (
+                <div key={item.title} className="bg-[#fffaf9] rounded-2xl border border-rose-100/80 p-6 text-center">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-[#671725]/10 flex items-center justify-center mb-4">
+                    <item.icon className="w-6 h-6 text-[#671725]" />
                   </div>
-                  <div className="bg-[#FFFDF6] p-4 rounded-lg border border-gray-200 text-center">
-                    <span className="block text-xs text-gray-500 font-medium">2 - 4 Hours</span>
-                    <span className="text-lg font-black text-[#671725]">₹20,000</span>
-                  </div>
-                  <div className="bg-[#FFFDF6] p-4 rounded-lg border border-gray-200 text-center">
-                    <span className="block text-xs text-gray-500 font-medium">5 - 6 Hours</span>
-                    <span className="text-lg font-black text-[#671725]">₹25,000</span>
-                  </div>
-                  <div className="bg-[#FFFDF6] p-4 rounded-lg border border-gray-200 text-center">
-                    <span className="block text-xs text-gray-500 font-medium">Full Night</span>
-                    <span className="text-lg font-black text-[#671725]">₹30,000+</span>
-                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-[#1a0a0d] mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{item.text}</p>
                 </div>
-              </div>
-            )}
-          </div>
-
-          {/* Right Sidebar (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* VIP Guarantee Box */}
-            <div className="bg-[#671725] text-white p-6 rounded-xl shadow-md space-y-4">
-              <h3 className="text-lg font-bold text-[#FFD700] flex items-center gap-2">
-                <Shield size={18} /> Why Choose {siteConfig.name}?
-              </h3>
-              <ul className="space-y-3 text-xs sm:text-sm text-gray-100">
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={15} className="text-[#FFD700] shrink-0 mt-0.5" />
-                  <span>100% Genuine, verified profile pictures</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={15} className="text-[#FFD700] shrink-0 mt-0.5" />
-                  <span>No upfront payment required (Pay on arrival)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={15} className="text-[#FFD700] shrink-0 mt-0.5" />
-                  <span>Doorstep 5-star hotel delivery in 20-30 mins</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={15} className="text-[#FFD700] shrink-0 mt-0.5" />
-                  <span>Absolute privacy and client confidentiality</span>
-                </li>
-              </ul>
-
-              <div className="pt-2 border-t border-white/10">
-                <a
-                  href={`tel:${siteConfig.phone}`}
-                  className="w-full block py-2.5 bg-white text-[#671725] hover:bg-rose-50 text-center text-xs font-bold rounded shadow transition-all"
-                >
-                  Call 24/7 Concierge Hotline
-                </a>
-              </div>
+              ))}
             </div>
 
-            {/* Featured Call Girls */}
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
-              <h4 className="text-base font-bold text-[#111827]">
-                Featured Escorts in {siteConfig.city}
-              </h4>
-              <div className="space-y-3">
-                {availableModels.map((m) => (
-                  <Link
-                    key={m.slug}
-                    href={`/escorts/${m.slug}`}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100 group"
-                  >
-                    <div className="relative w-14 h-16 rounded overflow-hidden bg-gray-100 shrink-0">
-                      <Image
-                        src={m.image}
-                        alt={m.name}
-                        fill
-                        sizes="56px"
-                        className="object-cover group-hover:scale-105 transition-transform"
-                      />
+            {rich ? (
+              <article>
+                <div className="space-y-5 text-gray-700 leading-relaxed text-[17px]">
+                  {rich.intro.map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
+
+                {rich.sections.map((section, idx) => (
+                  <div key={idx} className="mt-12">
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-5 leading-tight">{section.heading}</h2>
+                    <div className="space-y-4 text-gray-700 leading-relaxed text-[17px]">
+                      {section.paragraphs.map((para, i) => (
+                        <p key={i}>{para}</p>
+                      ))}
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h5 className="font-bold text-sm text-[#111827] truncate group-hover:text-[#671725]">
-                        {m.name}
-                      </h5>
-                      <span className="text-xs text-gray-500 block truncate">
-                        {m.category} • {m.age} Yrs
-                      </span>
-                      <span className="text-xs font-bold text-[#671725]">
-                        {m.rates.oneShot}
-                      </span>
-                    </div>
-                  </Link>
+                    {section.bullets && section.bullets.length > 0 && (
+                      <ul className="mt-6 space-y-3">
+                        {section.bullets.map((b, i) => (
+                          <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
+                            <CheckCircle2 className="w-5 h-5 text-[#671725] mt-0.5 shrink-0" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 ))}
+
+                {rich.faqs.length > 0 && (
+                  <div className="mt-14">
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-6 leading-tight">
+                      Frequently Asked Questions About {isLocation ? `Escort Service in ${locationName}` : page.title}
+                    </h2>
+                    <div className="space-y-4">
+                      {rich.faqs.map((faq, i) => (
+                        <details key={i} className="group bg-[#fffaf9] rounded-2xl border border-rose-100/80 p-5 open:shadow-sm">
+                          <summary className="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold text-[#1a0a0d]">
+                            <span>{faq.question}</span>
+                            <ChevronDown className="w-5 h-5 text-[#671725] shrink-0 transition-transform group-open:rotate-180" />
+                          </summary>
+                          <p className="mt-3 text-gray-700 leading-relaxed">{faq.answer}</p>
+                        </details>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {rich.nearbyAreas.length > 0 && (
+                  <div className="mt-14">
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-5 leading-tight">
+                      Nearby Areas We Also Serve
+                    </h2>
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      Along with {locationName}, we provide discreet premium companion service across nearby Gurgaon locations. Explore other areas for fast local availability.
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      {rich.nearbyAreas.map((area) => (
+                        <Link
+                          key={area.slug}
+                          href={`/${area.slug}`}
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#671725]/5 border border-[#671725]/15 text-[#671725] text-sm font-medium hover:bg-[#671725] hover:text-white transition-colors"
+                        >
+                          <MapPin className="w-3.5 h-3.5" /> {area.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </article>
+            ) : (
+              <div className="prose prose-lg max-w-none text-gray-700">
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1a0a0d] mb-4">
+                  About {page.title}
+                </h2>
+                <p className="leading-relaxed mb-6">{page.description}</p>
+                <p className="leading-relaxed mb-6">
+                  At {siteConfig.name}, we specialize in delivering a premium, discreet, and personalized companion experience.
+                  {isLocation
+                    ? ` Our ${locationName} service is designed for clients who value privacy, punctuality, and genuine companionship. Whether you are staying at a luxury hotel, a serviced apartment, or a private residence in ${locationName}, our team ensures a smooth and comfortable experience.`
+                    : ` We focus on quality, confidentiality, and client satisfaction. Every arrangement is handled with care, from the first inquiry to the completion of your booking.`}
+                </p>
+                <p className="leading-relaxed mb-6">
+                  {isLocation
+                    ? `Booking an escort service in ${locationName}, Gurgaon is simple and confidential. Contact us via phone or WhatsApp, share your preferences, and our team will coordinate the rest with complete discretion. We serve ${locationName} and surrounding areas with fast response times and verified companions.`
+                    : `From hotel outcalls to social companionship, we handle every request with discretion and professionalism. Contact us to discuss availability, preferences, and arrangements in your preferred Gurgaon location.`}
+                </p>
               </div>
+            )}
+
+            <div className="flex flex-wrap gap-3 mt-12 pt-8 border-t border-rose-100">
+              <a href={`tel:${siteConfig.phone}`} className="btn-luxury">
+                <Phone className="w-4 h-4" /> Call {siteConfig.phoneDisplay}
+              </a>
+              <a
+                href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${page.title}.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-luxury-whatsapp"
+              >
+                <MessageCircle className="w-4 h-4" /> WhatsApp
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* 3. Bottom CTA Section */}
-      <CTASection />
-    </div>
+      <CtaSection />
+    </>
   );
 }

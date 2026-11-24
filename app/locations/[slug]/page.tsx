@@ -1,644 +1,214 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
-import {
-  MapPin,
-  Navigation,
-  Phone,
-  ShieldCheck,
-  Clock,
-  Star,
-  MessageCircle,
-  Building2,
-  ArrowRight,
-  CheckCircle2,
-  Hotel,
-} from 'lucide-react';
-import Breadcrumb from '@/components/Breadcrumb';
-import CTASection from '@/components/CTASection';
-import TestimonialsSection from '@/components/TestimonialsSection';
-import LocationBookingForm from '@/components/LocationBookingForm';
-import { siteConfig, getAlternateLanguages } from '@/data/siteConfig';
-import { getLocation, locations } from '@/data/locations';
-import { categories } from '@/data/categories';
-import {
-  isLocationIndexable,
-  isLocationRedirect,
-  getRedirectDestination,
-} from '@/data/locationManifest';
+import { notFound } from 'next/navigation';
+import { MapPin, CheckCircle2, ArrowRight, Phone, MessageCircle } from 'lucide-react';
+import PageHero from '@/components/PageHero';
+import CtaSection from '@/components/home/CtaSection';
+import { locations, getLocationBySlug } from '@/data/locations';
+import { landingPages } from '@/data/landingPages';
+import { locationPageContent } from '@/data/locationPageContent';
+import { siteConfig } from '@/data/siteConfig';
 
-interface LocationPageProps {
-  params: Promise<{ slug: string }>;
-}
-
-export const dynamicParams = false;
+interface Props { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  return locations
-    .filter((loc) => !isLocationRedirect(loc.slug))
-    .map((loc) => ({
-      slug: loc.slug,
-    }));
+  return locations.map((l) => ({ slug: l.slug }));
 }
 
-export async function generateMetadata({ params }: LocationPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const location = getLocation(slug);
-  if (!location) {
-    return {
-      title: `Location Not Found | ${siteConfig.name}`,
-      robots: { index: false, follow: false },
-        twitter: { card: 'summary_large_image' },
-    openGraph: { type: 'website' },
-  };
-  }
-
-  if (isLocationRedirect(slug)) {
-    return {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
-  }
-
-  const isIndexable = isLocationIndexable(slug);
-
-  const title =
-    location.slug === 'gurgaon'
-      ? `${siteConfig.city} Escorts Directory & Sector Guide | Verified Locations | ${siteConfig.name}`
-      : location.region === 'Gurgaon'
-      ? `Escort Service in ${location.name}, ${siteConfig.city} | ${siteConfig.name}`
-      : location.metaTitle;
-  const description =
-    location.slug === 'gurgaon'
-      ? 'Comprehensive directory of verified call girls and escort service in Gurgaon across all 108 sectors, DLF, and Golf Course Road with 20-30 min 5-star hotel dispatch.'
-      : location.region === 'Gurgaon'
-      ? `Discreet 24/7 escort service in ${location.name}, ${siteConfig.city}. Verified VIP call girls, Russian models, and 20-30 min 5-star hotel outcalls with ${siteConfig.name}.`
-      : location.metaDescription;
-  const canonicalUrl = `${siteConfig.url}/locations/${location.slug}`;
-
+  const location = getLocationBySlug(slug);
+  if (!location) return {};
+  const title = `Escort Service in ${location.name}, Gurgaon | ${siteConfig.name}`;
+  const description = location.shortDescription;
   return {
     title,
     description,
-    keywords: [
-      `${location.name.toLowerCase()} escort service`,
-      `${location.name.toLowerCase()} escorts`,
-      `escort service in ${location.name.toLowerCase()}`,
-      `call girls in ${location.name.toLowerCase()}`,
-      `call girls ${location.name.toLowerCase()}`,
-      `${location.name.toLowerCase()} call girl service`,
-      `vip escorts ${location.name.toLowerCase()}`,
-      `russian escorts ${location.name.toLowerCase()}`,
-      ...(siteConfig.keywords || []).slice(0, 10),
-    ],
-    robots: {
-      index: isIndexable,
-      follow: true,
-    },
-    alternates: {
-      canonical: canonicalUrl,
-      languages: getAlternateLanguages(`/locations/${location.slug}`),
-    },
+    alternates: { canonical: `/locations/${location.slug}` },
     openGraph: {
       title,
       description,
-      url: canonicalUrl,
+      url: `${siteConfig.url}/locations/${location.slug}`,
       type: 'website',
+      images: [{ url: location.image, width: 1200, height: 630, alt: `Escort Service in ${location.name}, Gurgaon` }],
     },
   };
 }
 
-export default async function LocationPage({ params }: LocationPageProps) {
-  const { slug } = await params;
-  if (isLocationRedirect(slug)) {
-    const target = getRedirectDestination(slug);
-    if (target) {
-      redirect(target);
-    }
-    notFound();
-  }
-
-  const location = getLocation(slug);
-
-  if (!location) {
-    notFound();
-  }
-
-  // Resolve genuine nearby areas from factual location data
-  const nearbyLocationLinks = location.nearbyAreas
-    .map((area) => {
-      const match = locations.find(
-        (l) =>
-          l.name.toLowerCase() === area.toLowerCase() ||
-          l.area.toLowerCase() === area.toLowerCase() ||
-          l.slug.toLowerCase() === area.toLowerCase().replace(/\s+/g, '-')
-      );
-      return match || null;
+function getRelatedLocationPages(locationName: string, locationSlug: string) {
+  const name = locationName.toLowerCase();
+  const slug = locationSlug.toLowerCase();
+  return landingPages
+    .filter((p) => p.type === 'location')
+    .filter((p) => {
+      const hay = `${p.slug} ${p.locationName || ''} ${p.title}`.toLowerCase();
+      if (slug === 'dlf-phase-1-5') return hay.includes('dlf phase');
+      if (slug === 'sushant-lok') return hay.includes('sushant lok');
+      if (slug === 'mg-road') return hay.includes('mg road');
+      if (slug === 'cyber-city') return hay.includes('cyber city') || hay.includes('dlf cyber');
+      if (slug === 'golf-course-road') return hay.includes('golf course road') && !hay.includes('extension');
+      if (slug === 'golf-course-extension-road') return hay.includes('golf course extension');
+      if (slug === 'sohna-road') return hay.includes('sohna road') || hay.includes('south city') || hay.includes('sector 48') || hay.includes('sector 49');
+      if (slug === 'sector-29') return hay.includes('sector 29') || hay.includes('sector 28');
+      if (slug === 'udyog-vihar') return hay.includes('udyog vihar');
+      if (slug === 'iffco-chowk') return hay.includes('iffco chowk');
+      if (slug === 'palam-vihar') return hay.includes('palam vihar');
+      if (slug === 'dwarka-expressway') return hay.includes('dwarka expressway') || hay.includes('new gurgaon') || hay.includes('sector 82') || hay.includes('sector 83') || hay.includes('sector 84');
+      return hay.includes(name);
     })
-    .filter(Boolean);
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: location.faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
+    .slice(0, 12);
+}
 
-  const breadcrumbItems: { name: string; path?: string }[] = [
-    { name: 'Home', path: '/' },
-    { name: 'Locations', path: '/locations' },
-  ];
-  if (!location.isHub) {
-    if (location.region === 'Gurgaon') {
-      breadcrumbItems.push({ name: 'Gurgaon', path: '/locations/gurgaon' });
-    } else if (location.region === 'Delhi') {
-      breadcrumbItems.push({ name: 'Delhi', path: '/locations/delhi' });
-    } else if (location.region === 'Noida') {
-      breadcrumbItems.push({ name: 'Noida', path: '/locations/noida' });
-    }
-  }
-  breadcrumbItems.push({ name: location.name });
+export default async function LocationDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const location = getLocationBySlug(slug);
+  if (!location) notFound();
+
+  const content = locationPageContent[location.slug];
+  const relatedPages = getRelatedLocationPages(location.name, location.slug);
+  const others = locations.filter((l) => l.slug !== location.slug).slice(0, 4);
 
   const breadcrumbSchema = {
+    '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbItems.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: item.path ? `${siteConfig.url}${item.path}` : `${siteConfig.url}/locations/${location.slug}`,
-    })),
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+      { '@type': 'ListItem', position: 2, name: 'Locations', item: `${siteConfig.url}/locations` },
+      { '@type': 'ListItem', position: 3, name: location.name, item: `${siteConfig.url}/locations/${location.slug}` },
+    ],
+  };
+
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `Escort Service in ${location.name}, Gurgaon`,
+    description: location.description,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: siteConfig.name,
+      telephone: siteConfig.phone,
+      url: siteConfig.url,
+    },
+    areaServed: { '@type': 'Place', name: `${location.name}, Gurgaon` },
+    url: `${siteConfig.url}/locations/${location.slug}`,
+    image: location.image,
   };
 
   return (
     <>
-      {/* Server-Rendered JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [breadcrumbSchema, faqSchema] }) }}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <PageHero
+        eyebrow="Service Area"
+        title={`Escort Service in ${location.name}`}
+        description={location.shortDescription}
+        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Locations', href: '/locations' }, { label: location.name }]}
       />
 
-      <Breadcrumb items={breadcrumbItems} />
-
-      {/* Hero Section */}
-      <section className="relative bg-[#671725] text-white py-14 px-4 sm:px-6 lg:px-8 border-b-4 border-luxury-gold shadow-md">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="inline-block px-6 py-2 border border-luxury-gold/50 rounded-full text-luxury-gold text-sm font-semibold tracking-wider uppercase mb-6 bg-black/30 backdrop-blur-sm">
-            ★ {location.city} • {location.region}
-          </span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-sans font-bold tracking-wide">
-            {location.slug === 'gurgaon' ? (
-              <>Gurgaon Escort Directory &amp; <span className="text-luxury-gold">Local Areas</span></>
-            ) : (
-              <>
-                Escort Service in <span className="text-luxury-gold">{location.name}</span>
-                {location.region === 'Gurgaon' ? ', Gurgaon' : `, ${location.region}`}
-              </>
-            )}
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light">
-            {location.shortDescription} {siteConfig.name} provides verified, discreet, and premium escort services across {location.name} and surrounding regional corridors.
-          </p>
-          <div className="w-16 h-1 bg-luxury-gold mx-auto mt-4 mb-6 rounded-full" />
-
-          {/* Quick Trust Bar */}
-          <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold uppercase tracking-wider text-gray-200">
-            <span className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-luxury-gold">
-              <ShieldCheck size={16} /> 100% Verified Profiles
-            </span>
-            <span className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-luxury-gold">
-              <Clock size={16} /> 20-30 Min Outcall Dispatch
-            </span>
-            <span className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-luxury-gold">
-              <Hotel size={16} /> 5-Star Hotel Outcalls
-            </span>
-          </div>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap justify-center gap-4 mt-8">
-            <a
-              href={`tel:${siteConfig.phone}`}
-              className="inline-flex items-center gap-2 bg-[#671725] hover:bg-[#52121d] text-white px-8 py-4 rounded-xl font-bold text-sm transition-all shadow-md"
-            >
-              <Phone className="w-5 h-5" /> Call Concierge: {siteConfig.phoneDisplay}
-            </a>
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-2 bg-[#13bc18] hover:bg-[#0fa814] text-white px-8 py-4 rounded-xl font-bold text-sm transition-all shadow-md"
-            >
-              Explore Profiles <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content (2-Column Editorial with Sticky Sidebar) */}
-      <section className="py-16 md:py-24 bg-white text-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
-            {/* Left Column: Comprehensive Local Guide */}
-            <div className="lg:col-span-8 space-y-10">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#111827] mb-5 font-sans font-bold">
-                  Premium Luxury Escort Service in {location.name}
-                </h2>
-                <div className="w-16 h-1 bg-primary-wine mt-2 mb-4 rounded-full" />
-
-                <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
-                  {location.about?.intro ? (
-                    <>
-                      <p>{location.about.intro}</p>
-                      <p>{location.about.historyVibe}</p>
-                      <p>{location.about.commercialProfile}</p>
-                    </>
-                  ) : (
-                    <>
-                      <p>
-                        <strong>{siteConfig.name}</strong> provides premier luxury escort services in {location.name}, one of the most distinguished areas in {location.city}. Known for its upscale lifestyle and vibrant commercial landscape, {location.name} attracts discerning gentlemen who demand discretion, elegance, and authentic hospitality.
-                      </p>
-                      <p>
-                        Whether staying at premier five-star luxury suites or hosting private dinners, our verified <Link href="/category/vip-call-girls" className="text-primary-wine hover:underline font-medium">VIP call girls</Link> and <Link href="/services" className="text-primary-wine hover:underline font-medium">escort girls</Link> provide charismatic social presence tailored to your highest expectations.
-                      </p>
-                    </>
-                  )}
-                </div>
+      <section className="section-padding bg-[#fffaf9]">
+        <div className="container-luxury">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="relative rounded-3xl overflow-hidden shadow-luxury">
+              <Image src={location.image} alt={`Escort Service in ${location.name}, Gurgaon`} width={800} height={600} className="w-full h-auto object-cover" priority />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a0d]/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+                <MapPin className="w-4 h-4 text-[#671725]" />
+                <span className="text-sm font-semibold text-gray-800">{location.name}, Gurugram</span>
               </div>
+            </div>
+            <div>
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Area Details</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] mb-5">Premium Companions in {location.name}</h2>
+              <p className="text-gray-600 leading-relaxed mb-8">{location.description}</p>
 
-              {/* Key Landmarks */}
-              {location.about?.landmarks && location.about.landmarks.length > 0 && (
-                <div className="p-8 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm">
-                  <h3 className="text-2xl font-bold text-[#111827] mb-4 font-sans font-bold flex items-center gap-2">
-                    <MapPin className="text-primary-wine w-6 h-6" />
-                    Key Landmarks &amp; Hotspots in {location.name}
-                  </h3>
-                  <div className="grid sm:grid-cols-2 gap-3 mt-4">
-                    {location.about.landmarks.map((landmark, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 text-sm text-gray-700 bg-white p-3 rounded-xl border border-gray-100">
-                        <CheckCircle2 size={16} className="text-primary-wine shrink-0" />
-                        <span className="font-semibold">{landmark}</span>
-                      </div>
+              {location.landmarks && location.landmarks.length > 0 && (
+                <div className="mb-8">
+                  <p className="text-sm font-semibold text-gray-900 mb-3">Nearby Landmarks &amp; Areas</p>
+                  <div className="flex flex-wrap gap-2">
+                    {location.landmarks.map((lm) => (
+                      <span key={lm} className="px-3 py-1.5 bg-white border border-rose-100/60 rounded-full text-xs text-gray-600">{lm}</span>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Why Choose Us in this location */}
-              <div>
-                <h3 className="text-2xl md:text-3xl font-bold text-[#111827] mb-6 font-sans font-bold">
-                  Why Choose {siteConfig.name} in {location.name}?
-                </h3>
-                {location.whyChoose?.overview ? (
-                  <div className="space-y-4">
-                    <p className="text-gray-700 text-lg leading-relaxed">{location.whyChoose.overview}</p>
-                    <div className="grid sm:grid-cols-2 gap-4 mt-6">
-                      {location.whyChoose.reasons.map((r, idx) => (
-                        <div key={idx} className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                          <h4 className="text-base font-bold text-[#111827] mb-2">{r.title}</h4>
-                          <p className="text-sm text-gray-600 leading-relaxed">{r.desc}</p>
-                        </div>
-                      ))}
-                    </div>
+              <div className="space-y-3 mb-8">
+                {['Verified premium companions', 'Fast, discreet coordination', '24/7 availability in this area', 'Hotel & private residence outcall'].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-[#671725] shrink-0" />
+                    <span className="text-gray-700 text-sm">{item}</span>
                   </div>
-                ) : (
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    {[
-                      {
-                        title: '100% Verified Profiles',
-                        desc: 'Real untouched photos and in-person verification for all call girls in Gurgaon.',
-                        icon: ShieldCheck,
-                      },
-                      {
-                        title: 'Rapid 20-30m Arrival',
-                        desc: `Quick discreet outcall to all luxury hotels and residences in ${location.name}.`,
-                        icon: Clock,
-                      },
-                      {
-                        title: 'Absolute Privacy',
-                        desc: 'Complete confidentiality and client protection for all booking records.',
-                        icon: Star,
-                      },
-                    ].map((item, idx) => {
-                      const Icon = item.icon;
-                      return (
-                        <div key={idx} className="p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                          <Icon className="w-8 h-8 text-primary-wine mb-3" />
-                          <h4 className="text-base font-bold text-[#111827] mb-2">{item.title}</h4>
-                          <p className="text-xs text-gray-600 leading-relaxed">{item.desc}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+                ))}
               </div>
 
-              {/* Service Options */}
-              {location.serviceOptions?.overview && (
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-[#111827] mb-4 font-sans font-bold">
-                    Service Options in {location.name}
-                  </h3>
-                  <p className="text-gray-700 text-lg leading-relaxed mb-6">{location.serviceOptions.overview}</p>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {location.serviceOptions.options.map((opt, idx) => (
-                      <div key={idx} className="p-6 bg-white rounded-2xl border border-gray-200 hover:border-primary-wine/40 transition-all shadow-sm">
-                        <h4 className="text-lg font-bold text-[#111827] mb-2 font-sans font-bold">{opt.title}</h4>
-                        <p className="text-sm text-gray-600 leading-relaxed">{opt.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Local Area Connectivity & Hospitality */}
-              {location.localCharacteristics?.connectivity && (
-                <div className="p-8 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm">
-                  <h3 className="text-2xl font-bold text-[#111827] mb-3 font-sans font-bold flex items-center gap-2">
-                    <Navigation className="text-primary-wine w-6 h-6" />
-                    Connectivity &amp; Five-Star Hotels Served
-                  </h3>
-                  <p className="text-gray-700 text-sm leading-relaxed mb-6">{location.localCharacteristics.connectivity}</p>
-
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    {location.localCharacteristics.hotels && location.localCharacteristics.hotels.length > 0 && (
-                      <div>
-                        <h4 className="text-xs uppercase tracking-wider text-primary-wine font-bold mb-3 flex items-center gap-1.5">
-                          <Hotel size={16} /> Partner Hotels &amp; Outcall Venues
-                        </h4>
-                        <ul className="space-y-2">
-                          {location.localCharacteristics.hotels.map((h, idx) => (
-                            <li key={idx} className="text-xs text-gray-700 flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 bg-primary-wine rounded-full" />
-                              <span>{h}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {location.localCharacteristics.metroStations && location.localCharacteristics.metroStations.length > 0 && (
-                      <div>
-                        <h4 className="text-xs uppercase tracking-wider text-primary-wine font-bold mb-3 flex items-center gap-1.5">
-                          <Building2 size={16} /> Transit &amp; Metro Connectivity
-                        </h4>
-                        <ul className="space-y-2">
-                          {location.localCharacteristics.metroStations.map((m, idx) => (
-                            <li key={idx} className="text-xs text-gray-700 flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 bg-primary-wine rounded-full" />
-                              <span>{m}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Hotel Outcall Protocol & Booking Safety */}
-              <div className="p-8 bg-[#FFFDF6] rounded-2xl border border-gray-200/60 shadow-sm space-y-4">
-                <h3 className="text-2xl font-bold text-[#111827] font-sans font-bold flex items-center gap-2">
-                  <ShieldCheck className="text-primary-wine w-6 h-6" />
-                  Private Outcall Protocol &amp; Hotel Etiquette in {location.name}
-                </h3>
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  Booking an outcall escort service in {location.name} with <strong>{siteConfig.name}</strong> is organized to provide maximum convenience, privacy, and peace of mind. Whether you are staying at an executive business hotel, a five-star luxury suite, or a private serviced residence, our escorts arrive punctually and conduct themselves with refined social poise.
-                </p>
-                <div className="grid sm:grid-cols-2 gap-4 pt-2">
-                  <div className="bg-white p-4 rounded-xl border border-gray-100">
-                    <h4 className="font-bold text-[#111827] text-xs uppercase tracking-wider mb-1 text-primary-wine">
-                      Discreet Arrival
-                    </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      Escorts arrive via private, unmarked executive chauffeur directly at your chosen venue in {location.name}, ensuring your meeting remains strictly confidential from reception to suite.
-                    </p>
-                  </div>
-                  <div className="bg-white p-4 rounded-xl border border-gray-100">
-                    <h4 className="font-bold text-[#111827] text-xs uppercase tracking-wider mb-1 text-primary-wine">
-                      Zero Advance Fees
-                    </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      To protect you from fraud and deceptive advance-fee schemes, {siteConfig.name} supports Cash on Delivery. You meet and verify your call girl in person before settling the booking fee.
-                    </p>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-500 pt-2 border-t border-gray-200/40">
-                  Need assistance with reservations in {location.name}? Contact our 24/7 concierge desk at{' '}
-                  <a href={`tel:${siteConfig.phone}`} className="text-primary-wine font-bold hover:underline">
-                    {siteConfig.phoneDisplay}
-                  </a>{' '}
-                  or chat directly on WhatsApp.
-                </p>
+              <div className="flex flex-wrap gap-4">
+                <a href={`tel:${siteConfig.phone}`} className="btn-luxury"><Phone className="w-4 h-4" /> Call Now</a>
+                <a href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm looking for escort service in ${location.name}, Gurgaon.`)}`} target="_blank" rel="noopener noreferrer" className="btn-luxury-whatsapp"><MessageCircle className="w-4 h-4" /> WhatsApp</a>
               </div>
-
-              {/* Master Hub Links if Applicable */}
-              {location.isHub && location.hubDetails && (
-                <div className="space-y-6 pt-4 border-t border-gray-200">
-                  <h3 className="text-2xl md:text-3xl font-bold text-[#111827] font-sans font-bold">
-                    {location.name} Regional Master Directory
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">{location.hubDetails.overview}</p>
-                  {location.hubDetails.corridors.map((corridor, idx) => (
-                    <div key={idx} className="mb-6 p-6 bg-[#FFFDF6] rounded-2xl border border-gray-200/50">
-                      <h4 className="text-lg font-bold text-[#111827] mb-2">{corridor.title}</h4>
-                      <p className="text-sm text-gray-600 mb-4">{corridor.desc}</p>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
-                        {corridor.slugs.map((subSlug) => {
-                          const subLoc = locations.find((l) => l.slug === subSlug);
-                          return (
-                            <Link
-                              key={subSlug}
-                              href={`/locations/${subSlug}`}
-                              className="flex items-center gap-2 p-2.5 bg-white border border-gray-200 hover:border-primary-wine rounded-lg text-xs text-gray-700 hover:text-primary-wine transition-colors font-medium"
-                            >
-                              <Navigation size={12} className="text-primary-wine shrink-0" />
-                              <span className="truncate">{subLoc ? subLoc.name : subSlug.replace(/-/g, ' ')}</span>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Right Column: Sticky Concierge Showcase */}
-            <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
-              {/* Hotel Outcall Dispatch Card */}
-              <div className="p-6 bg-white text-[#2d2d2d] rounded-2xl shadow-lg border border-gray-200 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary-wine/10 flex items-center justify-center mx-auto mb-4 border border-primary-wine/30">
-                  <Hotel className="w-6 h-6 text-luxury-gold" />
-                </div>
-                <span className="text-xs uppercase tracking-ultra text-luxury-gold font-bold block mb-1">
-                  Private Outcall Desk
-                </span>
-                <h3 className="font-sans font-bold text-2xl text-white font-medium mb-2">
-                  {location.name} Dispatch
-                </h3>
-                <p className="text-gray-300 text-xs leading-relaxed mb-6">
-                  Discreet arrival within 20 to 30 minutes to all major 5-star hotels and luxury residences in {location.name}.
-                </p>
-
-                <div className="space-y-3">
-                  <a
-                    href={`tel:${siteConfig.phone}`}
-                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#671725] hover:bg-[#50121d] text-white font-bold rounded-xl text-xs shadow transition-colors"
-                  >
-                    <Phone size={16} /> Call Now: {siteConfig.phoneDisplay}
-                  </a>
-                  <a
-                    href={`https://wa.me/${siteConfig.whatsapp}?text=Hello%20ALINA%20VIP,%20I%20would%20like%20to%20book%20an%20escort%20in%20${encodeURIComponent(location.name)}.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#25D366] text-white font-bold rounded-xl text-sm shadow-lg hover:shadow-xl transition-all"
-                  >
-                    <MessageCircle size={16} /> WhatsApp Booking
-                  </a>
-                </div>
-              </div>
-
-              {/* Rating Card */}
-              <div className="bg-[#FFFDF6] p-6 rounded-2xl border border-gray-200/80 text-center shadow-sm">
-                <div className="flex justify-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-luxury-gold text-luxury-gold" />
-                  ))}
-                </div>
-                <p className="font-bold text-[#111827] text-lg font-sans font-bold">Top Rated in {location.name}</p>
-                <p className="text-gray-600 text-xs mt-1">
-                  100% verified call girls and escorts with complete privacy.
-                </p>
-              </div>
-
-              {/* Quick Categories Navigation */}
-              <div className="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="font-sans font-bold text-lg font-bold text-[#111827]">
-                    Service Categories
-                  </h4>
-                  <Link href="/services" className="text-xs text-primary-wine hover:underline font-semibold">
-                    All Services &rarr;
-                  </Link>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.slug}
-                      href={`/category/${cat.slug}`}
-                      className="p-2 rounded-lg hover:bg-[#F9E1E5] text-xs font-semibold text-gray-700 hover:text-primary-wine transition-colors truncate"
-                    >
-                      {cat.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Contextual Hospitality Guide Link */}
-              {['cyber-city', 'aerocity', 'golf-course-road', 'gurgaon', 'dlf-phase-1', 'mg-road'].includes(location.slug) && (
-                <div className="p-5 bg-white rounded-2xl border border-gray-200 shadow-sm">
-                  <p className="text-[11px] uppercase font-bold tracking-wider text-primary-wine mb-1">Local Area Guide</p>
-                  <Link
-                    href="/blog/luxury-hotels-gurgaon-guide"
-                    className="font-sans font-bold text-sm font-bold text-[#111827] hover:text-primary-wine transition-colors block"
-                  >
-                    Top Luxury Hotels in Gurgaon for Discreet Stays &rarr;
-                  </Link>
-                </div>
-              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Nearby Areas Section */}
-      <section className="py-16 md:py-20 bg-[#FFFDF6] text-gray-800 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {content && (
+        <section className="section-padding bg-[#fdf8f5]">
+          <div className="container-luxury">
+            <div className="max-w-4xl mx-auto">
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Local Guide</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a0a0d] mb-6">About {location.name} Companion Service</h2>
+              <div className="space-y-4 text-gray-600 leading-relaxed">
+                {content.intro.map((p, i) => <p key={i}>{p}</p>)}
+              </div>
+
+
+            </div>
+          </div>
+        </section>
+      )}
+
+      {relatedPages.length > 0 && (
+        <section className="section-padding bg-[#fffaf9]">
+          <div className="container-luxury">
+            <div className="text-center mb-10">
+              <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">Detailed Area Pages</p>
+              <h2 className="font-serif text-3xl font-bold text-[#1a0a0d]">{location.name} Service Pages</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {relatedPages.map((p) => (
+                <Link key={p.slug} href={`/${p.slug}`} className="group flex items-center justify-between bg-white rounded-xl px-5 py-4 border border-rose-100/60 hover:border-[#671725]/20 hover:shadow-sm transition-all">
+                  <span className="text-sm font-medium text-gray-700 group-hover:text-[#671725] transition-colors">{p.locationName || p.title}</span>
+                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#671725] transition-colors shrink-0" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="section-padding bg-[#fdf8f5]">
+        <div className="container-luxury">
           <div className="text-center mb-10">
-            <p className="section-subtitle text-primary-wine">Nearby Corridors</p>
-            <h2 className="section-title mb-4 text-[#111827]">
-              Locations Near <span className="text-luxury-gold">{location.name}</span>
-            </h2>
-            <div className="w-16 h-1 bg-primary-wine mx-auto mt-2 mb-4 rounded-full" />
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#671725] mb-3">More Areas</p>
+            <h2 className="font-serif text-3xl font-bold text-[#1a0a0d]">Explore Other Locations</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
-            {nearbyLocationLinks.map(
-              (loc) =>
-                loc && (
-                  <Link
-                    key={loc.slug}
-                    href={`/locations/${loc.slug}`}
-                    className="flex items-center gap-2.5 p-4 bg-white border border-gray-200 hover:border-primary-wine hover:shadow-md transition-all rounded-xl group"
-                  >
-                    <Navigation size={15} className="text-primary-wine shrink-0 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs text-gray-700 group-hover:text-primary-wine font-semibold transition-colors">
-                      {loc.name}
-                    </span>
-                  </Link>
-                )
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Local FAQ Section */}
-      <section className="py-16 md:py-24 bg-white text-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="section-subtitle text-primary-wine">Local Area FAQ</p>
-            <h2 className="section-title mb-4 text-[#111827]">
-              Frequently Asked Questions – <span className="text-luxury-gold">{location.name}</span>
-            </h2>
-            <div className="w-16 h-1 bg-primary-wine mx-auto mt-2 mb-4 rounded-full" />
-          </div>
-          <div className="max-w-3xl mx-auto space-y-4">
-            {location.faqs.map((faq, i) => (
-              <details
-                key={i}
-                className="bg-[#FFFDF6] rounded-2xl border border-gray-200/50 hover:border-primary-wine transition-all group overflow-hidden"
-              >
-                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                  <span className="font-semibold text-[#111827] text-base pr-4">
-                    {faq.question}
-                  </span>
-                  <span className="text-primary-wine text-2xl font-light group-open:rotate-45 transition-transform">
-                    +
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 text-sm text-gray-600 leading-relaxed border-t border-gray-200/40 pt-4">
-                  {faq.answer}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {others.map((l) => (
+              <Link key={l.slug} href={`/locations/${l.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-rose-100/60 shadow-sm hover:shadow-luxury hover:-translate-y-1 transition-all">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image src={l.image} alt={l.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 100vw, 25vw" />
                 </div>
-              </details>
+                <div className="p-4">
+                  <h3 className="font-serif text-base font-bold text-gray-900 group-hover:text-[#671725] transition-colors mb-1">{l.name}</h3>
+                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#671725]">View Area <ArrowRight className="w-4 h-4" /></span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Booking Form Section */}
-      <section className="py-16 md:py-24 bg-[#FFFDF6]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="section-subtitle text-primary-wine">Direct Reservation</p>
-            <h2 className="section-title mb-4 text-[#111827]">
-              Book Escort Service in <span className="text-luxury-gold">{location.name}</span>
-            </h2>
-            <div className="w-16 h-1 bg-primary-wine mx-auto mt-2 mb-4 rounded-full" />
-          </div>
-          <div className="bg-white p-8 md:p-10 rounded-2xl shadow-xl border-2 border-primary-wine text-left">
-            <LocationBookingForm locationName={location.name} locationCity={location.city} />
-          </div>
-        </div>
-      </section>
-
-      <TestimonialsSection theme="light" />
-      <CTASection />
+      <CtaSection />
     </>
   );
 }

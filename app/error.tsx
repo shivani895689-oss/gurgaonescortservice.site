@@ -23,11 +23,11 @@ export default function GlobalError({ error, reset }: ErrorProps) {
       aria-live="assertive"
     >
       <div className="max-w-md w-full text-center bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
-        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary-wine/10 text-primary-wine flex items-center justify-center">
+        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[#671725]/10 text-[#671725] flex items-center justify-center">
           <AlertTriangle className="w-8 h-8" />
         </div>
 
-        <span className="text-primary-wine text-xs font-bold uppercase tracking-wider mb-2 block">
+        <span className="text-[#671725] text-xs font-bold uppercase tracking-wider mb-2 block">
           Notice
         </span>
 

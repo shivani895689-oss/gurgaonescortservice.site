@@ -8,28 +8,33 @@ import { siteConfig, getAlternateLanguages } from '@/data/siteConfig';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-playfair',
   display: 'swap',
 });
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-poppins',
   display: 'swap',
 });
 
+const canonicalUrl = `${siteConfig.url}/`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.tagline} | ${siteConfig.name}`,
-    template: '%s',
+    default: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
+    template: '%s | Gurgaon Escort Service',
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
   applicationName: siteConfig.name,
-  authors: [{ name: siteConfig.name }],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: 'Companionship Services',
   robots: {
     index: true,
     follow: true,
@@ -47,101 +52,109 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   alternates: {
-    canonical: siteConfig.url,
+    canonical: canonicalUrl,
     languages: getAlternateLanguages(''),
   },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: siteConfig.url,
+    url: canonicalUrl,
     siteName: siteConfig.name,
-    title: `${siteConfig.tagline} | ${siteConfig.name}`,
+    title: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
     description: siteConfig.description,
-    images: [
-      {
-        url: `${siteConfig.url}/og-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.name} Escort Service in ${siteConfig.city}`,
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${siteConfig.tagline} | ${siteConfig.name}`,
+    title: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
     description: siteConfig.description,
-    images: [`${siteConfig.url}/og-image.jpg`],
   },
-  verification: {
-    other: {
-      seobility: '01d67d85a0cff8389a0210729e64aead',
-    },
-  }
+  other: {
+    'geo.region': 'IN-HR',
+    'geo.placename': 'Gurgaon',
+    'geo.position': `${siteConfig.geo.latitude};${siteConfig.geo.longitude}`,
+    ICBM: `${siteConfig.geo.latitude}, ${siteConfig.geo.longitude}`,
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#FFFFFF',
+  themeColor: '#671725',
   width: 'device-width',
-  initialScale: 1
+  initialScale: 1,
+  colorScheme: 'light',
 };
 
-
-const jsonLd = {
+const businessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   '@id': `${siteConfig.url}/#business`,
   name: siteConfig.name,
-  url: siteConfig.url,
+  url: canonicalUrl,
   telephone: siteConfig.phone,
+  email: siteConfig.email,
   description: siteConfig.description,
-  image: `${siteConfig.url}/og-image.jpg`,
-  priceRange: '₹₹₹₹',
+  priceRange: '₹₹₹',
+  image: `${siteConfig.url}/apple-touch-icon.png`,
   address: {
     '@type': 'PostalAddress',
     ...siteConfig.structuredAddress,
   },
   geo: {
     '@type': 'GeoCoordinates',
-    ...siteConfig.geo,
+    latitude: siteConfig.geo.latitude,
+    longitude: siteConfig.geo.longitude,
   },
+  areaServed: [
+    { '@type': 'City', name: 'Gurgaon' },
+    { '@type': 'City', name: 'Gurugram' },
+    { '@type': 'Place', name: 'DLF Cyber City' },
+    { '@type': 'Place', name: 'Golf Course Road' },
+  ],
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ],
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       opens: '00:00',
       closes: '23:59',
     },
-  ]
+  ],
+  sameAs: siteConfig.socialLinks.map((s) => s.url),
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteConfig.url}/#website`,
+  name: siteConfig.name,
+  url: canonicalUrl,
+  description: siteConfig.description,
+  publisher: {
+    '@id': `${siteConfig.url}/#business`,
+  },
+  inLanguage: 'en-IN',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${poppins.variable}`}>
-      <head>
+    <html lang="en-IN" className={`${poppins.variable} ${playfair.variable}`}>
+      <body className="min-h-screen bg-white text-[#2B2B2B] antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-[#671725] focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+        >
+          Skip to content
+        </a>
+        <Header />
+        <div id="main-content">{children}</div>
+        <Footer />
+        <WhatsAppButton />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
         />
-      </head>
-      <body className="bg-white text-[#2d2d2d] font-sans antialiased">
-        <div className="min-h-screen flex flex-col bg-white overflow-x-hidden">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppButton />
-        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
       </body>
     </html>
   );

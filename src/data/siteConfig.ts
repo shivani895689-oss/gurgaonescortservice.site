@@ -1,16 +1,19 @@
-﻿export const siteConfig = {
+export const siteConfig = {
   name: 'Gurgaon Escort Service',
+  brand: 'Alina',
   city: 'Gurgaon',
+  state: 'Haryana',
+  country: 'India',
   structuredAddress: {
-      "streetAddress": "DLF Phase 3, Golf Course Road",
-      "addressLocality": "Gurgaon",
-      "addressRegion": "Haryana",
-      "postalCode": "122002",
-      "addressCountry": "IN"
+    streetAddress: 'DLF Phase 3, Golf Course Road',
+    addressLocality: 'Gurgaon',
+    addressRegion: 'Haryana',
+    postalCode: '122002',
+    addressCountry: 'IN',
   },
   geo: {
-      "latitude": 28.4908,
-      "longitude": 77.0947
+    latitude: 28.4908,
+    longitude: 77.0947,
   },
   phone: '+91-9996265679',
   phoneDisplay: '+91 99962 65679',
@@ -19,49 +22,27 @@
   address: 'DLF Phase 3, Golf Course Road, Gurgaon, Haryana 122002, India',
   url: 'https://gurgaonescortservice.site',
   domain: 'gurgaonescortservice.site',
-  tagline: 'Escort Service in Gurgaon (Gurugram) | VIP Escorts Service',
-  description: 'Gurgaon Escort Service by ALINA VIP is the leading escort service in Gurgaon (Gurugram). Providing 100% verified VIP escorts service, high-profile call girls, and discreet 20-30 min 5-star hotel and residence outcalls across DLF, Cyber City, and Golf Course Road.',
+  tagline: 'Premium, Discreet & Verified Companions in Gurugram',
+  description:
+    'Gurgaon Escort Service offers premium, verified, and discreet companion experiences across Gurugram. Book trusted Gurgaon escorts for 5-star hotels, private residences, DLF, Cyber City, and Golf Course Road with fast, confidential service.',
   keywords: [
-    'escort service in gurgaon',
-    'escorts service in gurgaon',
-    'escort service in gurugram',
-    'escorts service in gurugram',
-    'escort service in gurugaon',
-    'escorts service in gurugaon',
     'gurgaon escort service',
+    'escort service in gurgaon',
     'gurugram escort service',
-    'vip escorts service in gurgaon',
-    'luxury escort service gurgaon',
+    'escort service in gurugram',
+    'vip escort service gurgaon',
+    'premium escorts in gurgaon',
     'call girls in gurgaon',
-    'call girls in gurugram',
-    'call girls gurgaon',
-    'call girls gurugram',
-    'escorts in gurgaon',
-    'escorts in gurugram',
-    'escort agency gurgaon',
-    'escort agency in gurugram',
-    'hotel outcall escort service gurgaon',
-    'russian escort service in gurgaon',
-    'russian call girls in gurgaon',
-    'russian escorts in gurugram',
-    'vip call girls in gurgaon',
-    'vip call girls in gurugram',
+    'gurgaon call girls',
     'independent escorts in gurgaon',
-    'independent call girls in gurugram',
-    'cash on delivery escort service gurgaon',
-    'cod call girls in gurgaon',
-    'dlf phase 1 escort service',
-    'dlf phase 2 escorts service',
-    'dlf phase 3 escort service',
-    'cyber city call girls',
+    'russian escorts in gurgaon',
+    'escort service near me gurgaon',
+    'dlf escort service',
     'cyber city escort service',
     'golf course road escorts',
-    'golf course extension road call girls',
+    'mg road gurgaon escorts',
     'sohna road escort service',
-    'mg road call girls gurgaon',
     '5 star hotel escorts gurgaon',
-    'leela ambience gurgaon escorts',
-    'oberoi gurgaon call girls',
   ],
   socialLinks: [
     { name: 'Instagram', url: 'https://instagram.com/gurgaonescortservice', icon: 'Instagram' },
@@ -72,36 +53,52 @@
 
 export function getAlternateLanguages(path: string = '') {
   const cleanPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';
+  const base = `${siteConfig.url}${cleanPath}`;
   return {
-    'en': `${siteConfig.url}${cleanPath}`,
-    'x-default': `${siteConfig.url}${cleanPath}`,
+    en: base,
+    'x-default': base,
   };
 }
 
 export const generalFaqs = [
   {
-    question: 'How do I book an escort service in Gurgaon with Gurgaon Escort Service?',
-    answer: 'Booking an escort service in Gurgaon with Gurgaon Escort Service is simple and 100% confidential. Call our booking desk directly at +91-9996265679 or WhatsApp us with your preferred location, timing, and escort preferences. Our concierge confirms availability within minutes and coordinates discreet outcall dispatch to your luxury hotel or residence.',
+    question: 'How do I book a Gurgaon escort service appointment?',
+    answer:
+      'Booking is simple and private. Call or WhatsApp our team with your preferred time, location, and companion preference. We confirm availability, share suitable options, and coordinate the booking discreetly.',
   },
   {
-    question: 'Are all call girl and escort profiles verified with real photos?',
-    answer: 'Yes, 100%. Every profile published on our portal undergoes rigorous in-person photo and identity verification. We enforce an uncompromising zero-catfish policy. The model who arrives at your suite will match the authentic photographs and profile details you selected.',
+    question: 'Are the companion profiles genuine and verified?',
+    answer:
+      'Yes. We focus on genuine presentation, clear communication, and a premium standard of service. Profiles are shared with care so expectations are clear before confirmation.',
   },
   {
-    question: 'How fast can an escort arrive at Gurgaon hotels or Cyber City residences?',
-    answer: 'Our average outcall arrival time is 20 to 30 minutes across DLF Phase 1–5, Cyber City, Golf Course Road, Golf Course Extension, Sohna Road, and MG Road. We maintain a strategically positioned fleet across Gurugram luxury corridors for rapid response.',
+    question: 'How fast is arrival in Gurgaon and nearby areas?',
+    answer:
+      'Arrival time depends on your location and current availability, but we prioritize fast coordination across major Gurgaon zones. For DLF, Cyber City, Golf Course Road, MG Road, and nearby sectors, we usually arrange prompt same-day support.',
   },
   {
-    question: 'Is client confidentiality and privacy protected?',
-    answer: 'Yes, absolute discretion and confidentiality are guaranteed. All client details are strictly protected with zero digital footprint. Our verified VIP escorts arrive in unmarked executive vehicles and observe the strictest privacy standards for five-star hotel suites and private residences across Gurgaon.',
+    question: 'Is my privacy protected during booking and coordination?',
+    answer:
+      'Absolutely. Privacy is a core part of our service. We handle inquiries confidentially, avoid unnecessary data sharing, and keep communication discreet from first contact to coordination.',
   },
   {
-    question: 'Do you offer cash on delivery (COD) payment for escort service in Gurgaon?',
-    answer: 'Yes, we support cash on delivery directly upon your escort’s arrival. We believe in transparent, honest service without deceptive advance fee demands. You may inspect and confirm your escort before settling the agreed service fee in person.',
+    question: 'Do you provide outcall service to 5-star hotels in Gurugram?',
+    answer:
+      'Yes. We arrange discreet outcall companionship for premium hotels, business stays, serviced apartments, and private residences across Gurugram. Share your location details and we will guide you through available options.',
   },
   {
-    question: 'Which 5-star hotels in Gurgaon do you provide outcall escorts to?',
-    answer: 'Our outcall escort service regularly dispatches to premier 5-star hotels including The Oberoi, The Trident, The Leela Ambience, Grand Hyatt Gurgaon, and ITC Grand Bharat. When booking, provide your hotel name and room or suite number. Our VIP escorts arrive dressed in elegant, understated attire that blends seamlessly with upscale hotel environments, maintaining absolute discretion upon entry.',
+    question: 'Which areas in Gurgaon do you cover for near-me bookings?',
+    answer:
+      'We cover major Gurgaon locations including DLF Phase 1-5, Cyber City, Golf Course Road, Golf Course Extension Road, Sohna Road, MG Road, Sector 29, Udyog Vihar, Dwarka Expressway, and nearby premium neighborhoods across Gurugram.',
+  },
+  {
+    question: 'What details should I share for a smooth booking?',
+    answer:
+      'Share your preferred area or hotel, expected time, duration, and any companion preference. Clear details help us confirm availability faster and coordinate a smooth, respectful experience.',
+  },
+  {
+    question: 'Is Gurgaon Escort Service available 24/7?',
+    answer:
+      'Yes. Our coordination team is available 24/7 for calls and WhatsApp inquiries across Gurgaon. Availability of specific companions may vary, so contacting us in advance helps secure the best match.',
   },
 ];
-

@@ -4,6 +4,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -33,7 +34,7 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  .btn-wine, .btn-luxury-primary {
+  .btn-luxury, .btn-wine, .btn-luxury-primary {
     @apply inline-flex items-center justify-center gap-2 px-7 py-3 bg-linear-to-r from-[#671725] via-[#56131f] to-[#420c16] text-white font-semibold text-sm rounded-xl shadow-md shadow-rose-950/20 hover:from-[#7d1c2e] hover:to-[#55101d] hover:shadow-lg hover:shadow-rose-950/30 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300;
   }
 

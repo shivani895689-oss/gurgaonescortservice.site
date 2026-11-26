@@ -2,43 +2,70 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import FaqSection from '@/components/home/FaqSection';
 import CtaSection from '@/components/home/CtaSection';
-import { siteConfig } from '@/data/siteConfig';
-import { pageMetadata } from '@/lib/seo';
+import HubContent from '@/components/HubContent';
+import { generalFaqs } from '@/data/siteConfig';
+import { breadcrumbSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Escort Service FAQs | Booking, Privacy & Coverage',
+  title: 'Gurgaon Escort Service FAQ | Booking, Privacy & Coverage',
   description:
-    'Answers about booking a Gurgaon escort: how to book, privacy, hotel outcall, pricing, coverage areas and 24/7 availability across Gurugram.',
+    'Answers to common questions about booking a Gurgaon escort service: verification, privacy, hotel outcalls, response times, payment and the areas we cover across Gurugram.',
   path: '/faq',
-  keywords: ['Gurgaon escort FAQ', 'escort booking questions Gurgaon', 'escort service privacy Gurugram'],
+  keywords: [
+    'Gurgaon escort FAQ',
+    'escort service questions Gurgaon',
+    'Gurugram escort booking questions',
+    'hotel outcall FAQ Gurgaon',
+    'escort privacy policy FAQ',
+    'Gurgaon companion service help',
+    'how to book escorts in Gurgaon',
+    'escort service payment Gurgaon',
+    'escort service near me Gurgaon',
+    'Gurgaon escort service coverage',
+    'is Gurgaon escort service safe',
+    '24/7 escort booking help Gurugram',
+  ],
   imageAlt: 'Gurgaon escort service frequently asked questions',
 });
 
 export default function FaqPage() {
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
-      { '@type': 'ListItem', position: 2, name: 'FAQ', item: `${siteConfig.url}/faq` },
-    ],
-  };
+  const schema = [
+    webPageSchema({
+      name: 'Frequently Asked Questions | Gurgaon Escort Service',
+      description:
+        'Answers about booking, verification, privacy, hotel outcalls, response times, and service coverage across Gurgaon.',
+      path: '/faq',
+      pageType: 'FAQPage',
+      faqs: generalFaqs,
+    }),
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'FAQ', path: '/faq' },
+    ]),
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {schema.map((item, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
+      ))}
       <PageHero
         eyebrow="FAQ"
-        title="Frequently Asked Questions"
-        description="Clear, discreet answers about our Gurgaon escort service, booking process, privacy standards, and coverage across Gurugram."
+        title="Frequently Asked Questions About Our Gurgaon Escort Service"
+        description="Booking, verification, privacy, hotel outcalls, response times and coverage - the questions clients ask most before they book in Gurugram."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'FAQ' }]}
       />
       <FaqSection
-        eyebrow="Questions & Answers"
-        title="Everything You Need to Know About Our Gurgaon Escort Service"
-        description="Find quick answers about booking, verification, privacy, hotel outcalls, response times, and the areas we serve across Gurgaon."
+        faqs={generalFaqs}
+        eyebrow="Good to Know"
+        title="Answers Before You Book"
+        description="Everything clients usually ask about booking, privacy, arrival times and coverage across Gurgaon and Gurugram."
+        id="faq"
+        includeSchema={false}
       />
+      <HubContent page="faq" />
       <CtaSection />
     </>
   );
 }
+

@@ -77,6 +77,10 @@ const nextConfig = {
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
       {
+        source: '/img/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
         source: '/(favicon.png|apple-touch-icon.png|og-image.png|gurgaon-escort-service-logo.png|manifest.json|robots.txt)',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }],
       },
@@ -102,14 +106,44 @@ const nextConfig = {
       { source: '/profiles/kavya', destination: '/kavya-escort-gurgaon' },
     ].map(({ source, destination }) => ({ source, destination, permanent: true }));
 
-    return [
-      ...profileRedirects,
-      ...legacyRedirects.map(({ source, destination, permanent }) => ({
+    // Area pages moved from /locations/{area} to keyword URLs at the site root
+    // (for example /locations/mg-road-sector-29 -> /call-girls-in-mg-road-gurgaon)
+    // so the address itself carries the search phrase.
+    const areaRedirects = [
+      { source: '/locations/dlf-phase-1-5', destination: '/call-girls-in-dlf-phase-1-5-gurgaon' },
+      { source: '/locations/cyber-city-udyog-vihar', destination: '/call-girls-in-cyber-city-gurgaon' },
+      { source: '/locations/golf-course-road', destination: '/call-girls-in-golf-course-road-gurgaon' },
+      { source: '/locations/mg-road-sector-29', destination: '/call-girls-in-mg-road-gurgaon' },
+      { source: '/locations/sohna-road', destination: '/call-girls-in-sohna-road-gurgaon' },
+      { source: '/locations/golf-course-extension', destination: '/call-girls-in-golf-course-extension-gurgaon' },
+    ].map(({ source, destination }) => ({ source, destination, permanent: true }));
+
+    // The old site redirected /blog to the homepage, but /blog is now a real
+    // section. Drop that rule, and drop any legacy deep link whose slug is now a
+    // live guide, so real posts are never shadowed by an old redirect.
+    const liveBlogSlugs = (() => {
+      try {
+        const source = readFileSync(path.join(process.cwd(), 'src/data/blog.ts'), 'utf8');
+        return new Set([...source.matchAll(/^\s+slug: ['"]([^'"]+)['"]/gm)].map((m) => m[1]));
+      } catch {
+        return new Set();
+      }
+    })();
+
+    const cleanedLegacy = legacyRedirects
+      .filter(({ source }) => source !== '/blog')
+      .filter(({ source }) => {
+        if (!source.startsWith('/blog/')) return true;
+        const slug = source.slice('/blog/'.length).replace(/\/+$/, '');
+        return !liveBlogSlugs.has(slug);
+      })
+      .map(({ source, destination, permanent }) => ({
         source,
-        destination,
+        destination: source.startsWith('/blog/') ? '/blog' : destination,
         permanent: permanent !== false,
-      })),
-    ];
+      }));
+
+    return [...profileRedirects, ...areaRedirects, ...cleanedLegacy];
   },
 };
 

@@ -97,7 +97,7 @@ export default function ProfileView({ profile }: { profile: Profile }) {
               <div className="relative aspect-[3/4] w-full">
                 <Image
                   src={profile.image}
-                  alt={profile.name + ' - ' + profile.categoryLabel + ' call girl in Gurgaon'}
+                  alt={profile.imageAlt}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -307,17 +307,25 @@ export default function ProfileView({ profile }: { profile: Profile }) {
             description: profile.tagline,
             path,
             pageType: 'ProfilePage',
+            mainEntityId: absoluteUrl(path) + '#person',
           }),
-          faqSchema(faqs, path),
+          faqSchema(faqs, absoluteUrl(path) + '#faq'),
           {
             '@context': 'https://schema.org',
             '@type': 'Person',
             '@id': absoluteUrl(path) + '#person',
             name: profile.name,
             description: profile.tagline,
-            image: profile.image,
+            image: absoluteUrl(profile.image),
             jobTitle: profile.categoryLabel + ' companion',
             knowsLanguage: profile.languages,
+            homeLocation: { '@type': 'Place', name: profile.location + ', Gurugram' },
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: profile.location,
+              addressRegion: 'Haryana',
+              addressCountry: 'IN',
+            },
             worksFor: { '@id': 'https://gurgaonescortservice.site/#business' },
             url: absoluteUrl(path),
             ...(profile.verified
@@ -329,3 +337,5 @@ export default function ProfileView({ profile }: { profile: Profile }) {
     </main>
   );
 }
+
+

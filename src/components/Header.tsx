@@ -14,6 +14,7 @@ const navLinks = [
   { href: '/profiles', label: 'Profiles' },
   { href: '/categories', label: 'Categories' },
   { href: '/locations', label: 'Areas' },
+  { href: '/blog', label: 'Guides' },
   { href: '/booking', label: 'Booking' },
   { href: '/contact', label: 'Contact' },
 ];

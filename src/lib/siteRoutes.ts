@@ -2,9 +2,10 @@ import { categories } from '@/data/categories';
 import { services } from '@/data/services';
 import { locations } from '@/data/locations';
 import { landingPages } from '@/data/landingPages';
+import { blogPosts } from '@/data/blog';
 import { profiles } from '@/lib/profiles';
 
-export type RouteGroup = 'home' | 'hub' | 'category' | 'service' | 'location' | 'area' | 'profile' | 'legal';
+export type RouteGroup = 'home' | 'hub' | 'category' | 'service' | 'location' | 'area' | 'profile' | 'blog' | 'legal';
 
 export type IndexableRoute = {
   path: string;
@@ -32,6 +33,7 @@ export function getIndexableRoutes(): IndexableRoute[] {
     { path: '/about', group: 'hub', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/contact', group: 'hub', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/faq', group: 'hub', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/blog', group: 'hub', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/privacy-policy', group: 'legal', priority: 0.3, changeFrequency: 'yearly' },
     { path: '/terms-and-conditions', group: 'legal', priority: 0.3, changeFrequency: 'yearly' },
     { path: '/disclaimer', group: 'legal', priority: 0.3, changeFrequency: 'yearly' },
@@ -57,10 +59,19 @@ export function getIndexableRoutes(): IndexableRoute[] {
 
   for (const location of locations) {
     routes.push({
-      path: `/locations/${location.slug}`,
+      path: '/' + location.path,
       group: 'location',
       priority: 0.8,
       changeFrequency: 'weekly',
+    });
+  }
+
+  for (const post of blogPosts) {
+    routes.push({
+      path: '/blog/' + post.slug,
+      group: 'blog',
+      priority: 0.75,
+      changeFrequency: 'monthly',
     });
   }
 

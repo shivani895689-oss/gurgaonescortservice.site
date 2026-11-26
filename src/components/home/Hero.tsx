@@ -80,8 +80,8 @@ export default function Hero() {
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-gray-950/10 border border-white/60 bg-white">
               <div className="relative aspect-[4/5] sm:aspect-[5/5] lg:aspect-[4/5]">
                 <Image
-                  src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80"
-                  alt="Luxury hotel ambience in Gurgaon for premium escort service"
+                  src="/img/gurgaon-escort-service-premium-companion.webp"
+                  alt="Verified premium escort in Gurgaon available 24/7 for discreet hotel outcall"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"

@@ -22,7 +22,7 @@ export default function ProfileCard({ profile, priority = false }: ProfileCardPr
         <div className="relative aspect-[3/4] overflow-hidden">
           <Image
             src={profile.image}
-            alt={`${profile.name} - ${profile.categoryLabel} companion in ${profile.location}`}
+            alt={profile.imageAlt}
             fill
             priority={priority}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

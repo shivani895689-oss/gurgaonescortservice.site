@@ -14,9 +14,11 @@
     "typecheck": "tsc --noEmit",
     "seo:redirects": "node scripts/build-legacy-redirects.mjs",
     "seo:verify": "node scripts/verify-seo.mjs",
-    "seo:indexnow": "node scripts/submit-indexnow.mjs"
+    "seo:indexnow": "node scripts/submit-indexnow.mjs",
+    "seo:index": "node scripts/verify-indexing.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "lucide-react": "^0.446.0",
     "next": "16.4.6",
     "react": "^19.3.1",

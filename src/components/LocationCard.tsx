@@ -1,21 +1,21 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, ArrowRight } from 'lucide-react';
-import type { ServiceLocation } from '@/data/locations';
+import { locationPath, type ServiceLocation } from '@/data/locations';
 
 export default function LocationCard({ location }: { location: ServiceLocation }) {
   return (
     <Link
-      href={`/locations/${location.slug}`}
+      href={locationPath(location)}
       className="group block bg-white rounded-2xl border border-gray-200/80 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-gray-900/5 hover:-translate-y-1 transition-all duration-300"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={location.image}
-          alt={location.name}
+          alt={location.imageAlt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-linear-to-t from-[#4a4d52]/45 to-transparent" />
         <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white">

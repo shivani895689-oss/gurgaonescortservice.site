@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 import { categories } from '@/data/categories';
-import { locations } from '@/data/locations';
+import { locations, locationPath } from '@/data/locations';
 import { services } from '@/data/services';
 
 const quickLinks = [
@@ -24,6 +24,7 @@ const quickLinks = [
   { href: '/services', label: 'Our Services' },
   { href: '/categories', label: 'Companion Categories' },
   { href: '/locations', label: 'Service Areas' },
+  { href: '/blog', label: 'Guides & Blog' },
   { href: '/booking', label: 'How to Book' },
   { href: '/faq', label: 'FAQs' },
   { href: '/contact', label: 'Contact Us' },
@@ -231,7 +232,7 @@ export default function Footer() {
               {locations.map((location) => (
                 <li key={location.slug}>
                   <Link
-                    href={`/locations/${location.slug}`}
+                    href={locationPath(location)}
                     className="text-sm text-gray-300 transition-colors hover:text-white"
                   >
                     {location.name}

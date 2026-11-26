@@ -5,15 +5,16 @@ import BookingProcess from '@/components/home/BookingProcess';
 import TrustBar from '@/components/home/TrustBar';
 import FaqSection from '@/components/home/FaqSection';
 import CtaSection from '@/components/home/CtaSection';
+import HubContent from '@/components/HubContent';
 import { siteConfig } from '@/data/siteConfig';
-import { pageMetadata } from '@/lib/seo';
+import { jsonLdScript, offerCatalogSchema, pageMetadata, serviceSchema, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Book Now | Premium Gurgaon Escort Service',
   description:
     'Book a premium companion in Gurgaon in four simple steps. Call or WhatsApp for availability, confirm the arrangement cost, and get a discreet arrival 24/7.',
   path: '/booking',
-  keywords: ['book escorts in Gurgaon', 'Gurgaon escort booking', 'escort service booking Gurugram'],
+  keywords: ["book escorts in Gurgaon","Gurgaon escort booking","escort service booking Gurugram","book call girl gurgaon online","hotel escort booking gurgaon","same day escort booking gurugram","full night booking escorts gurgaon","hourly escort booking gurgaon","escort booking near me gurgaon","advance booking escorts gurugram","gurgaon escort booking process","last minute escort booking gurgaon"],
   imageAlt: 'Book Gurgaon Escort Service',
 });
 
@@ -65,10 +66,43 @@ export default function BookingPage() {
     })),
   };
 
+  const serviceAndRates = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      serviceSchema({
+        name: 'Companion booking service in Gurgaon',
+        description:
+          'Verified companion booking for hotels, serviced apartments and private residences across Gurugram, with discreet 24/7 coordination.',
+        path: '/booking',
+        serviceType: 'Escort and companion booking',
+      }),
+      webPageSchema({
+        name: 'Book a companion in Gurgaon',
+        description:
+          'Book a verified Gurgaon companion in four steps with discreet coordination, clear rates and 24/7 availability.',
+        path: '/booking',
+        pageType: 'WebPage',
+      }),
+      offerCatalogSchema({
+        name: 'Gurgaon companion booking rates',
+        path: '/booking',
+        items: [
+          { name: 'One hour companion booking', price: 7500 },
+          { name: 'Two hour companion booking', price: 13000 },
+          { name: 'Three hour companion booking', price: 18000 },
+          { name: 'Four hour companion booking', price: 24000 },
+          { name: 'Six hour companion booking', price: 33000 },
+          { name: 'Full night companion booking', price: 22000 },
+        ],
+      }),
+    ],
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(serviceAndRates)} />
       <PageHero
         eyebrow="Book Now"
         title="Simple, Discreet Booking in Gurgaon"
@@ -154,6 +188,7 @@ export default function BookingPage() {
       <BookingProcess />
       <TrustBar />
       <FaqSection />
+      <HubContent page="booking" />
       <CtaSection />
     </>
   );

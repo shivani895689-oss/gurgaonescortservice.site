@@ -5,6 +5,8 @@ import { Phone, MessageCircle, Shield, Clock, MapPin, CheckCircle2, ArrowRight }
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
 import ProfileView from '@/components/ProfileView';
+import LocationView, { locationMetadata } from '@/components/LocationView';
+import { getLocationByPath, locations } from '@/data/locations';
 import { getProfileBySeoSlug, profilePath, profiles } from '@/lib/profiles';
 import { siteConfig } from '@/data/siteConfig';
 import { getLandingPageBySlug, landingPages } from '@/data/landingPages';
@@ -22,13 +24,17 @@ import {
 } from '@/components/content/SeoContentBlocks';
 import { EtiquetteBlock, ExtraFaqBlock, TimingBlock } from '@/components/content/SeoContentExtra';
 import { services } from '@/data/services';
+import { extraFaqs } from '@/lib/contentFaqs';
 import {
   absoluteUrl,
+  areaKeywords,
   breadcrumbSchema,
   faqSchema,
   itemListSchema,
   jsonLdScript,
   pageMetadata,
+  placeSchema,
+  profileKeywords,
   serviceSchema,
   webPageSchema,
 } from '@/lib/seo';
@@ -41,6 +47,7 @@ export function generateStaticParams() {
   return [
     ...landingPages.map((page) => ({ slug: page.slug })),
     ...profiles.map((profile) => ({ slug: profile.seoSlug })),
+    ...locations.map((location) => ({ slug: location.path })),
   ];
 }
 
@@ -59,18 +66,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'profile',
       brand: false,
       image: profile.image,
-      imageAlt: profile.name + ' - ' + profile.categoryLabel + ' call girl in Gurgaon',
-      keywords: [
-        profile.name + ' call girl Gurgaon',
-        profile.name + ' escort Gurgaon',
-        profile.name + ' escort service Gurgaon',
-        profile.categoryLabel + ' call girl Gurgaon',
-        profile.categoryLabel + ' escort service Gurgaon',
-        'call girl in Gurgaon',
-        'escort service Gurgaon',
-      ],
+      imageAlt: profile.imageAlt,
+      keywords: profileKeywords(profile.name, profile.categoryLabel),
     });
   }
+
+  const location = getLocationByPath(slug);
+  if (location) return locationMetadata(location);
 
   const page = getLandingPageBySlug(slug);
   if (!page) return {};
@@ -80,13 +82,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: page.metaTitle,
     description: page.metaDescription,
     path: '/' + page.slug,
-    keywords: [
-      'escort service in ' + area,
-      'escort service ' + area + ' Gurgaon',
-      area + ' escorts near me',
-      'premium companions ' + area + ' Gurugram',
-      'call girls in ' + area,
-    ],
+    keywords: areaKeywords(area),
     imageAlt: 'Escort service in ' + area + ', Gurgaon',
   });
 }
@@ -96,6 +92,9 @@ export default async function LandingPage({ params }: PageProps) {
 
   const profile = getProfileBySeoSlug(slug);
   if (profile) return <ProfileView profile={profile} />;
+
+  const location = getLocationByPath(slug);
+  if (location) return <LocationView location={location} />;
 
   const page = getLandingPageBySlug(slug);
   if (!page) notFound();
@@ -116,6 +115,10 @@ export default async function LandingPage({ params }: PageProps) {
     page.metaDescription.split('. ')[0] + '.';
 
   const faqs = rich?.faqs?.length ? rich.faqs : [];
+  // The page renders rich FAQs (when present) plus the shared extra FAQ block,
+  // so the FAQPage schema has to cover both sets of visible questions.
+  const extraQuestionSet = extraFaqs('escorts in ' + locationName, 'escort');
+  const schemaFaqs = [...faqs, ...extraQuestionSet];
 
   // Only link to areas that actually have a landing page, otherwise we ship
   // internal links that 404 and the ItemList schema points at dead URLs.
@@ -165,7 +168,8 @@ export default async function LandingPage({ params }: PageProps) {
       path,
       items: finalNearbyAreas.map((area) => ({ name: area.name + ' escorts', path: '/' + area.slug })),
     }),
-    ...(faqs.length ? [faqSchema(faqs, absoluteUrl(path) + '#faq')] : []),
+    placeSchema({ name: locationName + ', Gurugram', path }),
+    faqSchema(schemaFaqs, absoluteUrl(path) + '#faq'),
   ];
 
   const whatsappHref =
@@ -413,3 +417,6 @@ export default async function LandingPage({ params }: PageProps) {
     </>
   );
 }
+
+
+

@@ -16,9 +16,14 @@ import {
 import { EtiquetteBlock, ExtraFaqBlock, TimingBlock } from '@/components/content/SeoContentExtra';
 
 import type { Metadata } from 'next';
-import { pageMetadata } from '@/lib/seo';
-
-const baseUrl = siteConfig.url.replace(/\/+$/, '');
+import {
+  breadcrumbSchema,
+  faqSchema,
+  itemListSchema,
+  jsonLdScript,
+  pageMetadata,
+  webPageSchema,
+} from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Escort Categories in Gurgaon | VIP, Russian, GFE & More',
@@ -34,6 +39,16 @@ export const metadata: Metadata = pageMetadata({
     'GFE escorts Gurgaon',
     'party companions Gurugram',
     'best escort service categories Gurgaon',
+    'model escorts Gurgaon',
+    'air hostess escorts Gurgaon',
+    'college escorts Gurugram',
+    'high profile escorts Gurgaon',
+    'celebrity companions Gurugram',
+    'nepali escorts Gurgaon',
+    'south indian escorts Gurugram',
+    'NRI escorts Gurgaon',
+    'housewife escorts Gurugram',
+    'escort categories near me',
   ],
   imageAlt: 'Escort categories in Gurgaon and Gurugram',
 });
@@ -84,43 +99,35 @@ const localAreas = [
 ];
 
 export default function CategoriesPage() {
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-      { '@type': 'ListItem', position: 2, name: 'Categories', item: `${baseUrl}/categories` },
-    ],
-  };
-
-  const itemListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Escort Categories in Gurgaon',
-    description: 'Browse verified escort companion categories available across Gurugram.',
-    itemListElement: categories.map((c, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: c.name,
-      url: `${baseUrl}/categories/${c.slug}`,
-    })),
-  };
-
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: categoryFaqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: { '@type': 'Answer', text: faq.a },
-    })),
-  };
+  const schema = [
+    webPageSchema({
+      name: 'Escort Categories in Gurgaon | VIP, Russian, GFE & More',
+      description:
+        'Browse verified escort categories in Gurgaon - VIP, independent, Russian, model, air hostess, GFE and party companions - with discreet 24/7 booking across Gurugram.',
+      path: '/categories',
+      pageType: 'CollectionPage',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Categories', path: '/categories' },
+    ]),
+    itemListSchema({
+      name: 'Escort Categories in Gurgaon',
+      path: '/categories',
+      items: categories.map((category) => ({
+        name: category.name,
+        path: `/categories/${category.slug}`,
+        description: category.shortDescription,
+      })),
+    }),
+    faqSchema(categoryFaqs.map((faq) => ({ question: faq.q, answer: faq.a }))),
+  ];
 
   return (
     <main className="bg-white">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      {schema.map((item, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
+      ))}
 
       {/* Hero */}
       <section className="relative bg-[#2f3338] py-20 lg:py-28 overflow-hidden">
@@ -277,3 +284,4 @@ export default function CategoriesPage() {
     </main>
   );
 }
+

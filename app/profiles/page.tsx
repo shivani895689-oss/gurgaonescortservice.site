@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import HubContent from '@/components/HubContent';
 import PageHero from '@/components/PageHero';
 import ProfilesListing from '@/components/ProfilesListing';
 import CtaSection from '@/components/home/CtaSection';
@@ -12,14 +13,7 @@ export const metadata: Metadata = pageMetadata({
   description:
     'Browse verified premium companion profiles in Gurgaon and nearby locations. Filter by category, area and availability, then book discreetly on call or WhatsApp, 24/7.',
   path: '/profiles',
-  keywords: [
-    'Gurgaon escort profiles',
-    'verified escorts Gurgaon',
-    'premium companions Gurugram',
-    'independent escort profiles Gurgaon',
-    'Russian escort profiles Gurgaon',
-    'call girls profiles Gurugram',
-  ],
+  keywords: ["Gurgaon escort profiles","verified escorts Gurgaon","premium companions Gurugram","independent escort profiles Gurgaon","Russian escort profiles Gurgaon","call girls profiles Gurugram","nepali escorts gurgaon profiles","south indian escorts gurugram","nri companions gurgaon","college girl escorts gurugram","model escorts gurgaon profiles","vip escort profiles gurgaon"],
   imageAlt: 'Verified companion profiles in Gurgaon',
 });
 
@@ -91,6 +85,7 @@ export default function ProfilesPage() {
         </div>
       </section>
 
+      <HubContent page="profiles" />
       <CtaSection />
 
       {schema.map((item, index) => (

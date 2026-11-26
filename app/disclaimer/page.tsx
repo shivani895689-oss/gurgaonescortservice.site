@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
+import { disclaimerExtras } from '@/data/legalExtras';
 import { siteConfig } from '@/data/siteConfig';
-import { breadcrumbSchema, jsonLdScript, pageMetadata } from '@/lib/seo';
+import { breadcrumbSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: "Disclaimer | Content, Age & Service Limits",
   description:
     "Important disclaimer for Gurgaon Escort Service on website content, adult-only access, service communication, availability and user responsibility.",
   path: "/disclaimer",
-  keywords: ["Gurgaon escort disclaimer","adult content disclaimer"],
+  keywords: ["Gurgaon escort service disclaimer","escort website disclaimer gurugram","profile verification disclaimer","escort service information gurgaon","booking disclaimer gurugram escorts","gurgaon companion service notice","terms of use escort website","escort service gurgaon legal notice","18+ escort website gurgaon","escort service liability gurugram","escort booking responsibility gurgaon","escort service content notice gurugram"],
 });
 
 const sections = [
@@ -48,10 +49,17 @@ export default function Page() {
     { name: 'Home', path: '/' },
     { name: "Disclaimer", path: "/disclaimer" },
   ]);
+  const pageSchema = webPageSchema({
+    name: "Disclaimer",
+    description: "Important information about the content, profiles and services described on Gurgaon Escort Service, and how to verify details before booking.",
+    path: "/disclaimer",
+    pageType: 'WebPage',
+  });
+
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumb)} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript([breadcrumb, pageSchema])} />
       <PageHero
         eyebrow="Legal"
         title="Disclaimer"
@@ -60,7 +68,7 @@ export default function Page() {
       <section className="section-padding bg-white">
         <div className="container-luxury max-w-4xl">
           <div className="space-y-10">
-            {sections.map((section) => (
+            {[...sections, ...disclaimerExtras].map((section) => (
               <div key={section.title}>
                 <h2 className="font-serif text-2xl font-bold text-[#4a4d52] mb-4">{section.title}</h2>
                 <div className="space-y-3 text-gray-600 leading-relaxed">
@@ -81,3 +89,4 @@ export default function Page() {
     </>
   );
 }
+

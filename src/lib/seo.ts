@@ -47,7 +47,8 @@ export function fitDescription(input: string): string {
   if (text.length <= MAX_DESCRIPTION) return text;
   const cut = text.slice(0, MAX_DESCRIPTION - 1);
   const lastSpace = cut.lastIndexOf(' ');
-  return (lastSpace > 100 ? cut.slice(0, lastSpace) : cut).replace(/[,;:\-–]$/, '').trim() + '…';
+  const clipped = (lastSpace > 100 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\-\u2013\u2014]+$/, '').trim();
+  return clipped + '\u2026';
 }
 
 type PageMetadataInput = {
@@ -169,12 +170,18 @@ export function webPageSchema({
   path,
   pageType = 'WebPage',
   speakable = true,
+  faqs,
+  mainEntityId,
 }: {
   name: string;
   description: string;
   path: string;
   pageType?: string;
   speakable?: boolean;
+  /** Questions rendered on the page; keeps a FAQPage node self-contained. */
+  faqs?: FaqItem[];
+  /** Absolute @id of the primary entity this page is about (Person, Service...). */
+  mainEntityId?: string;
 }) {
   const url = absoluteUrl(normalizePath(path));
   return {
@@ -187,7 +194,19 @@ export function webPageSchema({
     isPartOf: { '@id': WEBSITE_ID },
     about: { '@id': BUSINESS_ID },
     inLanguage: 'en-IN',
+    dateModified: new Date().toISOString().slice(0, 10),
     primaryImageOfPage: { '@type': 'ImageObject', url: OG_IMAGE.url },
+    ...(faqs && faqs.length
+      ? {
+          mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+          })),
+        }
+      : mainEntityId
+        ? { mainEntity: { '@id': mainEntityId } }
+        : {}),
     ...(speakable
       ? { speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.page-summary'] } }
       : {}),
@@ -202,15 +221,27 @@ export function serviceSchema({
   description,
   path,
   areaName,
+  areaServed,
   serviceType,
 }: {
   name: string;
   description: string;
   path: string;
   areaName?: string;
+  areaServed?: string[];
   serviceType?: string;
 }) {
   const url = absoluteUrl(normalizePath(path));
+  const servedAreas =
+    areaServed && areaServed.length > 0
+      ? areaServed.map((area) => ({ '@type': 'City', name: area }))
+      : areaName
+        ? [{ '@type': 'Place', name: areaName }]
+        : [
+            { '@type': 'City', name: 'Gurugram' },
+            { '@type': 'AdministrativeArea', name: 'Haryana' },
+          ];
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -220,12 +251,7 @@ export function serviceSchema({
     serviceType: serviceType ?? 'Companion Service',
     url,
     provider: BUSINESS_REF,
-    areaServed: areaName
-      ? { '@type': 'Place', name: areaName }
-      : [
-          { '@type': 'City', name: 'Gurugram' },
-          { '@type': 'AdministrativeArea', name: 'Haryana' },
-        ],
+    areaServed: servedAreas,
     availableChannel: {
       '@type': 'ServiceChannel',
       servicePhone: { '@type': 'ContactPoint', telephone: siteConfig.phone, contactType: 'booking' },
@@ -267,8 +293,187 @@ export function itemListSchema({
   };
 }
 
+export function contactPageSchema({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  path: string;
+}) {
+  const url = absoluteUrl(normalizePath(path));
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${url}#contactpage`,
+    name: title,
+    description,
+    url,
+    isPartOf: { '@id': WEBSITE_ID },
+    about: { '@id': ORGANIZATION_ID },
+    mainEntity: {
+      '@type': 'Organization',
+      '@id': ORGANIZATION_ID,
+      name: SITE_NAME,
+      telephone: siteConfig.phone,
+      email: siteConfig.email,
+    },
+    inLanguage: 'en-IN',
+  };
+}
+
 export function jsonLdScript(data: unknown) {
   return {
     __html: JSON.stringify(data).replace(/</g, '\\u003c'),
   } as { __html: string };
 }
+/** Long-tail keyword set for an area landing page (local + near-me intent). */
+export function areaKeywords(area: string): string[] {
+  return [
+    'escort service in ' + area + ' gurgaon',
+    'escort service in ' + area,
+    area + ' escorts',
+    area + ' call girls',
+    'escorts near ' + area + ' gurgaon',
+    area + ' escort service near me',
+    'book escort in ' + area + ' gurgaon',
+    'book ' + area + ' call girl',
+    'independent escorts in ' + area,
+    area + ' gurgaon escort service 24x7',
+    'hotel escort service ' + area + ' gurgaon',
+    area + ' hotel escorts',
+    'vip escorts ' + area + ' gurugram',
+    area + ' call girl number',
+    area + ' call girl contact',
+    'russian escorts ' + area + ' gurgaon',
+    area + ' female escorts gurgaon',
+    area + ' escort service price',
+    area + ' escorts gurugram 24 hours',
+    'cheap escorts in ' + area + ' gurgaon',
+  ];
+}
+
+/** Long-tail keyword set for a companion profile page. */
+export function profileKeywords(name: string, category: string): string[] {
+  const lower = name.toLowerCase();
+  const cat = category.toLowerCase();
+  return [
+    lower + ' call girl gurgaon',
+    lower + ' escort gurgaon',
+    lower + ' ' + cat + ' escort gurgaon',
+    'book ' + lower + ' gurgaon',
+    lower + ' escort service near me',
+    lower + ' gurugram companion',
+    cat + ' escorts in gurgaon',
+    'gurgaon call girls near me',
+    'hotel outcall ' + lower + ' gurgaon',
+    lower + ' call girl number',
+    lower + ' escort price gurgaon',
+    lower + ' whatsapp number gurugram',
+    'verified ' + lower + ' escort gurgaon',
+    lower + ' independent escort gurugram',
+    lower + ' escort service 24x7 gurgaon',
+    lower + ' ' + cat + ' companion gurugram',
+  ];
+}
+
+/** Long-tail keyword set for a category page. */
+export function categoryKeywords(name: string): string[] {
+  const lower = name.replace(/ in Gurgaon/i, '').toLowerCase();
+  return [
+    lower + ' in gurgaon',
+    lower + ' gurugram',
+    lower + ' service near me',
+    'book ' + lower + ' gurgaon',
+    'book ' + lower + ' online gurgaon',
+    'verified ' + lower + ' gurgaon',
+    lower + ' 24x7 booking gurgaon',
+    'hotel ' + lower + ' gurgaon',
+    'hotel outcall ' + lower + ' gurugram',
+    'best ' + lower + ' in gurgaon',
+    lower + ' rates gurgaon',
+    lower + ' price gurgaon',
+    lower + ' call girl gurgaon',
+    lower + ' escorts dlf cyber city',
+    lower + ' escorts golf course road',
+    'affordable ' + lower + ' gurugram',
+  ];
+}
+
+/** Long-tail keyword set for a service page. */
+export function serviceKeywords(name: string): string[] {
+  const lower = name.replace(/ in Gurgaon/i, '').toLowerCase();
+  return [
+    lower + ' gurgaon',
+    lower + ' in gurugram',
+    lower + ' service near me gurgaon',
+    'book ' + lower + ' gurgaon',
+    'book ' + lower + ' online',
+    lower + ' escort service gurgaon',
+    lower + ' 24x7 gurgaon',
+    lower + ' dlf cyber city',
+    lower + ' golf course road',
+    lower + ' hotel outcall gurugram',
+    'premium ' + lower + ' gurgaon',
+    lower + ' price gurgaon',
+    lower + ' price list gurugram',
+    lower + ' booking gurgaon',
+    'best ' + lower + ' in gurgaon',
+  ];
+}
+
+export function placeSchema({
+  name,
+  path,
+  containedIn = 'Gurugram, Haryana, India',
+}: {
+  name: string;
+  path: string;
+  containedIn?: string;
+}) {
+  const url = absoluteUrl(normalizePath(path));
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    '@id': url + '#place',
+    name,
+    url,
+    containedInPlace: { '@type': 'City', name: containedIn },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Gurgaon',
+      addressRegion: 'Haryana',
+      addressCountry: 'IN',
+    },
+  };
+}
+
+export function offerCatalogSchema({
+  name,
+  items,
+  path = '/',
+}: {
+  name: string;
+  path?: string;
+  items: { name: string; price: number; description?: string }[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    '@id': absoluteUrl(normalizePath(path)) + '#offercatalog',
+    url: absoluteUrl(normalizePath(path)),
+    name,
+    itemListElement: items.map((item) => ({
+      '@type': 'Offer',
+      name: item.name,
+      price: item.price,
+      priceCurrency: 'INR',
+      availability: 'https://schema.org/InStock',
+      ...(item.description ? { description: item.description } : {}),
+      itemOffered: { '@type': 'Service', name: item.name, serviceType: 'Companion service' },
+    })),
+  };
+}
+
+

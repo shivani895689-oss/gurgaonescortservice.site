@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
+import { privacyExtras } from '@/data/legalExtras';
 import { siteConfig } from '@/data/siteConfig';
-import { breadcrumbSchema, jsonLdScript, pageMetadata } from '@/lib/seo';
+import { breadcrumbSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy | Discreet Handling of Your Data",
   description:
     "How Gurgaon Escort Service handles inquiries, personal details and privacy when you contact us for premium companionship in Gurugram. Read the full policy.",
   path: "/privacy-policy",
-  keywords: ["Gurgaon escort privacy policy","data protection escort service"],
+  keywords: ["Gurgaon escort privacy policy","data protection escort service gurgaon","discreet escort booking privacy","escort service confidentiality gurgaon","client privacy gurugram escorts","how escort service protects data","safe escort booking gurgaon","privacy policy gurgaon escort service","escort service privacy gurugram","anonymous escort booking gurgaon","client data safety escort gurgaon","discreet call girl booking privacy"],
 });
 
 const sections = [
@@ -55,10 +56,17 @@ export default function Page() {
     { name: 'Home', path: '/' },
     { name: "Privacy Policy", path: "/privacy-policy" },
   ]);
+  const pageSchema = webPageSchema({
+    name: "Privacy Policy",
+    description: "How Gurgaon Escort Service handles inquiries, personal details and privacy when you contact us for premium companionship in Gurugram.",
+    path: "/privacy-policy",
+    pageType: 'WebPage',
+  });
+
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumb)} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript([breadcrumb, pageSchema])} />
       <PageHero
         eyebrow="Legal"
         title="Privacy Policy"
@@ -67,7 +75,7 @@ export default function Page() {
       <section className="section-padding bg-white">
         <div className="container-luxury max-w-4xl">
           <div className="space-y-10">
-            {sections.map((section) => (
+            {[...sections, ...privacyExtras].map((section) => (
               <div key={section.title}>
                 <h2 className="font-serif text-2xl font-bold text-[#4a4d52] mb-4">{section.title}</h2>
                 <div className="space-y-3 text-gray-600 leading-relaxed">
@@ -88,3 +96,4 @@ export default function Page() {
     </>
   );
 }
+

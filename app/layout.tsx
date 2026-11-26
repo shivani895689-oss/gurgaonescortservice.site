@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import { Poppins, Playfair_Display } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import MobileBookingBar from '@/components/MobileBookingBar';
 import { siteConfig, getAlternateLanguages } from '@/data/siteConfig';
 import {
   BASE_URL,
@@ -115,6 +117,16 @@ export const viewport: Viewport = {
   colorScheme: 'light',
 };
 
+const offerPrices = [
+  { name: 'Hourly companion booking in Gurgaon', price: 7500 },
+  { name: 'Two hour escort booking in Gurgaon', price: 13000 },
+  { name: 'Three hour companion booking in Gurugram', price: 18000 },
+  { name: 'Full night escort booking in Gurgaon', price: 22000 },
+  { name: 'VIP model escort booking in Gurgaon', price: 15000 },
+  { name: 'Russian escort companion booking in Gurgaon', price: 8000 },
+  { name: 'Hotel outcall companion booking in Gurugram', price: 8500 },
+];
+
 const areaServed = [
   ...siteConfig.localAreas.map((name) => ({ '@type': 'Place', name: `${name}, Gurugram` })),
   { '@type': 'City', name: 'Gurugram' },
@@ -148,6 +160,12 @@ const schemaGraph = {
       email: siteConfig.email,
       telephone: siteConfig.phone,
       foundingDate: siteConfig.founded,
+      address: {
+        '@type': 'PostalAddress',
+        ...siteConfig.structuredAddress,
+      },
+      areaServed,
+      knowsAbout: siteConfig.keywords,
       sameAs: siteConfig.socialLinks.map((s) => s.url),
       contactPoint: [
         {
@@ -171,6 +189,21 @@ const schemaGraph = {
       image: [OG_IMAGE.url, `${BASE_URL}/gurgaon-escort-service-logo.png`],
       logo: { '@id': `${BASE_URL}/#logo` },
       priceRange: siteConfig.priceRange,
+      slogan: siteConfig.tagline,
+      knowsAbout: siteConfig.keywords,
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        '@id': BASE_URL + '/#offercatalog',
+        name: 'Gurgaon companion services and hourly rates',
+        itemListElement: offerPrices.map((offer) => ({
+          '@type': 'Offer',
+          name: offer.name,
+          price: offer.price,
+          priceCurrency: 'INR',
+          availability: 'https://schema.org/InStock',
+          itemOffered: { '@type': 'Service', name: offer.name, serviceType: 'Companion service' },
+        })),
+      },
       currenciesAccepted: siteConfig.currenciesAccepted,
       paymentAccepted: siteConfig.paymentAccepted,
       parentOrganization: { '@id': ORGANIZATION_ID },
@@ -221,26 +254,13 @@ const schemaGraph = {
       '@id': WEBSITE_ID,
       url: absoluteUrl('/'),
       name: siteConfig.name,
+      alternateName: ['Gurugram Escort Service', 'Gurgaon Companion Service', 'Escorts in Gurgaon'],
       description: siteConfig.description,
       inLanguage: 'en-IN',
       publisher: { '@id': ORGANIZATION_ID },
+      about: { '@id': BUSINESS_ID },
       copyrightYear: new Date().getFullYear(),
       copyrightHolder: { '@id': ORGANIZATION_ID },
-    },
-    {
-      '@type': 'WebPage',
-      '@id': `${BASE_URL}/#webpage`,
-      url: absoluteUrl('/'),
-      name: defaultTitle,
-      description: defaultDescription,
-      isPartOf: { '@id': WEBSITE_ID },
-      about: { '@id': BUSINESS_ID },
-      inLanguage: 'en-IN',
-      primaryImageOfPage: { '@type': 'ImageObject', url: OG_IMAGE.url },
-      speakable: {
-        '@type': 'SpeakableSpecification',
-        cssSelector: ['h1', '.page-summary'],
-      },
     },
   ],
 };
@@ -251,8 +271,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://ik.imagekit.io" />
-        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+
       </head>
       <body className="min-h-screen bg-white text-[#2B2B2B] antialiased">
         <a
@@ -265,11 +284,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div id="main-content">{children}</div>
         <Footer />
         <WhatsAppButton />
+        <MobileBookingBar />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={jsonLdScript(schemaGraph)}
         />
+        <Analytics />
       </body>
     </html>
   );
 }
+

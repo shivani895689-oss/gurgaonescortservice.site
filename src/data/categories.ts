@@ -9,6 +9,8 @@ export interface Category {
   shortDescription: string;
   description: string;
   image: string;
+  /** Descriptive, keyword-aware alt text for the category image. */
+  imageAlt: string;
   highlights: string[];
   seoTitle?: string;
   seoDescription?: string;
@@ -28,7 +30,8 @@ export const categories: Category[] = [
     shortDescription: 'Elegant Russian companions offering a truly premium, international experience in Gurugram.',
     description:
       'Our Russian escorts in Gurgaon bring an international flair and sophistication to every encounter. Known for their elegance, charm, and refined presence, these companions are perfect for clients who seek a world-class experience in the heart of Gurugram.',
-    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/russian-escorts-in-gurgaon-premium-companion.webp',
+    imageAlt: 'Russian escorts in Gurgaon — elegant premium companion for hotel outcall bookings, available 24/7',
     highlights: ['International elegance', 'Premium companions', 'Discreet service', 'Available 24/7'],
     seoTitle: 'Russian Escorts in Gurgaon | Premium International Companions',
     seoDescription:
@@ -72,7 +75,8 @@ export const categories: Category[] = [
     shortDescription: 'Self-managed, confident companions offering personalized and authentic experiences in Gurugram.',
     description:
       'Independent escorts in Gurgaon offer a more personal, direct, and authentic companionship experience. These confident, self-managed companions bring individuality and genuine connection to every meeting in Gurugram.',
-    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/independent-escorts-gurgaon-direct-booking.webp',
+    imageAlt: 'Independent escorts in Gurgaon — verified companion with direct booking and discreet hotel visits',
     highlights: ['Genuine connection', 'Personalized experience', 'Confident companions', 'Flexible arrangements'],
     seoTitle: 'Independent Escorts in Gurgaon | Authentic Companions',
     seoDescription:
@@ -116,7 +120,8 @@ export const categories: Category[] = [
     shortDescription: 'High-profile model companions for elite clients seeking an exclusive experience in Gurgaon.',
     description:
       'Our VIP and model escorts in Gurgaon represent the pinnacle of elegance and exclusivity. These high-profile companions are ideal for elite events, luxury travel, and private arrangements where only the best will do.',
-    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/vip-model-escorts-gurgaon-luxury-companion.webp',
+    imageAlt: 'VIP and model escorts in Gurgaon — luxury companion for five-star hotels and premium events',
     highlights: ['Elite companions', 'Model profiles', 'Exclusive arrangements', 'Premium discretion'],
     seoTitle: 'VIP & Model Escorts in Gurgaon | Elite Companions',
     seoDescription:
@@ -160,7 +165,8 @@ export const categories: Category[] = [
     shortDescription: 'Youthful, energetic companions bringing freshness and fun to your time in Gurugram.',
     description:
       'Our college escorts in Gurgaon offer a youthful, vibrant energy that makes every moment enjoyable. These companions are fun, approachable, and perfect for clients looking for a fresh, lively experience in Gurugram.',
-    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/college-escorts-gurgaon-young-companion.webp',
+    imageAlt: 'College escorts in Gurgaon — young verified companion for discreet outcall appointments',
     highlights: ['Youthful energy', 'Fun & approachable', 'Fresh experience', 'Discreet meetings'],
     seoTitle: 'College Escorts in Gurgaon | Youthful Companions',
     seoDescription:
@@ -204,7 +210,8 @@ export const categories: Category[] = [
     shortDescription: 'Exclusive, high-profile companions for a truly unforgettable luxury experience.',
     description:
       'Our celebrity escort category features exclusive, high-profile companions for clients who desire the ultimate in luxury and prestige. These companions bring star quality to every occasion in Gurgaon.',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/celebrity-escorts-gurgaon-glamorous-companion.webp',
+    imageAlt: 'Celebrity escorts in Gurgaon — glamorous high-profile companion for premium social events',
     highlights: ['Star quality', 'Exclusive access', 'Luxury experience', 'Ultimate discretion'],
     seoTitle: 'Celebrity Escorts in Gurgaon | Exclusive Luxury Companions',
     seoDescription:
@@ -248,9 +255,10 @@ export const categories: Category[] = [
     shortDescription: 'Polished, well-travelled companions with impeccable etiquette for premium Gurugram occasions.',
     description:
       'Our air hostess escorts in Gurgaon bring the poise and polish of a professional travel lifestyle to every booking — ideal for business dinners, hotel evenings, and refined social occasions across Gurugram.',
-    image: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/air-hostess-escorts-gurgaon-elegant-companion.webp',
+    imageAlt: 'Air hostess escorts in Gurgaon — elegant companion for business travellers and hotel stays',
     highlights: ['Travel-lifestyle poise', 'Impeccable etiquette', 'Hotel-friendly', 'Discreet coordination'],
-    seoTitle: 'Air Hostess Escorts in Gurgaon | Elegant & Discreet Companions',
+    seoTitle: 'Air Hostess Escorts in Gurgaon | Elegant Companions',
     seoDescription:
       'Book air hostess escorts in Gurgaon for polished, discreet companionship at premium hotels and private venues. Verified companions across Gurugram, available 24/7.',
     keywords: [
@@ -298,9 +306,10 @@ export const categories: Category[] = [
     shortDescription: 'Discreet, exclusive companions for public-facing clients who need absolute privacy in Gurugram.',
     description:
       'High profile escorts in Gurgaon are selected for clients who value privacy above everything else — public-facing professionals, entrepreneurs, and visitors who need a discreet companion without any digital footprint risk.',
-    image: 'https://images.unsplash.com/photo-1502323777036-f29e3972d82f?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/high-profile-escorts-gurgaon-elite-companion.webp',
+    imageAlt: 'High profile escorts in Gurgaon — elite companion for VIP dinners and corporate events',
     highlights: ['Absolute privacy', 'Exclusive companions', 'Corporate-ready', 'Verified discretion'],
-    seoTitle: 'High Profile Escorts in Gurgaon | Private & Exclusive Companions',
+    seoTitle: 'High Profile Escorts in Gurgaon | Exclusive Companions',
     seoDescription:
       'Book high profile escorts in Gurgaon for exclusive, private companionship. Discreet coordination for senior professionals and VIP clients across Gurugram, 24/7.',
     keywords: [
@@ -348,7 +357,8 @@ export const categories: Category[] = [
     shortDescription: 'Short, flexible 1 to 3 hour companionship bookings for travellers and busy professionals in Gurugram.',
     description:
       'Our hourly escort service in Gurgaon is built for clients who want quality companionship without committing to a full evening — flexible one, two, or three hour bookings with clear timing and discreet coordination.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/hourly-escort-service-gurgaon-short-time.webp',
+    imageAlt: 'Hourly escort service in Gurgaon — short-time verified companion bookings available 24/7',
     highlights: ['1-3 hour bookings', 'Flexible timing', 'Same-day availability', 'Clear pricing'],
     seoTitle: 'Hourly Escort Service in Gurgaon | 1, 2 & 3 Hour Bookings',
     seoDescription:
@@ -398,7 +408,8 @@ export const categories: Category[] = [
     shortDescription: 'Overnight companionship with dinner, conversation, and a relaxed full-night stay in Gurugram.',
     description:
       'Our full night escort service in Gurgaon is designed for unhurried, overnight companionship — dinner, conversation, and a relaxed stay with a verified companion who understands the difference between a booking and a genuinely good evening.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/full-night-escort-service-gurgaon-overnight.webp',
+    imageAlt: 'Full night escort service in Gurgaon — overnight companion for hotel suites and private stays',
     highlights: ['Overnight companionship', 'Dinner included', 'Relaxed pace', 'Respectful boundaries'],
     seoTitle: 'Full Night Escort Service in Gurgaon | Overnight Companions',
     seoDescription:
@@ -448,7 +459,8 @@ export const categories: Category[] = [
     shortDescription: 'Girlfriend experience companions who make an evening feel personal, unhurried and genuinely warm.',
     description:
       'GFE escorts in Gurgaon are booked by clients who want more than company for an hour. The girlfriend experience is built on conversation, attention and the small courtesies of a real date, and our GFE companions are chosen for exactly that temperament.',
-    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/gfe-escorts-gurgaon-girlfriend-experience.webp',
+    imageAlt: 'GFE escorts in Gurgaon — girlfriend experience companion for warm, unhurried dates',
     highlights: ['Girlfriend experience', 'Conversation-first', 'Dinner and movie dates', 'Repeat-friendly'],
     seoTitle: 'GFE Escorts in Gurgaon | Girlfriend Experience Companions',
     seoDescription:
@@ -491,7 +503,8 @@ export const categories: Category[] = [
     shortDescription: 'Warm, confident Punjabi companions who bring easy conversation, family-style hospitality and real presence.',
     description:
       'Punjabi escorts in Gurgaon are the companions clients book when they want an evening with energy, laughter and no awkward silences. Our Punjabi companions are comfortable in a farmhouse party, a family dinner and a quiet hotel room alike.',
-    image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/punjabi-escorts-gurgaon-companion.webp',
+    imageAlt: 'Punjabi escorts in Gurgaon — friendly verified companion for dinners and private outcall',
     highlights: ['Hindi and Punjabi', 'Warm, social company', 'Farmhouse and party bookings', 'Family-function friendly'],
     seoTitle: 'Punjabi Escorts in Gurgaon | Hindi & Punjabi Companions',
     seoDescription:
@@ -534,7 +547,8 @@ export const categories: Category[] = [
     shortDescription: 'Camera-ready companions with model presence for launches, corporate galas and evenings that get photographed.',
     description:
       'Model escorts in Gurgaon are booked for the evenings where presentation matters: brand launches, hotel openings, corporate galas and private parties where the room is full of people who notice details.',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/model-escorts-gurgaon-fashion-companion.webp',
+    imageAlt: 'Model escorts in Gurgaon — fashion-forward companion for upscale hotel and event bookings',
     highlights: ['Model presence', 'Event-ready styling', 'Photography-aware', 'Corporate galas'],
     seoTitle: 'Model Escorts in Gurgaon | Event & Party Companions',
     seoDescription:
@@ -577,7 +591,8 @@ export const categories: Category[] = [
     shortDescription: 'Mature, grounded companions for clients who prefer calm conversation and unhurried company over nightlife.',
     description:
       'Housewife escorts in Gurgaon suit clients who want a companion with a settled, grounded manner - someone who is easy to talk to, comfortable at home and free of the performance that younger profiles sometimes carry.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/housewife-escorts-gurgaon-mature-companion.webp',
+    imageAlt: 'Housewife escorts in Gurgaon — mature companion for discreet private companionship',
     highlights: ['Mature company', 'Calm and grounded', 'Home and hotel visits', 'Daytime bookings'],
     seoTitle: 'Housewife Escorts in Gurgaon | Mature Companions',
     seoDescription:
@@ -616,7 +631,8 @@ export const categories: Category[] = [
   },
   {
     slug: 'nepali-escorts-gurgaon',
-    image: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/nepali-escorts-gurgaon-companion.webp',
+    imageAlt: 'Nepali escorts in Gurgaon — verified companion for hotel outcall and private residence visits',
     highlights: ['Friendly and warm', 'Hindi, Nepali and English', 'Simple, easy evenings', 'Verified profiles'],
     name: 'Nepali Escorts in Gurgaon',
     shortDescription: 'Warm, down-to-earth Nepali companions who are easy to talk to and comfortable in any Gurgaon setting.',
@@ -659,13 +675,14 @@ export const categories: Category[] = [
   },
   {
     slug: 'south-indian-escorts-gurgaon',
-    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/south-indian-escorts-gurgaon-companion.webp',
+    imageAlt: 'South Indian escorts in Gurgaon — elegant companion for premium hotel bookings',
     highlights: ['Tamil, Telugu and more', 'Calm and courteous', 'Dinner bookings', 'Verified profiles'],
     name: 'South Indian Escorts in Gurgaon',
     shortDescription: 'Graceful South Indian companions for clients who want calm conversation, classical charm and genuine warmth.',
     description:
       'South Indian escorts in Gurgaon are chosen for a composed, courteous manner and a warmth that shows in conversation rather than performance. Ideal for dinner bookings, long evenings and clients who prefer a quieter pace.',
-    seoTitle: 'South Indian Escorts in Gurgaon | Tamil, Telugu & More',
+    seoTitle: 'South Indian Escorts in Gurgaon | Tamil & Telugu',
     seoDescription:
       'Book South Indian escorts in Gurgaon - Tamil, Telugu, Kannada and Malayali companions with verified profiles, discreet outcall and 24/7 booking.',
     keywords: ['South Indian escorts Gurgaon', 'South Indian call girl Gurgaon', 'Tamil escort Gurgaon', 'Telugu companion Gurugram', 'South Indian escort service near me'],
@@ -702,7 +719,8 @@ export const categories: Category[] = [
   },
   {
     slug: 'nri-escorts-gurgaon',
-    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/nri-escorts-gurgaon-international-companion.webp',
+    imageAlt: 'NRI escorts in Gurgaon — international companion for business travellers and weekend stays',
     highlights: ['Fluent English', 'Airport and hotel savvy', 'Late-night friendly', 'International norms'],
     name: 'NRI Escorts in Gurgaon',
     shortDescription: 'English-fluent, well-travelled companions for NRI clients, returning professionals and international visitors to Gurugram.',
@@ -745,13 +763,14 @@ export const categories: Category[] = [
   },
   {
     slug: 'bhabhi-escorts-gurgaon',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/bhabhi-escorts-gurgaon-companion.webp',
+    imageAlt: 'Bhabhi escorts in Gurgaon — mature companion for discreet private companionship',
     highlights: ['Mature and homely', 'Home visit friendly', 'Daytime bookings', 'Straightforward'],
     name: 'Bhabhi Escorts in Gurgaon',
     shortDescription: 'Confident, mature companions with a homely, unhurried manner for clients who prefer real company over glamour.',
     description:
       'Bhabhi escorts in Gurgaon are chosen for maturity, warmth and a homely confidence that makes an evening feel familiar rather than formal. Ideal for clients who want conversation, comfort and no performance.',
-    seoTitle: 'Bhabhi Escorts in Gurgaon | Mature & Homely Companions',
+    seoTitle: 'Bhabhi Escorts in Gurgaon | Mature Companions',
     seoDescription:
       'Book bhabhi escorts in Gurgaon for mature, homely company - confident conversation, discreet home and hotel visits and 24/7 booking on call.',
     keywords: ['bhabhi escorts Gurgaon', 'bhabhi call girl Gurgaon', 'mature bhabhi Gurugram', 'homely escorts Gurgaon', 'bhabhi escort service near me'],

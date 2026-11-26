@@ -18,8 +18,8 @@ export default function AboutSection() {
             <div className="relative rounded-[2rem] overflow-hidden shadow-xl shadow-gray-950/10">
               <div className="aspect-[4/4.5] relative">
                 <Image
-                  src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
-                  alt="Elegant premium interior representing Gurgaon escort service experience"
+                  src="/img/about-alina-escort-service-gurgaon.webp"
+                  alt="Alina premium escort service in Gurgaon with verified companions for hotel and residence bookings"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"

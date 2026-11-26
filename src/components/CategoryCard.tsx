@@ -12,10 +12,10 @@ export default function CategoryCard({ category }: { category: Category }) {
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
           src={category.image}
-          alt={category.name}
+          alt={category.imageAlt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-linear-to-t from-[#4a4d52]/50 via-transparent to-transparent" />
         <div className="absolute bottom-4 left-4 right-4">

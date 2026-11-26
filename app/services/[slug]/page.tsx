@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { CheckCircle2, ArrowRight, Phone, MessageCircle, MapPin, ShieldCheck, Clock } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
+import ServiceDeepDive from '@/components/ServiceDeepDive';
 import { services, getServiceBySlug } from '@/data/services';
 import { categories } from '@/data/categories';
 import { siteConfig } from '@/data/siteConfig';
@@ -12,8 +13,10 @@ import {
   absoluteUrl,
   breadcrumbSchema,
   faqSchema,
+  itemListSchema,
   jsonLdScript,
   pageMetadata,
+  serviceKeywords,
   serviceSchema,
   webPageSchema,
 } from '@/lib/seo';
@@ -33,9 +36,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: service.metaTitle,
     description: service.metaDescription,
     path: '/services/' + service.slug,
-    keywords: service.relatedKeywords,
+    keywords: [...service.relatedKeywords, ...serviceKeywords(service.name)],
     image: service.image,
-    imageAlt: service.name + ' in Gurgaon',
+    imageAlt: service.imageAlt,
   });
 }
 
@@ -66,8 +69,19 @@ export default async function ServiceDetail({ params }: Props) {
       description: service.metaDescription,
       path,
       serviceType: service.name,
+      areaServed: ['Gurgaon', 'Gurugram', 'Delhi NCR'],
     }),
-    webPageSchema({ name: service.metaTitle, description: service.metaDescription, path }),
+    webPageSchema({
+      name: service.metaTitle,
+      description: service.metaDescription,
+      path,
+      pageType: 'WebPage',
+    }),
+    itemListSchema({
+      name: 'Other companion services in Gurgaon',
+      path,
+      items: otherServices.map((item) => ({ name: item.name + ' in Gurgaon', path: '/services/' + item.slug })),
+    }),
     ...(service.faqs.length ? [faqSchema(service.faqs, absoluteUrl(path) + '#faq')] : []),
   ];
 
@@ -120,7 +134,7 @@ export default async function ServiceDetail({ params }: Props) {
 
             <div className="lg:col-span-2">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-luxury mb-6">
-                <Image src={service.image} alt={service.name + ' in Gurgaon'} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
+                <Image src={service.image} alt={service.imageAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
               </div>
               <div className="card-luxury p-6">
                 <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">Key Highlights</h3>
@@ -244,6 +258,8 @@ export default async function ServiceDetail({ params }: Props) {
         </div>
       </section>
 
+      <ServiceDeepDive slug={service.slug} name={service.name} />
+
       <section id="faq" className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury max-w-4xl">
           <div className="text-center mb-12">
@@ -277,7 +293,7 @@ export default async function ServiceDetail({ params }: Props) {
             {otherServices.map((s) => (
               <Link key={s.slug} href={'/services/' + s.slug} className="card-luxury overflow-hidden group">
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image src={s.image} alt={s.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+                  <Image src={s.image} alt={s.imageAlt} fill className="object-cover object-top transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-serif text-xl font-bold text-gray-900 mb-2 group-hover:text-[#2f3338] transition-colors">{s.name}</h3>
@@ -298,3 +314,6 @@ export default async function ServiceDetail({ params }: Props) {
     </>
   );
 }
+
+
+

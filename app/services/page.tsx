@@ -5,9 +5,9 @@ import TrustBar from '@/components/home/TrustBar';
 import BookingProcess from '@/components/home/BookingProcess';
 import FaqSection from '@/components/home/FaqSection';
 import CtaSection from '@/components/home/CtaSection';
+import HubContent from '@/components/HubContent';
 import { services } from '@/data/services';
-import { siteConfig } from '@/data/siteConfig';
-import { pageMetadata } from '@/lib/seo';
+import { breadcrumbSchema, faqSchema, itemListSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Our Services | Premium Gurgaon Escort Service',
@@ -20,6 +20,19 @@ export const metadata: Metadata = pageMetadata({
     'dinner companion Gurgaon',
     'VIP escort service Gurugram',
     'travel companion Gurgaon',
+    'companion services near me gurgaon',
+    'private residence visit escorts gurgaon',
+    'event companion gurugram',
+    'airport companion service gurgaon',
+    'full night escort service gurgaon',
+    'premium companion services gurugram',
+    'escort service packages gurgaon',
+    '5 star hotel escort service gurgaon',
+    'overnight companion gurugram',
+    'corporate event companion gurgaon',
+    'weekend travel companion gurugram',
+    'hourly escort service gurgaon',
+    'luxury companion service gurugram',
   ],
   imageAlt: 'Premium companion services in Gurgaon',
 });
@@ -48,32 +61,36 @@ const serviceFaqs = [
 ];
 
 export default function ServicesPage() {
-  const itemListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Gurgaon Escort Services',
-    itemListElement: services.map((item, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: item.name,
-      url: siteConfig.url + '/services/' + item.slug,
-    })),
-  };
-
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: siteConfig.url + '/services' },
-    ],
-  };
+  const schema = [
+    webPageSchema({
+      name: 'Escort Services in Gurgaon | Hotel Outcall, Dinner & VIP',
+      description:
+        'Explore premium escort services in Gurgaon, including VIP companionship, hotel outcalls, dinner dates, travel companionship, and discreet private bookings across Gurugram.',
+      path: '/services',
+      pageType: 'CollectionPage',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Services', path: '/services' },
+    ]),
+    itemListSchema({
+      name: 'Gurgaon Escort Services',
+      path: '/services',
+      items: services.map((svc) => ({
+        name: svc.name,
+        path: `/services/${svc.slug}`,
+        description: svc.shortDescription,
+      })),
+    }),
+    faqSchema(serviceFaqs),
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <PageHero
+      {schema.map((item, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
+      ))}
+<PageHero
         eyebrow="Our Services"
         title="Premium Companion Services in Gurgaon"
         description="From luxury hotel outcalls to elegant dinner companionship, discover refined services designed around privacy, comfort, and exceptional experiences across Gurugram."
@@ -109,14 +126,18 @@ export default function ServicesPage() {
 
       <TrustBar />
       <BookingProcess />
+      <HubContent page="services" />
       <FaqSection
         faqs={serviceFaqs}
         eyebrow="Service Questions"
         title="What Clients Ask Before Booking a Service"
         description="Practical answers about formats, hotel visits, pricing and coverage outside Gurugram."
         id="faq"
+        includeSchema={false}
       />
       <CtaSection />
     </>
   );
 }
+
+

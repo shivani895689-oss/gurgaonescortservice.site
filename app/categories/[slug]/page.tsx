@@ -18,13 +18,17 @@ import {
   RateGuideBlock,
 } from '@/components/content/SeoContentBlocks';
 import { EtiquetteBlock, ExtraFaqBlock, TimingBlock } from '@/components/content/SeoContentExtra';
+import { extraFaqs } from '@/lib/contentFaqs';
 import { siteConfig } from '@/data/siteConfig';
 import {
   absoluteUrl,
   breadcrumbSchema,
+  categoryKeywords,
   faqSchema,
   jsonLdScript,
   pageMetadata,
+  itemListSchema,
+  offerCatalogSchema,
   serviceSchema,
   webPageSchema,
 } from '@/lib/seo';
@@ -44,9 +48,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: category.seoTitle ?? category.name + ' | ' + siteConfig.name,
     description: category.seoDescription ?? category.shortDescription,
     path: '/categories/' + category.slug,
-    keywords: category.keywords,
+    keywords: [...(category.keywords ?? []), ...categoryKeywords(category.name)],
     image: category.image,
-    imageAlt: category.name + ' in Gurgaon',
+    imageAlt: category.imageAlt,
   });
 }
 
@@ -84,6 +88,8 @@ export default async function CategoryDetail({ params }: Props) {
   const idealFor = category.idealFor ?? ['Premium hotel meetings in Gurgaon', 'Private companionship across Gurugram', 'Discreet bookings with verified companions'];
   const localAreas = category.localAreas ?? ['DLF Phase 1-5', 'Golf Course Road', 'Cyber City', 'MG Road', 'Sohna Road', 'Golf Course Extension Road'];
   const faqs = category.faqs ?? [];
+  // The extra FAQ block below also renders, so its questions belong in the schema too.
+  const schemaFaqs = [...faqs, ...extraFaqs(category.name.replace(' in Gurgaon', ''), category.name.toLowerCase())];
 
   const description = category.seoDescription ?? category.shortDescription;
   const quickAnswer =
@@ -105,9 +111,34 @@ export default async function CategoryDetail({ params }: Props) {
       description,
       path,
       serviceType: 'Escort and companion service',
+      areaServed: ['Gurgaon', 'Gurugram', 'Delhi NCR'],
     }),
-    webPageSchema({ name: category.seoTitle ?? category.name, description, path }),
-    ...(faqs.length ? [faqSchema(faqs, absoluteUrl(path) + '#faq')] : []),
+    webPageSchema({
+      name: category.seoTitle ?? category.name,
+      description,
+      path,
+      pageType: 'CollectionPage',
+    }),
+    itemListSchema({
+      name: 'Verified ' + category.name + ' profiles',
+      path,
+      items: profiles.slice(0, 8).map((p) => ({
+        name: p.name + ' - ' + p.categoryLabel + ' companion in Gurgaon',
+        path: profilePath(p),
+        description: p.tagline,
+      })),
+    }),
+    offerCatalogSchema({
+      name: category.name + ' rates in Gurgaon',
+      path,
+      items: [
+        { name: 'One hour ' + category.name + ' booking', price: categoryRate },
+        { name: 'Two hour ' + category.name + ' booking', price: Math.round(categoryRate * 1.8) },
+        { name: 'Three hour ' + category.name + ' booking', price: Math.round(categoryRate * 2.5) },
+        { name: 'Full night ' + category.name + ' booking', price: Math.round(categoryRate * 6) },
+      ],
+    }),
+    faqSchema(schemaFaqs, absoluteUrl(path) + '#faq'),
   ];
 
   return (
@@ -159,7 +190,7 @@ export default async function CategoryDetail({ params }: Props) {
 
             <div className="lg:col-span-2">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-luxury mb-6">
-                <Image src={category.image} alt={category.name + ' in Gurgaon'} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
+                <Image src={category.image} alt={category.imageAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
               </div>
               <div className="card-luxury p-6">
                 <h3 className="font-serif text-xl font-bold text-gray-900 mb-4">Category Highlights</h3>
@@ -368,7 +399,7 @@ export default async function CategoryDetail({ params }: Props) {
             {otherCategories.map((c) => (
               <Link key={c.slug} href={'/categories/' + c.slug} className="card-luxury overflow-hidden group">
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image src={c.image} alt={c.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+                  <Image src={c.image} alt={c.imageAlt} fill className="object-cover object-top transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-serif text-xl font-bold text-gray-900 mb-2 group-hover:text-[#2f3338] transition-colors">{c.name}</h3>
@@ -389,3 +420,6 @@ export default async function CategoryDetail({ params }: Props) {
     </>
   );
 }
+
+
+

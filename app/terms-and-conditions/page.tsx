@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
+import { termsExtras } from '@/data/legalExtras';
 import { siteConfig } from '@/data/siteConfig';
-import { breadcrumbSchema, jsonLdScript, pageMetadata } from '@/lib/seo';
+import { breadcrumbSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: "Terms & Conditions | Booking Rules & Conduct",
   description:
     "The terms for using this website and contacting Gurgaon Escort Service: eligibility, booking communication, payments, cancellations and acceptable conduct.",
   path: "/terms-and-conditions",
-  keywords: ["Gurgaon escort terms","escort booking terms Gurugram"],
+  keywords: ["Gurgaon escort terms and conditions","escort booking terms gurgaon","escort service rules gurugram","booking policy escort gurgaon","cancellation policy escort service","escort service payment terms gurgaon","gurgaon escort service conditions","companion booking terms gurugram","escort booking cancellation gurugram","escort service refund policy gurgaon","escort service agreement gurgaon","client responsibilities escort gurugram"],
 });
 
 const sections = [
@@ -55,10 +56,17 @@ export default function Page() {
     { name: 'Home', path: '/' },
     { name: "Terms & Conditions", path: "/terms-and-conditions" },
   ]);
+  const pageSchema = webPageSchema({
+    name: "Terms and Conditions",
+    description: "The terms that apply when you book a companion through Gurgaon Escort Service, including booking, payment, conduct and cancellation rules.",
+    path: "/terms-and-conditions",
+    pageType: 'WebPage',
+  });
+
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumb)} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript([breadcrumb, pageSchema])} />
       <PageHero
         eyebrow="Legal"
         title="Terms & Conditions"
@@ -67,7 +75,7 @@ export default function Page() {
       <section className="section-padding bg-white">
         <div className="container-luxury max-w-4xl">
           <div className="space-y-10">
-            {sections.map((section) => (
+            {[...sections, ...termsExtras].map((section) => (
               <div key={section.title}>
                 <h2 className="font-serif text-2xl font-bold text-[#4a4d52] mb-4">{section.title}</h2>
                 <div className="space-y-3 text-gray-600 leading-relaxed">
@@ -88,3 +96,4 @@ export default function Page() {
     </>
   );
 }
+

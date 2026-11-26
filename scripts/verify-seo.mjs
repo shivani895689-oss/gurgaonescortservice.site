@@ -95,7 +95,7 @@ for (const href of linked) {
 if (brokenLinks === 0) console.log('  ok   every internal link on the sampled pages resolves');
 
 console.log('\nLegacy redirects:');
-for (const path of ['/blog', '/rates', '/escorts', '/gallery', '/escort-service-gurgaon', '/category/vip-call-girls']) {
+for (const path of ['/rates', '/escorts', '/gallery', '/escort-service-gurgaon', '/category/vip-call-girls']) {
   const res = await get(path);
   const ok = res.status === 301 || res.status === 308;
   console.log((ok ? '  ok   ' : '  FAIL ') + path + ' -> ' + res.status + ' ' + (res.headers.get('location') || ''));

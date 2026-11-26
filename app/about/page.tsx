@@ -5,15 +5,33 @@ import AboutSection from '@/components/home/AboutSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import TrustBar from '@/components/home/TrustBar';
 import CtaSection from '@/components/home/CtaSection';
-import { siteConfig } from '@/data/siteConfig';
-import { pageMetadata } from '@/lib/seo';
+import HubContent from '@/components/HubContent';
+import { breadcrumbSchema, jsonLdScript, pageMetadata, serviceSchema, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'About Us | Premium Gurgaon Escort Service',
   description:
     'Learn about Gurgaon Escort Service by Alina: verified profiles, privacy-first coordination and 24/7 discreet companionship across Gurugram and Delhi NCR.',
   path: '/about',
-  keywords: ['about Gurgaon escort service', 'verified escorts Gurgaon', 'trusted escort agency Gurugram'],
+  keywords: [
+    'about Gurgaon escort service',
+    'about Alina companions Gurugram',
+    'verified escorts Gurgaon',
+    'trusted escort agency Gurgaon',
+    'escort service company Gurugram',
+    'who we are gurgaon escorts',
+    'premium companion agency gurgaon',
+    '24/7 escort service gurgaon',
+    'escort service since 2019 gurgaon',
+    'discreet escort agency gurugram',
+    'gurgaon escorts reviews',
+    'why choose gurgaon escort service',
+    'verified companion profiles gurugram',
+    'privacy first escort booking gurgaon',
+    'professional escort agency gurugram',
+    'experienced escorts in gurgaon',
+    'best companion agency gurugram',
+  ],
   imageAlt: 'About Gurgaon Escort Service by Alina',
 });
 
@@ -41,29 +59,32 @@ const values = [
 ];
 
 export default function AboutPage() {
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
-      { '@type': 'ListItem', position: 2, name: 'About Us', item: `${siteConfig.url}/about` },
-    ],
-  };
-
-  const aboutSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'AboutPage',
-    name: 'About Gurgaon Escort Service',
-    description: 'About Gurgaon Escort Service by Alina, a premium and discreet companion service in Gurugram.',
-    url: `${siteConfig.url}/about`,
-    isPartOf: { '@type': 'WebSite', name: siteConfig.name, url: siteConfig.url },
-    about: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url, telephone: siteConfig.phone },
-  };
+  const schema = [
+    webPageSchema({
+      name: 'About Us | Premium Gurgaon Escort Service by Alina',
+      description:
+        'Learn about Gurgaon Escort Service by Alina - a premium, discreet companion agency in Gurugram focused on verified profiles, respectful coordination and 24/7 availability.',
+      path: '/about',
+      pageType: 'AboutPage',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'About Us', path: '/about' },
+    ]),
+    serviceSchema({
+      name: 'Gurgaon Escort Service by Alina',
+      description:
+        'Premium companion agency in Gurugram offering verified companions, discreet booking, and 24/7 availability for hotels and private residences.',
+      path: '/about',
+      areaServed: ['Gurgaon', 'Gurugram', 'Delhi NCR'],
+    }),
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }} />
+      {schema.map((item, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
+      ))}
       <PageHero
         eyebrow="About Us"
         title="A Premium Companion Experience Built on Trust"
@@ -102,7 +123,10 @@ export default function AboutPage() {
 
       <TrustBar />
       <WhyChooseUs />
+      <HubContent page="about" />
       <CtaSection />
     </>
   );
 }
+
+

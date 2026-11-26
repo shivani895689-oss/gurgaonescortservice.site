@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { MapPin, ArrowRight } from 'lucide-react';
-import { locations } from '@/data/locations';
+import { locations, locationPath } from '@/data/locations';
 
 export default function AreasSection() {
   return (
@@ -24,7 +24,7 @@ export default function AreasSection() {
           {locations.map((location) => (
             <Link
               key={location.slug}
-              href={`/locations/${location.slug}`}
+              href={locationPath(location)}
               className="group bg-white border border-gray-200/50 rounded-2xl p-6 hover:shadow-lg hover:shadow-gray-900/5 hover:-translate-y-1 transition-all duration-300"
             >
               <div className="flex items-start gap-3">

@@ -2,14 +2,31 @@ import type { Metadata } from 'next';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Shield, CheckCircle2 } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import { siteConfig } from '@/data/siteConfig';
-import { pageMetadata } from '@/lib/seo';
+import { breadcrumbSchema, contactPageSchema, jsonLdScript, pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Contact Us | Book Gurgaon Escort Service',
   description:
     'Call or WhatsApp +91 99962 65679 for discreet booking coordination in Gurugram. Check availability, verified companions and 24/7 private support.',
   path: '/contact',
-  keywords: ['contact Gurgaon escort service', 'Gurgaon escort number', 'book escorts Gurgaon'],
+  keywords: [
+    'contact Gurgaon escort service',
+    'Gurgaon escort number',
+    'book escorts Gurgaon',
+    'escort service contact number gurugram',
+    'gurgaon call girl number',
+    'whatsapp escort booking gurgaon',
+    '24/7 escort contact gurgaon',
+    'escort service phone number gurugram',
+    'gurgaon escort whatsapp number',
+    'booking enquiry escort gurgaon',
+    'escort service near me contact',
+    'gurgaon escort customer care',
+    'escort booking helpline gurugram',
+    'gurgaon escort service phone number',
+    'same day escort booking gurgaon',
+    'discreet escort enquiry gurugram',
+  ],
   imageAlt: 'Contact Gurgaon Escort Service',
 });
 
@@ -53,36 +70,25 @@ const bookingTips = [
 ];
 
 export default function ContactPage() {
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
-      { '@type': 'ListItem', position: 2, name: 'Contact', item: `${siteConfig.url}/contact` },
-    ],
-  };
-
-  const contactSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
-    name: 'Contact Gurgaon Escort Service',
-    description: 'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram.',
-    url: `${siteConfig.url}/contact`,
-    mainEntity: {
-      '@type': 'LocalBusiness',
-      name: siteConfig.name,
-      telephone: siteConfig.phone,
-      email: siteConfig.email,
-      areaServed: 'Gurgaon, Haryana, India',
-      url: siteConfig.url,
-    },
-  };
+  const schema = [
+    contactPageSchema({
+      title: 'Contact Gurgaon Escort Service | 24/7 Booking & Enquiries',
+      description:
+        'Contact Gurgaon Escort Service by Alina for verified companions, hotel bookings and discreet inquiries across Gurugram. Call or WhatsApp +91 99962 65679 any time, 24/7.',
+      path: '/contact',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Contact', path: '/contact' },
+    ]),
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }} />
-      <PageHero
+      {schema.map((item, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
+      ))}
+<PageHero
         eyebrow="Contact Us"
         title="Get in Touch Discreetly"
         description="We're available 24/7 for discreet inquiries, availability checks, and premium companion booking coordination across Gurgaon and Gurugram."
@@ -175,3 +181,5 @@ export default function ContactPage() {
     </>
   );
 }
+
+

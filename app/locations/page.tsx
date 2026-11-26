@@ -5,11 +5,11 @@ import LocationCard from '@/components/LocationCard';
 import TrustBar from '@/components/home/TrustBar';
 import FaqSection from '@/components/home/FaqSection';
 import CtaSection from '@/components/home/CtaSection';
+import HubContent from '@/components/HubContent';
 import { ArrowRight } from 'lucide-react';
 import { locations } from '@/data/locations';
 import { landingPages } from '@/data/landingPages';
-import { siteConfig } from '@/data/siteConfig';
-import { pageMetadata } from '@/lib/seo';
+import { breadcrumbSchema, faqSchema, itemListSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Service Areas in Gurgaon | All Sectors & Neighbourhoods',
@@ -21,6 +21,20 @@ export const metadata: Metadata = pageMetadata({
     'escorts near me Gurugram',
     'sector wise escort service Gurgaon',
     'Gurgaon escort service DLF Cyber City',
+    'escort service golf course road',
+    'mg road gurgaon escorts',
+    'sohna road escort service',
+    'escorts in new gurgaon',
+    'dwarka expressway escorts',
+    'manesar escort service',
+    'escort service palam vihar',
+    'escort service sushant lok',
+    'escort service golf course extension road',
+    'udyog vihar escorts',
+    'sector 29 gurgaon escorts',
+    'escort service near me gurgaon',
+    'hotel outcall escorts by location gurugram',
+    'escort service dlf phase 1 2 3 4 5',
   ],
   imageAlt: 'Gurgaon escort service areas',
 });
@@ -48,49 +62,64 @@ const locationFaqs = [
   },
 ];
 
+const sectorNumber = (slug: string): number | null => {
+  const match = slug.match(/sector-(\d+)/);
+  return match ? Number(match[1]) : null;
+};
+
+const sectorBands = [
+  { label: 'Sectors 14 to 33 \u00b7 Old Gurgaon and the MG Road side', min: 1, max: 33 },
+  { label: 'Sectors 36 to 42 \u00b7 Central Gurgaon', min: 34, max: 42 },
+  { label: 'Sectors 43 to 56 \u00b7 Golf Course Road and Sushant Lok', min: 43, max: 56 },
+  { label: 'Sectors 57 to 75 \u00b7 New Gurgaon and Sohna Road', min: 57, max: 75 },
+  { label: 'Sectors 76 to 105 \u00b7 Dwarka Expressway and Southern Peripheral Road', min: 76, max: 105 },
+];
+
+const locationGroups = [
+  {
+    label: 'Neighbourhoods and corridors',
+    pages: landingPages.filter((page) => sectorNumber(page.slug) === null),
+  },
+  ...sectorBands.map((band) => ({
+    label: band.label,
+    pages: landingPages.filter((page) => {
+      const sector = sectorNumber(page.slug);
+      return sector !== null && sector >= band.min && sector <= band.max;
+    }),
+  })),
+].filter((group) => group.pages.length > 0);
+
 export default function LocationsPage() {
-  const itemListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Gurgaon Escort Service Locations',
-    itemListElement: locations.map((item, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: item.name,
-      url: siteConfig.url + '/locations/' + item.slug,
-    })),
-  };
-
-  const locationPages = landingPages.filter((p) => p.type === 'location');
-
-  const areaListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Gurgaon area pages',
-    numberOfItems: locationPages.length,
-    itemListElement: locationPages.map((page, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: page.locationName || page.title,
-      url: siteConfig.url + '/' + page.slug,
-    })),
-  };
-
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
-      { '@type': 'ListItem', position: 2, name: 'Locations', item: siteConfig.url + '/locations' },
-    ],
-  };
+  const schema = [
+    webPageSchema({
+      name: 'Escorts in Gurgaon | All Service Areas & Neighbourhoods',
+      description:
+        'Browse verified escort service availability across Gurgaon, from DLF and Cyber City to Golf Course Road, MG Road, and nearby areas in Gurugram.',
+      path: '/locations',
+      pageType: 'CollectionPage',
+    }),
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Locations', path: '/locations' },
+    ]),
+    itemListSchema({
+      name: 'Gurgaon Escort Service Locations',
+      path: '/locations',
+      items: locations.map((loc) => ({
+        name: loc.name,
+        path: '/' + loc.path,
+        description: loc.shortDescription || `Escort service in ${loc.name}, Gurgaon`,
+      })),
+    }),
+    faqSchema(locationFaqs),
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(areaListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <PageHero
+      {schema.map((item, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
+      ))}
+<PageHero
         eyebrow="Service Areas"
         title="Premium Coverage Across Gurgaon"
         description="We provide discreet, premium companion services across all major areas of Gurgaon and Gurugram. Find your location below for fast, reliable coordination."
@@ -101,7 +130,7 @@ export default function LocationsPage() {
         <div className="container-luxury py-5">
           <p className="page-summary max-w-4xl text-sm leading-relaxed text-gray-700">
             <span className="font-semibold text-[#2f3338]">Quick answer: </span>
-            We cover {locationPages.length} areas across Gurgaon and Gurugram - DLF Phase 1 to 5, Cyber City, Udyog
+            We cover {landingPages.length} areas across Gurgaon and Gurugram - DLF Phase 1 to 5, Cyber City, Udyog
             Vihar, Golf Course Road, MG Road, Sohna Road, New Gurgaon, Dwarka Expressway and Manesar - with discreet
             hotel, serviced apartment and residence visits, seven days a week.
           </p>
@@ -135,16 +164,33 @@ export default function LocationsPage() {
               Browse our detailed area pages for specific sectors, neighborhoods, and local coverage across Gurugram. Select your area for fast, discreet, and premium companion service.
             </p>
           </div>
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {locationPages.map((p) => (
-              <li key={p.slug}>
-                <Link href={'/' + p.slug} className="group flex items-center justify-between bg-white rounded-xl px-5 py-4 border border-gray-200/60 hover:border-[#2f3338]/20 hover:shadow-sm transition-all">
-                  <span className="text-sm font-medium text-gray-700 group-hover:text-[#2f3338] transition-colors">{p.locationName || p.title}</span>
-                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#2f3338] transition-colors shrink-0" />
-                </Link>
-              </li>
+          <div className="space-y-10">
+            {locationGroups.map((group) => (
+              <div key={group.label}>
+                <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="font-serif text-xl font-bold text-[#2f3338]">{group.label}</h3>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+                    {group.pages.length} {group.pages.length === 1 ? 'area' : 'areas'}
+                  </p>
+                </div>
+                <ul className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {group.pages.map((p) => (
+                    <li key={p.slug}>
+                      <Link
+                        href={'/' + p.slug}
+                        className="group flex items-center justify-between gap-3 rounded-xl border border-[#eee9e4] bg-white px-5 py-4 transition-colors hover:border-[#2f3338]/30 hover:bg-[#faf7f4]"
+                      >
+                        <span className="text-sm font-medium text-gray-700 group-hover:text-[#2f3338] transition-colors">
+                          {p.locationName}
+                        </span>
+                        <ArrowRight className="w-4 h-4 shrink-0 text-gray-300 group-hover:text-[#2f3338] transition-colors" aria-hidden="true" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 
@@ -155,8 +201,12 @@ export default function LocationsPage() {
         title="Service Area Questions, Answered"
         description="How coverage, response time and hotel or residence visits work across Gurgaon."
         id="faq"
+        includeSchema={false}
       />
+      <HubContent page="locations" />
       <CtaSection />
     </>
   );
 }
+
+

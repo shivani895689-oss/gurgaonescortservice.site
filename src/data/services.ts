@@ -4,6 +4,8 @@ export interface Service {
   shortDescription: string;
   description: string;
   image: string;
+  /** Descriptive, keyword-aware alt text for the service image. */
+  imageAlt: string;
   features: string[];
   metaTitle: string;
   metaDescription: string;
@@ -24,7 +26,8 @@ export const services: Service[] = [
     shortDescription: 'Discreet and timely companion arrivals at premium hotels across Gurugram.',
     description:
       'Our luxury hotel outcall service is designed for clients staying at 5-star hotels and premium properties in Gurgaon. We ensure punctual, discreet arrivals with professional coordination so your experience is seamless from booking to meeting.',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/luxury-hotel-outcall-escort-gurgaon-five-star.webp',
+    imageAlt: 'Luxury hotel outcall in Gurgaon — companion ready for a discreet five-star hotel visit, 24/7',
     features: ['5-star hotel coverage', 'Discreet arrival', 'Fast coordination', '24/7 availability'],
     metaTitle: 'Luxury Hotel Outcall in Gurgaon | Premium Escort Service | Alina',
     metaDescription:
@@ -78,7 +81,8 @@ export const services: Service[] = [
     shortDescription: 'A graceful companion for dinners, lounges, and social evenings in Gurgaon.',
     description:
       'Whether it is a business dinner, a rooftop lounge evening, or a social event in Gurugram, our dinner and social companions bring elegance, conversation, and warmth to every occasion.',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/dinner-date-companion-gurgaon-restaurant.webp',
+    imageAlt: 'Dinner and social companion in Gurgaon — elegant date for restaurants, events and parties',
     features: ['Business dinners', 'Social events', 'Rooftop lounges', 'Elegant presence'],
     metaTitle: 'Dinner & Social Companion in Gurgaon | Elegant Escort Service | Alina',
     metaDescription:
@@ -132,7 +136,8 @@ export const services: Service[] = [
     shortDescription: 'Trusted, discreet companionship at your residence in premium Gurgaon locations.',
     description:
       'For clients who prefer the comfort of their own space, our private residence visit service offers discreet, professional companion arrangements across premium residential areas of Gurgaon.',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/private-residence-escort-visit-gurgaon.webp',
+    imageAlt: 'Private residence visit in Gurgaon — discreet companion at your home or serviced apartment',
     features: ['Residential coverage', 'Complete discretion', 'Verified companions', 'Flexible timing'],
     metaTitle: 'Private Residence Visit in Gurgaon | Discreet Escort Service | Alina',
     metaDescription:
@@ -186,7 +191,8 @@ export const services: Service[] = [
     shortDescription: 'Sophisticated companions for short trips, weekend getaways, and business travel.',
     description:
       'Make your travels more enjoyable with a sophisticated travel companion. Ideal for weekend getaways, business trips, and leisure travel from Gurgaon to nearby destinations.',
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/travel-weekend-companion-gurgaon-trip.webp',
+    imageAlt: 'Travel and weekend companion in Gurgaon — verified escort for trips and weekend getaways',
     features: ['Weekend getaways', 'Business travel', 'Flexible plans', 'Sophisticated company'],
     metaTitle: 'Travel & Weekend Companion in Gurgaon | Escort Service | Alina',
     metaDescription:
@@ -239,7 +245,8 @@ export const services: Service[] = [
     shortDescription: 'Bespoke companion arrangements designed around your expectations.',
     description:
       'For clients who expect the very best, our VIP personalized experience offers bespoke companion arrangements. Every detail — timing, location, preferences — is handled with care to deliver a truly premium Gurgaon escort service.',
-    image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1200&q=80',
+    image: '/img/vip-escort-experience-gurgaon-luxury.webp',
+    imageAlt: 'VIP escort experience in Gurgaon — premium personalised companion with luxury arrangements',
     features: ['Bespoke arrangements', 'Priority coordination', 'Premium companions', 'White-glove discretion'],
     metaTitle: 'VIP Personalized Escort Experience in Gurgaon | Alina',
     metaDescription:

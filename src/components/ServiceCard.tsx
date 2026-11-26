@@ -12,10 +12,10 @@ export default function ServiceCard({ service }: { service: Service }) {
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={service.image}
-          alt={service.name}
+          alt={service.imageAlt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-linear-to-t from-[#4a4d52]/35 to-transparent" />
       </div>

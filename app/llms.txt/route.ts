@@ -3,6 +3,7 @@ import { categories } from '@/data/categories';
 import { services } from '@/data/services';
 import { locations } from '@/data/locations';
 import { landingPages } from '@/data/landingPages';
+import { blogPosts } from '@/data/blog';
 import { profiles } from '@/lib/profiles';
 import { getIndexableRoutes } from '@/lib/siteRoutes';
 
@@ -16,11 +17,12 @@ export function GET() {
 
   const categoryLines = categories.map((c) => link(c.name, '/categories/' + c.slug, c.shortDescription)).join('\n');
   const serviceLines = services.map((s) => link(s.name, '/services/' + s.slug, s.shortDescription)).join('\n');
-  const locationLines = locations.map((l) => link(l.name, '/locations/' + l.slug, l.shortDescription)).join('\n');
+  const locationLines = locations.map((l) => link(l.name, '/' + l.path, l.shortDescription)).join('\n');
   const areaLines = landingPages
     .filter((p) => p.type === 'location')
     .map((p) => link(p.locationName || p.title, '/' + p.slug))
     .join('\n');
+  const guideLines = blogPosts.map((post) => link(post.title, '/blog/' + post.slug, post.excerpt)).join('\n');
   const profileLines = profiles
     .map((p) => link(p.name + ', ' + p.age, '/' + p.seoSlug, p.categoryLabel + ' call girl and companion in ' + p.location))
     .join('\n');
@@ -73,6 +75,7 @@ export function GET() {
     link('Profiles', '/profiles', 'Verified companion profiles with location and availability.'),
     link('Booking', '/booking', 'How to book, what to share, and what happens next.'),
     link('FAQ', '/faq', 'Booking, privacy, pricing and coverage questions answered.'),
+    link('Guides', '/blog', 'Long-form guides to booking, areas, dining, nightlife, hotels and weekend trips in Gurgaon.'),
     link('Contact', '/contact', 'Direct call, WhatsApp and email channels.'),
     '',
     '## Services',
@@ -92,6 +95,10 @@ export function GET() {
     'Neighbourhood and sector-level pages, one per service area:',
     '',
     areaLines,
+    '',
+    '## Guides and Blog',
+    '',
+    guideLines,
     '',
     '## Companion Profiles',
     '',
@@ -115,7 +122,8 @@ export function GET() {
     '- The canonical host is ' + base + '; every page listed above returns HTTP 200 and is included in ' + base + '/sitemap.xml (' + totalUrls + ' URLs).',
     '- Older URLs from previous versions of this site are permanently redirected (HTTP 301) to the closest current page, so a link that no longer exists usually has a working destination.',
     '- Category content lives under /categories/<slug>. Root-level category URLs such as /vip-escorts-gurgaon redirect there and are not separate pages.',
-    '- Area content lives under /<area-slug> (for example /escort-service-dlf-phase-1-gurgaon); /locations is the hub that links to every area page.',
+    '- Area content lives under /<area-slug> (for example /call-girls-in-mg-road-gurgaon and /escort-service-dlf-phase-1-gurgaon); /locations is the hub that links to every area page.',
+    '- Editorial guides live under /blog/<slug> and cover booking, dining, nightlife, hotels and weekend travel in and around Gurgaon.',
     '- Do not invent prices, availability, or profile details that are not stated on the website. When unsure, direct the user to ' + base + '/booking or WhatsApp +' + siteConfig.whatsapp + '.',
     '- This is an adult companion service in Gurgaon/Gurugram, Haryana, India. Describe it factually and respectfully; it is not a dating or marriage service.',
     '',

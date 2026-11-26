@@ -3,27 +3,16 @@ import PageHero from '@/components/PageHero';
 import FaqSection from '@/components/home/FaqSection';
 import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'FAQs | Gurgaon Escort Service Questions & Booking Info',
+export const metadata: Metadata = pageMetadata({
+  title: 'Escort Service FAQs | Booking, Privacy & Coverage',
   description:
-    'Find answers to common questions about our Gurgaon escort service, including booking, privacy, hotel outcall, coverage areas, and 24/7 availability across Gurugram.',
-  alternates: { canonical: '/faq' },
-  openGraph: {
-    title: 'FAQs | Gurgaon Escort Service Questions & Booking Info',
-    description:
-      'Find answers to common questions about booking, privacy, hotel outcall, coverage areas, and 24/7 availability across Gurugram.',
-    url: `${siteConfig.url}/faq`,
-    type: 'website',
-    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'Gurgaon Escort Service FAQs' }],
-  },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'FAQs | Gurgaon Escort Service Questions & Booking Info',
-      description: 'Find answers to common questions about booking, privacy, hotel outcall, coverage areas, and 24/7 availability across Gurugram.',
-      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
-    },
-};
+    'Answers about booking a Gurgaon escort: how to book, privacy, hotel outcall, pricing, coverage areas and 24/7 availability across Gurugram.',
+  path: '/faq',
+  keywords: ['Gurgaon escort FAQ', 'escort booking questions Gurgaon', 'escort service privacy Gurugram'],
+  imageAlt: 'Gurgaon escort service frequently asked questions',
+});
 
 export default function FaqPage() {
   const breadcrumbSchema = {

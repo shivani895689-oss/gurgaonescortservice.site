@@ -11,9 +11,9 @@ import { pageMetadata } from '@/lib/seo';
 const baseUrl = siteConfig.url.replace(/\/+$/, '');
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Escort Categories in Gurgaon | Best VIP, Independent, Russian & GFE Companions Near You',
+  title: 'Escort Categories in Gurgaon | VIP, Russian, GFE & More',
   description:
-    'Explore the best escort categories in Gurgaon including VIP, Independent, Russian, Model, College, Air Hostess, High Profile, Celebrity, GFE & Party companions. Discreet 24/7 booking across Gurugram.',
+    'Explore VIP, independent, Russian, model, air hostess, GFE and party escort categories in Gurgaon. Verified companions with discreet 24/7 booking across Gurugram.',
   path: '/categories',
   keywords: [
     'escort categories in Gurgaon',

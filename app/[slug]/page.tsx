@@ -70,12 +70,35 @@ export default async function LandingPage({ params }: PageProps) {
     page.metaDescription.split('. ')[0] + '.';
 
   const faqs = rich?.faqs?.length ? rich.faqs : [];
-  const nearbyAreas = rich?.nearbyAreas?.length
-    ? rich.nearbyAreas
-    : landingPages
-        .filter((candidate) => candidate.slug !== page.slug)
-        .slice(0, 6)
-        .map((candidate) => ({ name: candidate.locationName || candidate.title, slug: candidate.slug }));
+
+  // Only link to areas that actually have a landing page, otherwise we ship
+  // internal links that 404 and the ItemList schema points at dead URLs.
+  const landingSlugSet = new Set(landingPages.map((candidate) => candidate.slug));
+  const sectorOf = (value: string) => {
+    const match = value.match(/sector\s*(\d+)/i);
+    return match ? Number(match[1]) : null;
+  };
+  const ownSector = sectorOf(locationName);
+  // Closest sectors (or closest name share) make far better "nearby" picks than
+  // whatever happens to sit next in the data array.
+  const relatedScore = (candidate: (typeof landingPages)[number]) => {
+    const name = candidate.locationName || candidate.title;
+    const sector = sectorOf(name);
+    if (ownSector !== null && sector !== null) return Math.abs(ownSector - sector);
+    const shared = name.split(/\s+/).filter((word) => word.length > 3 && locationName.includes(word));
+    return 100 - shared.length * 10;
+  };
+  const fallbackAreas = [...landingPages]
+    .filter((candidate) => candidate.slug !== page.slug)
+    .sort((a, b) => relatedScore(a) - relatedScore(b))
+    .map((candidate) => ({ name: candidate.locationName || candidate.title, slug: candidate.slug }));
+  const nearbyAreas = (rich?.nearbyAreas?.length ? rich.nearbyAreas : fallbackAreas)
+    .filter((area) => area.slug !== page.slug && landingSlugSet.has(area.slug));
+  for (const area of fallbackAreas) {
+    if (nearbyAreas.length >= 6) break;
+    if (!nearbyAreas.some((existing) => existing.slug === area.slug)) nearbyAreas.push(area);
+  }
+  const finalNearbyAreas = nearbyAreas.slice(0, 6);
 
   const schema = [
     breadcrumbSchema(breadcrumbs),
@@ -94,7 +117,7 @@ export default async function LandingPage({ params }: PageProps) {
     itemListSchema({
       name: 'Companion service areas near ' + locationName + ', Gurugram',
       path,
-      items: nearbyAreas.map((area) => ({ name: area.name + ' escorts', path: '/' + area.slug })),
+      items: finalNearbyAreas.map((area) => ({ name: area.name + ' escorts', path: '/' + area.slug })),
     }),
     ...(faqs.length ? [faqSchema(faqs, absoluteUrl(path) + '#faq')] : []),
   ];
@@ -245,7 +268,7 @@ export default async function LandingPage({ params }: PageProps) {
           <div className="mt-14 border-t border-gray-200 pt-10">
             <h2 className="font-serif text-2xl font-bold text-[#2f3338]">Areas we cover near {locationName}</h2>
             <ul className="mt-5 flex flex-wrap gap-2">
-              {nearbyAreas.map((area) => (
+              {finalNearbyAreas.map((area) => (
                 <li key={area.slug}>
                   <Link href={'/' + area.slug} className="inline-flex rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-600 transition-colors hover:border-[#2f3338]/30 hover:text-[#2f3338]">
                     {area.name}

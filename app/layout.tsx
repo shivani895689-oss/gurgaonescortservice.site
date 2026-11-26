@@ -154,7 +154,6 @@ const schemaGraph = {
           '@type': 'ContactPoint',
           telephone: siteConfig.phone,
           contactType: 'reservations',
-          contactOption: 'TollFree',
           areaServed: 'IN',
           availableLanguage: ['English', 'Hindi'],
         },

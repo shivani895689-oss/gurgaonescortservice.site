@@ -2,19 +2,15 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
+import { breadcrumbSchema, jsonLdScript, pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Terms & Conditions | Gurgaon Escort Service',
-  description: 'Review the terms and conditions for using the Gurgaon Escort Service website and contacting our team for companionship coordination in Gurugram.',
-  alternates: { canonical: '/terms-and-conditions' },
-  openGraph: {
-    title: 'Terms & Conditions | Gurgaon Escort Service',
-    description: 'Review the terms and conditions for using the Gurgaon Escort Service website and contacting our team for companionship coordination in Gurugram.',
-    url: `${siteConfig.url}/terms-and-conditions`,
-    type: 'website',
-  },
-  robots: { index: true, follow: true },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Terms & Conditions | Booking Rules & Conduct",
+  description:
+    "The terms for using this website and contacting Gurgaon Escort Service: eligibility, booking communication, payments, cancellations and acceptable conduct.",
+  path: "/terms-and-conditions",
+  keywords: ["Gurgaon escort terms","escort booking terms Gurugram"],
+});
 
 const sections = [
   {
@@ -55,8 +51,14 @@ const sections = [
 ];
 
 export default function Page() {
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: "Terms & Conditions", path: "/terms-and-conditions" },
+  ]);
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumb)} />
       <PageHero
         eyebrow="Legal"
         title="Terms & Conditions"

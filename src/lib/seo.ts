@@ -29,6 +29,27 @@ export function normalizePath(path = '/'): string {
   return clean.length > 1 ? clean.replace(/\/+$/, '') : clean;
 }
 
+const BRAND = ' | Alina';
+const MAX_TITLE = 62;
+const MAX_DESCRIPTION = 160;
+
+/** Keeps a single brand suffix and stops titles from being truncated in SERPs. */
+export function fitTitle(input: string): string {
+  const title = input.replace(/\s+/g, ' ').trim();
+  if (title.length <= MAX_TITLE) return title.endsWith(BRAND) ? title : title + (title.length + BRAND.length <= MAX_TITLE ? BRAND : '');
+  if (title.endsWith(BRAND)) return title.slice(0, -BRAND.length).trim();
+  return title;
+}
+
+/** Trims a description on a word boundary so it stays in the SERP snippet. */
+export function fitDescription(input: string): string {
+  const text = input.replace(/\s+/g, ' ').trim();
+  if (text.length <= MAX_DESCRIPTION) return text;
+  const cut = text.slice(0, MAX_DESCRIPTION - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > 100 ? cut.slice(0, lastSpace) : cut).replace(/[,;:\-–]$/, '').trim() + '…';
+}
+
 type PageMetadataInput = {
   title: string;
   description: string;
@@ -60,11 +81,15 @@ export function pageMetadata({
 }: PageMetadataInput): Metadata {
   const canonical = normalizePath(path);
   const url = absoluteUrl(canonical);
+  // Titles already carry the brand, so they bypass the layout template instead
+  // of stacking a second "| Gurgaon Escort Service" onto every page.
+  const finalTitle = fitTitle(title);
+  const finalDescription = fitDescription(description);
   const socialImage = { ...OG_IMAGE, ...(image ? { url: absoluteUrl(image) } : {}), alt: imageAlt ?? OG_IMAGE.alt };
 
   return {
-    title,
-    description,
+    title: { absolute: finalTitle },
+    description: finalDescription,
     ...(keywords && keywords.length > 0 ? { keywords } : {}),
     alternates: {
       canonical,
@@ -75,8 +100,8 @@ export function pageMetadata({
       locale: siteConfig.locale,
       url,
       siteName: siteConfig.name,
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       images: [socialImage],
       ...(type === 'article'
         ? { publishedTime, modifiedTime, authors: [siteConfig.brand] }
@@ -84,8 +109,8 @@ export function pageMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: finalTitle,
+      description: finalDescription,
       images: [socialImage.url],
     },
     robots: noindex

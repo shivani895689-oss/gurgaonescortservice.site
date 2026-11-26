@@ -30,7 +30,7 @@ export const categories: Category[] = [
       'Our Russian escorts in Gurgaon bring an international flair and sophistication to every encounter. Known for their elegance, charm, and refined presence, these companions are perfect for clients who seek a world-class experience in the heart of Gurugram.',
     image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80',
     highlights: ['International elegance', 'Premium companions', 'Discreet service', 'Available 24/7'],
-    seoTitle: 'Russian Escorts in Gurgaon | Premium International Companions | Alina',
+    seoTitle: 'Russian Escorts in Gurgaon | Premium International Companions',
     seoDescription:
       'Book premium Russian escorts in Gurgaon for an elegant, discreet, and refined companionship experience. Verified international companions available across Gurugram 24/7.',
     keywords: ['Russian escorts Gurgaon', 'Russian companion Gurugram', 'premium Russian escorts near me', 'international escorts Gurgaon', 'Gurgaon Russian escort service'],
@@ -74,7 +74,7 @@ export const categories: Category[] = [
       'Independent escorts in Gurgaon offer a more personal, direct, and authentic companionship experience. These confident, self-managed companions bring individuality and genuine connection to every meeting in Gurugram.',
     image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80',
     highlights: ['Genuine connection', 'Personalized experience', 'Confident companions', 'Flexible arrangements'],
-    seoTitle: 'Independent Escorts in Gurgaon | Authentic Companions | Alina',
+    seoTitle: 'Independent Escorts in Gurgaon | Authentic Companions',
     seoDescription:
       'Discover independent escorts in Gurgaon for a personalized, discreet, and authentic companionship experience. Verified independent companions available across Gurugram.',
     keywords: ['independent escorts Gurgaon', 'independent companion Gurugram', 'independent escorts near me', 'authentic escort service Gurgaon', 'Gurgaon independent companions'],
@@ -118,7 +118,7 @@ export const categories: Category[] = [
       'Our VIP and model escorts in Gurgaon represent the pinnacle of elegance and exclusivity. These high-profile companions are ideal for elite events, luxury travel, and private arrangements where only the best will do.',
     image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&q=80',
     highlights: ['Elite companions', 'Model profiles', 'Exclusive arrangements', 'Premium discretion'],
-    seoTitle: 'VIP & Model Escorts in Gurgaon | Elite Companions | Alina',
+    seoTitle: 'VIP & Model Escorts in Gurgaon | Elite Companions',
     seoDescription:
       'Book VIP and model escorts in Gurgaon for exclusive, discreet, and premium companionship. Elite companions for luxury hotels, events, and private experiences in Gurugram.',
     keywords: ['VIP escorts Gurgaon', 'model escorts Gurugram', 'elite escort service Gurgaon', 'VIP companion near me', 'premium model escorts Gurgaon'],
@@ -162,7 +162,7 @@ export const categories: Category[] = [
       'Our college escorts in Gurgaon offer a youthful, vibrant energy that makes every moment enjoyable. These companions are fun, approachable, and perfect for clients looking for a fresh, lively experience in Gurugram.',
     image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80',
     highlights: ['Youthful energy', 'Fun & approachable', 'Fresh experience', 'Discreet meetings'],
-    seoTitle: 'College Escorts in Gurgaon | Youthful Companions | Alina',
+    seoTitle: 'College Escorts in Gurgaon | Youthful Companions',
     seoDescription:
       'Book college escorts in Gurgaon for a youthful, fun, and discreet companionship experience. Verified companions available across Gurugram with easy booking.',
     keywords: ['college escorts Gurgaon', 'young companions Gurugram', 'college escort service near me', 'youthful escorts Gurgaon', 'Gurgaon college companions'],
@@ -206,7 +206,7 @@ export const categories: Category[] = [
       'Our celebrity escort category features exclusive, high-profile companions for clients who desire the ultimate in luxury and prestige. These companions bring star quality to every occasion in Gurgaon.',
     image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80',
     highlights: ['Star quality', 'Exclusive access', 'Luxury experience', 'Ultimate discretion'],
-    seoTitle: 'Celebrity Escorts in Gurgaon | Exclusive Luxury Companions | Alina',
+    seoTitle: 'Celebrity Escorts in Gurgaon | Exclusive Luxury Companions',
     seoDescription:
       'Explore celebrity escorts in Gurgaon for an exclusive, discreet, and luxurious companionship experience. Premium high-profile companions available in Gurugram.',
     keywords: ['celebrity escorts Gurgaon', 'high profile escorts Gurugram', 'exclusive escort service Gurgaon', 'luxury celebrity companion near me', 'elite escorts Gurgaon'],
@@ -250,7 +250,7 @@ export const categories: Category[] = [
       'Our air hostess escorts in Gurgaon bring the poise and polish of a professional travel lifestyle to every booking — ideal for business dinners, hotel evenings, and refined social occasions across Gurugram.',
     image: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80',
     highlights: ['Travel-lifestyle poise', 'Impeccable etiquette', 'Hotel-friendly', 'Discreet coordination'],
-    seoTitle: 'Air Hostess Escorts in Gurgaon | Elegant & Discreet Companions | Alina',
+    seoTitle: 'Air Hostess Escorts in Gurgaon | Elegant & Discreet Companions',
     seoDescription:
       'Book air hostess escorts in Gurgaon for polished, discreet companionship at premium hotels and private venues. Verified companions across Gurugram, available 24/7.',
     keywords: [
@@ -300,7 +300,7 @@ export const categories: Category[] = [
       'High profile escorts in Gurgaon are selected for clients who value privacy above everything else — public-facing professionals, entrepreneurs, and visitors who need a discreet companion without any digital footprint risk.',
     image: 'https://images.unsplash.com/photo-1502323777036-f29e3972d82f?auto=format&fit=crop&w=1200&q=80',
     highlights: ['Absolute privacy', 'Exclusive companions', 'Corporate-ready', 'Verified discretion'],
-    seoTitle: 'High Profile Escorts in Gurgaon | Private & Exclusive Companions | Alina',
+    seoTitle: 'High Profile Escorts in Gurgaon | Private & Exclusive Companions',
     seoDescription:
       'Book high profile escorts in Gurgaon for exclusive, private companionship. Discreet coordination for senior professionals and VIP clients across Gurugram, 24/7.',
     keywords: [
@@ -350,7 +350,7 @@ export const categories: Category[] = [
       'Our hourly escort service in Gurgaon is built for clients who want quality companionship without committing to a full evening — flexible one, two, or three hour bookings with clear timing and discreet coordination.',
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80',
     highlights: ['1-3 hour bookings', 'Flexible timing', 'Same-day availability', 'Clear pricing'],
-    seoTitle: 'Hourly Escort Service in Gurgaon | 1, 2 & 3 Hour Bookings | Alina',
+    seoTitle: 'Hourly Escort Service in Gurgaon | 1, 2 & 3 Hour Bookings',
     seoDescription:
       'Book an hourly escort service in Gurgaon with flexible 1, 2 or 3 hour companionship. Discreet same-day bookings for hotels and residences across Gurugram, 24/7.',
     keywords: [
@@ -400,7 +400,7 @@ export const categories: Category[] = [
       'Our full night escort service in Gurgaon is designed for unhurried, overnight companionship — dinner, conversation, and a relaxed stay with a verified companion who understands the difference between a booking and a genuinely good evening.',
     image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=80',
     highlights: ['Overnight companionship', 'Dinner included', 'Relaxed pace', 'Respectful boundaries'],
-    seoTitle: 'Full Night Escort Service in Gurgaon | Overnight Companions | Alina',
+    seoTitle: 'Full Night Escort Service in Gurgaon | Overnight Companions',
     seoDescription:
       'Book a full night escort service in Gurgaon for relaxed overnight companionship. Dinner, conversation, and discreet hotel stays with verified companions across Gurugram.',
     keywords: [

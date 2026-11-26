@@ -6,27 +6,16 @@ import WhyChooseUs from '@/components/home/WhyChooseUs';
 import TrustBar from '@/components/home/TrustBar';
 import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'About Us | Premium Gurgaon Escort Service',
   description:
-    'Learn about Gurgaon Escort Service by Alina — a premium, discreet companion service focused on verified profiles, respectful coordination, privacy, and 24/7 support across Gurugram.',
-  alternates: { canonical: '/about' },
-  openGraph: {
-    title: 'About Us | Premium Gurgaon Escort Service',
-    description:
-      'Learn about Gurgaon Escort Service by Alina — premium, discreet companionship with verified profiles, privacy-first coordination, and 24/7 support across Gurugram.',
-    url: `${siteConfig.url}/about`,
-    type: 'website',
-    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'About Gurgaon Escort Service' }],
-  },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'About Us | Premium Gurgaon Escort Service',
-      description: 'Learn about Gurgaon Escort Service by Alina — premium, discreet companionship with verified profiles, privacy-first coordination, and 24/7 support across Gurugram.',
-      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
-    },
-};
+    'Learn about Gurgaon Escort Service by Alina: verified profiles, privacy-first coordination and 24/7 discreet companionship across Gurugram and Delhi NCR.',
+  path: '/about',
+  keywords: ['about Gurgaon escort service', 'verified escorts Gurgaon', 'trusted escort agency Gurugram'],
+  imageAlt: 'About Gurgaon Escort Service by Alina',
+});
 
 const values = [
   {

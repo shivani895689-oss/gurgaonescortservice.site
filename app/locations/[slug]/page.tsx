@@ -9,6 +9,7 @@ import { locations, getLocationBySlug } from '@/data/locations';
 import { landingPages } from '@/data/landingPages';
 import { locationPageContent } from '@/data/locationPageContent';
 import { siteConfig } from '@/data/siteConfig';
+import { pageMetadata } from '@/lib/seo';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -20,26 +21,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const location = getLocationBySlug(slug);
   if (!location) return {};
-  const title = `Escort Service in ${location.name}, Gurgaon | ${siteConfig.name}`;
-  const description = location.shortDescription;
-  return {
-    title,
-    description,
-    alternates: { canonical: `/locations/${location.slug}` },
-    openGraph: {
-      title,
-      description,
-      url: `${siteConfig.url}/locations/${location.slug}`,
-      type: 'website',
-      images: [{ url: location.image, width: 1200, height: 630, alt: `Escort Service in ${location.name}, Gurgaon` }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Gurgaon Escort Service',
-      description: siteConfig.description,
-      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
-    },
-  };
+  return pageMetadata({
+    title: `Escorts in ${location.name}, Gurgaon | Local Guide`,
+    description: `${location.shortDescription} Hotel and residence outcalls across ${location.name} and nearby areas, 24/7.`,
+    path: '/locations/' + location.slug,
+    keywords: [
+      `escort service in ${location.name}`,
+      `escorts ${location.name} Gurgaon`,
+      `call girls ${location.name}`,
+      `${location.name} escort service near me`,
+    ],
+    image: location.image,
+    imageAlt: `Escort service in ${location.name}, Gurgaon`,
+  });
 }
 
 function getRelatedLocationPages(locationName: string, locationSlug: string) {

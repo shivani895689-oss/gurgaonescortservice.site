@@ -6,27 +6,16 @@ import TrustBar from '@/components/home/TrustBar';
 import FaqSection from '@/components/home/FaqSection';
 import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Book Now | Premium Gurgaon Escort Service',
   description:
-    'Book a premium companion in Gurgaon with a simple, discreet process. Call or WhatsApp for fast availability checks, private coordination, and 24/7 support across Gurugram.',
-  alternates: { canonical: '/booking' },
-  openGraph: {
-    title: 'Book Now | Premium Gurgaon Escort Service',
-    description:
-      'Book a premium companion in Gurgaon with a simple, discreet process. Call or WhatsApp for fast availability checks and 24/7 private support.',
-    url: `${siteConfig.url}/booking`,
-    type: 'website',
-    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'Book Gurgaon Escort Service' }],
-  },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Book Now | Premium Gurgaon Escort Service',
-      description: 'Book a premium companion in Gurgaon with a simple, discreet process. Call or WhatsApp for fast availability checks and 24/7 private support.',
-      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
-    },
-};
+    'Book a premium companion in Gurgaon in four simple steps. Call or WhatsApp for availability, confirm the arrangement cost, and get a discreet arrival 24/7.',
+  path: '/booking',
+  keywords: ['book escorts in Gurgaon', 'Gurgaon escort booking', 'escort service booking Gurugram'],
+  imageAlt: 'Book Gurgaon Escort Service',
+});
 
 const expectations = [
   'Share your preferred location, hotel, or private residence in Gurgaon.',

@@ -2,19 +2,15 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
+import { breadcrumbSchema, jsonLdScript, pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Disclaimer | Gurgaon Escort Service',
-  description: 'Important disclaimer for Gurgaon Escort Service regarding website content, adult access, service communication, and user responsibility.',
-  alternates: { canonical: '/disclaimer' },
-  openGraph: {
-    title: 'Disclaimer | Gurgaon Escort Service',
-    description: 'Important disclaimer for Gurgaon Escort Service regarding website content, adult access, service communication, and user responsibility.',
-    url: `${siteConfig.url}/disclaimer`,
-    type: 'website',
-  },
-  robots: { index: true, follow: true },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Disclaimer | Content, Age & Service Limits",
+  description:
+    "Important disclaimer for Gurgaon Escort Service on website content, adult-only access, service communication, availability and user responsibility.",
+  path: "/disclaimer",
+  keywords: ["Gurgaon escort disclaimer","adult content disclaimer"],
+});
 
 const sections = [
   {
@@ -48,8 +44,14 @@ const sections = [
 ];
 
 export default function Page() {
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: "Disclaimer", path: "/disclaimer" },
+  ]);
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumb)} />
       <PageHero
         eyebrow="Legal"
         title="Disclaimer"

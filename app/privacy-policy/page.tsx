@@ -2,19 +2,15 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
+import { breadcrumbSchema, jsonLdScript, pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy | Gurgaon Escort Service',
-  description: 'Read how Gurgaon Escort Service handles inquiries, communication details, and privacy when you contact us for premium companionship services in Gurugram.',
-  alternates: { canonical: '/privacy-policy' },
-  openGraph: {
-    title: 'Privacy Policy | Gurgaon Escort Service',
-    description: 'Read how Gurgaon Escort Service handles inquiries, communication details, and privacy when you contact us for premium companionship services in Gurugram.',
-    url: `${siteConfig.url}/privacy-policy`,
-    type: 'website',
-  },
-  robots: { index: true, follow: true },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy Policy | Discreet Handling of Your Data",
+  description:
+    "How Gurgaon Escort Service handles inquiries, personal details and privacy when you contact us for premium companionship in Gurugram. Read the full policy.",
+  path: "/privacy-policy",
+  keywords: ["Gurgaon escort privacy policy","data protection escort service"],
+});
 
 const sections = [
   {
@@ -55,8 +51,14 @@ const sections = [
 ];
 
 export default function Page() {
+  const breadcrumb = breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: "Privacy Policy", path: "/privacy-policy" },
+  ]);
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(breadcrumb)} />
       <PageHero
         eyebrow="Legal"
         title="Privacy Policy"

@@ -2,27 +2,16 @@ import type { Metadata } from 'next';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Shield, CheckCircle2 } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import { siteConfig } from '@/data/siteConfig';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Contact Us | Book Gurgaon Escort Service',
   description:
-    'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram. Call or WhatsApp for quick availability, premium companion options, and 24/7 private support.',
-  alternates: { canonical: '/contact' },
-  openGraph: {
-    title: 'Contact Us | Book Gurgaon Escort Service',
-    description:
-      'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram. Call or WhatsApp for quick availability and 24/7 private support.',
-    url: `${siteConfig.url}/contact`,
-    type: 'website',
-    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'Contact Gurgaon Escort Service' }],
-  },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Contact Us | Book Gurgaon Escort Service',
-      description: 'Contact Gurgaon Escort Service for discreet booking coordination across Gurugram. Call or WhatsApp for quick availability and 24/7 private support.',
-      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
-    },
-};
+    'Call or WhatsApp +91 99962 65679 for discreet booking coordination in Gurugram. Check availability, verified companions and 24/7 private support.',
+  path: '/contact',
+  keywords: ['contact Gurgaon escort service', 'Gurgaon escort number', 'book escorts Gurgaon'],
+  imageAlt: 'Contact Gurgaon Escort Service',
+});
 
 const contactMethods = [
   {

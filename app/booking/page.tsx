@@ -51,15 +51,53 @@ export default function BookingPage() {
     ],
   };
 
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to book a companion in Gurgaon',
+    description:
+      'Book a premium companion in Gurgaon in four steps: share your area, confirm timing and duration, review the options, then confirm the arrangement.',
+    totalTime: 'PT15M',
+    estimatedCost: {
+      '@type': 'MonetaryAmount',
+      currency: 'INR',
+      value: siteConfig.priceRange,
+    },
+    supply: [
+      { '@type': 'HowToSupply', name: 'Your hotel, residence or preferred area in Gurgaon' },
+      { '@type': 'HowToSupply', name: 'Preferred date, time and duration' },
+    ],
+    step: expectations.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: 'Step ' + (index + 1),
+      text: step,
+      url: siteConfig.url + '/booking#step-' + (index + 1),
+    })),
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <PageHero
         eyebrow="Book Now"
         title="Simple, Discreet Booking in Gurgaon"
         description="A refined booking experience designed around your comfort, privacy, and schedule. Our team coordinates quickly and discreetly across Gurugram."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Booking' }]}
       />
+
+      <section className="border-b border-gray-100 bg-white">
+        <div className="container-luxury py-5">
+          <p className="page-summary max-w-4xl text-sm leading-relaxed text-gray-700">
+            <span className="font-semibold text-[#2f3338]">Quick answer: </span>
+            To book, message or call {siteConfig.phoneDisplay} with your area in Gurgaon, the date and time you want,
+            and the duration. Our team confirms which verified companions are available, shares the arrangement cost,
+            and coordinates a discreet arrival at your hotel, serviced apartment or residence. Most requests are
+            confirmed within minutes, 24 hours a day.
+          </p>
+        </div>
+      </section>
 
       <section className="section-padding bg-[#fdf8f5]">
         <div className="container-luxury">
@@ -73,8 +111,8 @@ export default function BookingPage() {
                 We keep the process clear and respectful so you can book with confidence. Whether you are at a premium hotel, serviced apartment, or private residence in Gurgaon, our coordination team guides you step by step.
               </p>
               <ul className="space-y-4">
-                {expectations.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm md:text-base text-gray-700 leading-relaxed">
+                {expectations.map((item, index) => (
+                  <li id={'step-' + (index + 1)} key={item} className="flex items-start gap-3 text-sm md:text-base text-gray-700 leading-relaxed">
                     <CheckCircle2 className="w-5 h-5 text-[#2f3338] shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>

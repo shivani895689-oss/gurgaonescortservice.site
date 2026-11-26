@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, MessageCircle, Phone, Star, BadgeCheck } from 'lucide-react';
 import type { Profile } from '@/lib/profiles';
+import { siteConfig } from '@/data/siteConfig';
 
 interface ProfileCardProps {
   profile: Profile;
@@ -11,9 +12,9 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCard({ profile, priority = false }: ProfileCardProps) {
-  const whatsappUrl = `https://wa.me/917065884666?text=${encodeURIComponent(
-    `Hi, I am interested in ${profile.name} (${profile.categoryLabel}) profile on Gurgaon Escort Service.`
-  )}`;
+  const whatsappUrl =
+    'https://wa.me/' + siteConfig.whatsapp + '?text=' +
+    encodeURIComponent('Hi, I am interested in the ' + profile.name + ' (' + profile.categoryLabel + ') profile on ' + siteConfig.name + '.');
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-900/5">
@@ -99,7 +100,7 @@ export default function ProfileCard({ profile, priority = false }: ProfileCardPr
             WhatsApp
           </a>
           <a
-            href="tel:+917065884666"
+            href={'tel:' + siteConfig.phone}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2f3338] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#4a4d52]"
           >
             <Phone className="h-4 w-4" />

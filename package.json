@@ -11,7 +11,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seo:redirects": "node scripts/build-legacy-redirects.mjs",
+    "seo:verify": "node scripts/verify-seo.mjs",
+    "seo:indexnow": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.446.0",

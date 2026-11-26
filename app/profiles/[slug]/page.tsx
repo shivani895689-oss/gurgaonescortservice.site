@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, BadgeCheck, Clock, Languages, MapPin, MessageCircle, Phone, Star } from 'lucide-react';
 import ProfileCard from '@/components/ProfileCard';
+import { siteConfig } from '@/data/siteConfig';
+import { absoluteUrl, breadcrumbSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
 import { getProfileBySlug, profiles } from '@/lib/profiles';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -16,14 +18,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const profile = getProfileBySlug(slug);
   if (!profile) return { title: 'Profile Not Found' };
-  const title = `${profile.name}, ${profile.age} - ${profile.categoryLabel} Companion in ${profile.location}`;
-  const description = `${profile.name} is a ${profile.categoryLabel.toLowerCase()} companion in ${profile.location}. ${profile.tagline}. Verified profile, discreet booking, and premium experience.`;
-  return {
-    title,
-    description,
-    alternates: { canonical: `/profiles/${profile.slug}` },
-    openGraph: { title, description, type: 'profile', images: [{ url: profile.image }] },
-  };
+  return pageMetadata({
+    title: profile.name + ', ' + profile.age + ' - ' + profile.categoryLabel + ' Companion in ' + profile.location,
+    description:
+      profile.name + ' is a ' + profile.categoryLabel.toLowerCase() + ' companion in ' + profile.location + '. ' +
+      profile.tagline + ' Verified profile, discreet booking and premium experience.',
+    path: '/profiles/' + profile.slug,
+    type: 'profile',
+    image: profile.image,
+    imageAlt: profile.name + ' - ' + profile.categoryLabel + ' companion in ' + profile.location,
+    keywords: [
+      profile.categoryLabel + ' in ' + profile.location,
+      profile.name + ' Gurgaon',
+      'verified companion ' + profile.location,
+      profile.categoryLabel + ' near me Gurgaon',
+    ],
+  });
 }
 
 export default async function ProfileDetailPage({ params }: Props) {
@@ -31,9 +41,9 @@ export default async function ProfileDetailPage({ params }: Props) {
   const profile = getProfileBySlug(slug);
   if (!profile) notFound();
 
-  const whatsappUrl = `https://wa.me/917065884666?text=${encodeURIComponent(
-    `Hi, I am interested in ${profile.name} (${profile.categoryLabel}) profile on Gurgaon Escort Service.`
-  )}`;
+  const whatsappUrl =
+    'https://wa.me/' + siteConfig.whatsapp + '?text=' +
+    encodeURIComponent('Hi, I am interested in the ' + profile.name + ' (' + profile.categoryLabel + ') profile on ' + siteConfig.name + '.');
 
   const related = profiles
     .filter((p) => p.slug !== profile.slug && (p.category === profile.category || p.location === profile.location))
@@ -61,6 +71,26 @@ export default async function ProfileDetailPage({ params }: Props) {
               {profile.tagline}
             </p>
           </div>
+          <nav aria-label="Breadcrumb" className="mt-6 text-sm text-white/60">
+            <ol className="flex flex-wrap items-center gap-2">
+              <li><Link href="/" className="transition hover:text-white">Home</Link></li>
+              <li aria-hidden="true">/</li>
+              <li><Link href="/profiles" className="transition hover:text-white">Profiles</Link></li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page" className="text-white/90">{profile.name}</li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+
+      <section className="border-b border-gray-100 bg-[#fdf8f5]">
+        <div className="container-luxury py-5">
+          <p className="page-summary max-w-4xl text-sm leading-relaxed text-gray-700">
+            <span className="font-semibold text-[#2f3338]">Quick answer: </span>
+            {profile.name} is a {profile.verified ? 'verified' : 'listed'} {profile.categoryLabel.toLowerCase()} companion in {profile.location}, Gurugram.
+            Availability is {profile.availability.toLowerCase()}, starting from {profile.priceLabel}. Book on call or WhatsApp; arrivals are discreet and the
+            arrangement is confirmed before the companion is dispatched.
+          </p>
         </div>
       </section>
 
@@ -125,10 +155,10 @@ export default async function ProfileDetailPage({ params }: Props) {
                     <MessageCircle className="h-5 w-5" /> WhatsApp Now
                   </a>
                   <a
-                    href="tel:+917065884666"
+                    href={'tel:' + siteConfig.phone}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2f3338] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#4a4d52]"
                   >
-                    <Phone className="h-5 w-5" /> Call Now
+                    <Phone className="h-5 w-5" /> {siteConfig.phoneDisplay}
                   </a>
                 </div>
               </div>
@@ -192,6 +222,38 @@ export default async function ProfileDetailPage({ params }: Props) {
           </div>
         </section>
       )}
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript([
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Profiles', path: '/profiles' },
+            { name: profile.name, path: '/profiles/' + profile.slug },
+          ]),
+          webPageSchema({
+            name: profile.name + ' - ' + profile.categoryLabel + ' companion in ' + profile.location,
+            description: profile.tagline,
+            path: '/profiles/' + profile.slug,
+            pageType: 'ProfilePage',
+          }),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            '@id': absoluteUrl('/profiles/' + profile.slug) + '#person',
+            name: profile.name,
+            description: profile.tagline,
+            image: profile.image,
+            jobTitle: profile.categoryLabel + ' companion',
+            knowsLanguage: profile.languages,
+            worksFor: { '@id': 'https://gurgaonescortservice.site/#business' },
+            url: absoluteUrl('/profiles/' + profile.slug),
+            ...(profile.verified
+              ? { hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'Verified profile' } }
+              : {}),
+          },
+        ])}
+      />
     </main>
   );
 }

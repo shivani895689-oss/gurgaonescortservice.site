@@ -1,33 +1,17 @@
 import { siteConfig } from '@/data/siteConfig';
-import { categories } from '@/data/categories';
-import { services } from '@/data/services';
-import { locations } from '@/data/locations';
-import { landingPages } from '@/data/landingPages';
+import { getIndexableRoutes } from '@/lib/siteRoutes';
 
 export const INDEXNOW_KEY = 'b7e3f9a1c2d4e5f6a7b8c9d0e1f2a3b4';
 export const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
 export const INDEXNOW_KEY_LOCATION = `${siteConfig.url.replace(/\/+$/, '')}/${INDEXNOW_KEY}.txt`;
 
+/**
+ * Every URL that should be indexed. Mirrors sitemap.xml exactly so IndexNow
+ * submissions never advertise a page that the sitemap omits (or vice versa).
+ */
 export function getAllSiteUrls(): string[] {
   const baseUrl = siteConfig.url.replace(/\/+$/, '');
-  const urls = [
-    baseUrl,
-    `${baseUrl}/about`,
-    `${baseUrl}/booking`,
-    `${baseUrl}/contact`,
-    `${baseUrl}/faq`,
-    `${baseUrl}/categories`,
-    `${baseUrl}/services`,
-    `${baseUrl}/locations`,
-    `${baseUrl}/privacy-policy`,
-    `${baseUrl}/terms-and-conditions`,
-    `${baseUrl}/disclaimer`,
-    ...categories.map((c) => `${baseUrl}/categories/${c.slug}`),
-    ...services.map((s) => `${baseUrl}/services/${s.slug}`),
-    ...locations.map((l) => `${baseUrl}/locations/${l.slug}`),
-    ...landingPages.map((p) => `${baseUrl}/${p.slug}`),
-  ];
-  return Array.from(new Set(urls));
+  return getIndexableRoutes().map((route) => (route.path === '/' ? baseUrl : baseUrl + route.path));
 }
 
 export type IndexNowResult = {

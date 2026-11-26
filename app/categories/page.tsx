@@ -5,12 +5,16 @@ import { SectionHeading } from '@/components/SectionHeading';
 import { Phone, MessageCircle, Shield, Clock, MapPin, Star } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
+
 const baseUrl = siteConfig.url.replace(/\/+$/, '');
 
-export const metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Escort Categories in Gurgaon | Best VIP, Independent, Russian & GFE Companions Near You',
   description:
     'Explore the best escort categories in Gurgaon including VIP, Independent, Russian, Model, College, Air Hostess, High Profile, Celebrity, GFE & Party companions. Discreet 24/7 booking across Gurugram.',
+  path: '/categories',
   keywords: [
     'escort categories in Gurgaon',
     'Gurgaon escort categories near me',
@@ -21,21 +25,8 @@ export const metadata = {
     'party companions Gurugram',
     'best escort service categories Gurgaon',
   ],
-  alternates: { canonical: '/categories' },
-  openGraph: {
-    title: 'Escort Categories in Gurgaon | Best Companions Near You in Gurugram',
-    description:
-      'Browse verified escort categories in Gurugram. From VIP and Independent to Russian, GFE, and Party companions — find the right experience with discreet 24/7 booking.',
-    url: '/categories',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Escort Categories in Gurgaon | Best Companions Near You',
-    description:
-      'Explore VIP, Independent, Russian, GFE, Party and more escort categories in Gurgaon. Discreet 24/7 booking across Gurugram.',
-  },
-};
+  imageAlt: 'Escort categories in Gurgaon and Gurugram',
+});
 
 const categoryFaqs = [
   {

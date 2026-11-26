@@ -10,21 +10,23 @@ import BookingProcess from '@/components/home/BookingProcess';
 import CtaSection from '@/components/home/CtaSection';
 import FaqSection from '@/components/home/FaqSection';
 import { siteConfig } from '@/data/siteConfig';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  alternates: { canonical: '/' },
-  openGraph: {
-    url: siteConfig.url,
-    type: 'website',
-    images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: 'Gurgaon Escort Service' }],
-  },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Gurgaon Escort Service',
-      description: siteConfig.description,
-      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
-    },
-};
+export const metadata: Metadata = pageMetadata({
+  title: 'Gurgaon Escort Service | Premium & Discreet Escorts in Gurugram',
+  description: siteConfig.description,
+  path: '/',
+  keywords: [
+    'Gurgaon escort service',
+    'escorts in Gurgaon',
+    'Gurugram escorts',
+    'call girls in Gurgaon',
+    'premium escorts Gurugram',
+    'escort service near me Gurgaon',
+    'hotel outcall escorts Gurgaon',
+    'independent escorts Gurugram',
+  ],
+});
 
 export default function Home() {
   return (

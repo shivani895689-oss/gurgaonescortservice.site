@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "node scripts/generate-sitemaps.js && next build"
+  "buildCommand": "next build",
+  "cleanUrls": false,
+  "trailingSlash": false
 }

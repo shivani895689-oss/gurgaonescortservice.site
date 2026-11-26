@@ -1,244 +1,138 @@
 import type { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
-import { Phone, MessageCircle, Shield, Clock, MapPin, CheckCircle2, ChevronDown } from 'lucide-react';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { Phone, MessageCircle, Shield, Clock, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
 import { siteConfig } from '@/data/siteConfig';
-import { getLandingAlias, getLandingPageBySlug, landingPageAliases, landingPages } from '@/data/landingPages';
+import { getLandingPageBySlug, landingPages } from '@/data/landingPages';
 import { locationPageContent } from '@/data/locationPageContent';
+import { categories } from '@/data/categories';
+import { services } from '@/data/services';
+import {
+  absoluteUrl,
+  breadcrumbSchema,
+  faqSchema,
+  itemListSchema,
+  jsonLdScript,
+  pageMetadata,
+  serviceSchema,
+  webPageSchema,
+} from '@/lib/seo';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
-  const aliasSlugs = Object.keys(landingPageAliases).map((slug) => ({ slug }));
-  return [...landingPages.map((p) => ({ slug: p.slug })), ...aliasSlugs];
-}
-
-function resolvePage(slug: string) {
-  const direct = getLandingPageBySlug(slug);
-  if (direct) return { page: direct, canonicalSlug: direct.slug };
-  const aliasTarget = getLandingAlias(slug);
-  if (aliasTarget) {
-    const targetSlug = aliasTarget.replace(/^\//, '');
-    const target = getLandingPageBySlug(targetSlug);
-    if (target) return { page: target, canonicalSlug: target.slug };
-  }
-  return null;
+  return landingPages.map((page) => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const resolved = resolvePage(slug);
-  if (!resolved) return {};
-  const { page, canonicalSlug } = resolved;
-  const url = `${siteConfig.url}/${canonicalSlug}`;
-  return {
+  const page = getLandingPageBySlug(slug);
+  if (!page) return {};
+  const area = page.locationName || 'Gurgaon';
+
+  return pageMetadata({
     title: page.metaTitle,
     description: page.metaDescription,
-    alternates: { canonical: `/${canonicalSlug}` },
-    openGraph: {
-      title: page.metaTitle,
-      description: page.metaDescription,
-      url,
-      type: 'website',
-      siteName: siteConfig.name,
-      locale: 'en_IN',
-      images: [{ url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', width: 1200, height: 630, alt: page.locationName || page.title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: page.metaTitle,
-      description: page.metaDescription,
-      images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80'],
-    },
-  };
+    path: '/' + page.slug,
+    keywords: [
+      'escort service in ' + area,
+      'escort service ' + area + ' Gurgaon',
+      area + ' escorts near me',
+      'premium companions ' + area + ' Gurugram',
+      'call girls in ' + area,
+    ],
+    imageAlt: 'Escort service in ' + area + ', Gurgaon',
+  });
 }
 
 export default async function LandingPage({ params }: PageProps) {
   const { slug } = await params;
-  const resolved = resolvePage(slug);
-  if (!resolved) notFound();
+  const page = getLandingPageBySlug(slug);
+  if (!page) notFound();
 
-  const { page, canonicalSlug } = resolved;
-  if (slug !== canonicalSlug) redirect(`/${canonicalSlug}`);
-  const rich = locationPageContent[canonicalSlug];
-  const isLocation = page.type === 'location';
+  const rich = locationPageContent[page.slug];
   const locationName = page.locationName || 'Gurgaon';
+  const path = '/' + page.slug;
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
-      { '@type': 'ListItem', position: 2, name: isLocation ? 'Locations' : 'Categories', item: `${siteConfig.url}/${isLocation ? 'locations' : 'categories'}` },
-      { '@type': 'ListItem', position: 3, name: page.title, item: `${siteConfig.url}/${canonicalSlug}` },
-    ],
-  };
+  const breadcrumbs = [
+    { name: 'Home', path: '/' },
+    { name: 'Locations', path: '/locations' },
+    { name: locationName, path },
+  ];
 
-  const serviceSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: page.metaTitle,
-    description: page.metaDescription,
-    provider: {
-      '@type': 'LocalBusiness',
-      name: siteConfig.name,
-      telephone: siteConfig.phone,
-      url: siteConfig.url,
-      address: {
-        '@type': 'PostalAddress',
-        ...siteConfig.structuredAddress,
-      },
-    },
-    areaServed: {
-      '@type': 'Place',
-      name: isLocation ? `${locationName}, Gurgaon, Haryana, India` : 'Gurgaon, Haryana, India',
-    },
-    url: `${siteConfig.url}/${canonicalSlug}`,
-  };
+  const quickAnswer =
+    'Yes. Verified companion service is available in ' + locationName + ', Gurugram, seven days a week. ' +
+    'Bookings are confirmed on call or WhatsApp within minutes, with discreet arrivals at hotels, serviced apartments and private residences. ' +
+    page.metaDescription.split('. ')[0] + '.';
 
-  const faqSchema = rich?.faqs?.length
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: rich.faqs.map((f) => ({
-          '@type': 'Question',
-          name: f.question,
-          acceptedAnswer: { '@type': 'Answer', text: f.answer },
-        })),
-      }
-    : null;
+  const faqs = rich?.faqs?.length ? rich.faqs : [];
+  const nearbyAreas = rich?.nearbyAreas?.length
+    ? rich.nearbyAreas
+    : landingPages
+        .filter((candidate) => candidate.slug !== page.slug)
+        .slice(0, 6)
+        .map((candidate) => ({ name: candidate.locationName || candidate.title, slug: candidate.slug }));
+
+  const schema = [
+    breadcrumbSchema(breadcrumbs),
+    serviceSchema({
+      name: 'Escort Service in ' + locationName + ', Gurgaon',
+      description: page.metaDescription,
+      path,
+      areaName: locationName + ', Gurugram, Haryana',
+      serviceType: 'Escort and companion service',
+    }),
+    webPageSchema({
+      name: page.metaTitle,
+      description: page.metaDescription,
+      path,
+    }),
+    itemListSchema({
+      name: 'Companion service areas near ' + locationName + ', Gurugram',
+      path,
+      items: nearbyAreas.map((area) => ({ name: area.name + ' escorts', path: '/' + area.slug })),
+    }),
+    ...(faqs.length ? [faqSchema(faqs, absoluteUrl(path) + '#faq')] : []),
+  ];
+
+  const whatsappHref =
+    'https://wa.me/' + siteConfig.whatsapp + '?text=' +
+    encodeURIComponent('Hi, I need an escort service in ' + locationName + ', Gurgaon.');
+
+  const introParagraphs = rich?.intro ?? [
+    page.description,
+    'Our escort service in ' + locationName + ' is coordinated with the same discretion, verified profiles and respectful communication we apply across ' + siteConfig.city + '. Share your hotel, residence or preferred area, and our team will confirm availability quickly.',
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
+      <PageHero
+        eyebrow={locationName + ' · Gurugram'}
+        title={page.title}
+        description={page.description}
+        breadcrumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Locations', href: '/locations' },
+          { label: locationName },
+        ]}
+      />
 
-      <PageHero eyebrow={page.eyebrow} title={page.title} description={page.description} />
-
-      <section className="section-padding bg-white">
-        <div className="container-luxury">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid sm:grid-cols-3 gap-6 mb-12">
-              {[
-                { icon: Shield, title: 'Verified & Discreet', text: 'Every companion is verified and every booking handled with absolute confidentiality.' },
-                { icon: Clock, title: '24/7 Availability', text: 'Round-the-clock booking support with fast response across Gurgaon locations.' },
-                { icon: MapPin, title: isLocation ? `Serving ${locationName}` : 'All Gurgaon Areas', text: isLocation ? `Fast, discreet outcall service across ${locationName} and nearby areas.` : 'Coverage across DLF, Cyber City, Golf Course Road, and all major Gurugram sectors.' },
-              ].map((item) => (
-                <div key={item.title} className="bg-[#fdf8f5] rounded-2xl border border-gray-200/80 p-6 text-center">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-[#2f3338]/10 flex items-center justify-center mb-4">
-                    <item.icon className="w-6 h-6 text-[#2f3338]" />
-                  </div>
-                  <h3 className="font-serif text-lg font-semibold text-[#4a4d52] mb-2">{item.title}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{item.text}</p>
-                </div>
-              ))}
-            </div>
-
-            {rich ? (
-              <article>
-                <div className="space-y-5 text-gray-700 leading-relaxed text-[17px]">
-                  {rich.intro.map((para, i) => (
-                    <p key={i}>{para}</p>
-                  ))}
-                </div>
-
-                {rich.sections.map((section, idx) => (
-                  <div key={idx} className="mt-12">
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-5 leading-tight">{section.heading}</h2>
-                    <div className="space-y-4 text-gray-700 leading-relaxed text-[17px]">
-                      {section.paragraphs.map((para, i) => (
-                        <p key={i}>{para}</p>
-                      ))}
-                    </div>
-                    {section.bullets && section.bullets.length > 0 && (
-                      <ul className="mt-6 space-y-3">
-                        {section.bullets.map((b, i) => (
-                          <li key={i} className="flex items-start gap-3 text-gray-700 leading-relaxed">
-                            <CheckCircle2 className="w-5 h-5 text-[#2f3338] mt-0.5 shrink-0" />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-
-                {rich.faqs.length > 0 && (
-                  <div className="mt-14">
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-6 leading-tight">
-                      Frequently Asked Questions About {isLocation ? `Escort Service in ${locationName}` : page.title}
-                    </h2>
-                    <div className="space-y-4">
-                      {rich.faqs.map((faq, i) => (
-                        <details key={i} className="group bg-[#fdf8f5] rounded-2xl border border-gray-200/80 p-5 open:shadow-sm">
-                          <summary className="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold text-[#4a4d52]">
-                            <span>{faq.question}</span>
-                            <ChevronDown className="w-5 h-5 text-[#2f3338] shrink-0 transition-transform group-open:rotate-180" />
-                          </summary>
-                          <p className="mt-3 text-gray-700 leading-relaxed">{faq.answer}</p>
-                        </details>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {rich.nearbyAreas.length > 0 && (
-                  <div className="mt-14">
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-5 leading-tight">
-                      Nearby Areas We Also Serve
-                    </h2>
-                    <p className="text-gray-700 leading-relaxed mb-6">
-                      Along with {locationName}, we provide discreet premium companion service across nearby Gurgaon locations. Explore other areas for fast local availability.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {rich.nearbyAreas.map((area) => (
-                        <Link
-                          key={area.slug}
-                          href={`/${area.slug}`}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2f3338]/5 border border-[#2f3338]/15 text-[#2f3338] text-sm font-medium hover:bg-[#2f3338] hover:text-white transition-colors"
-                        >
-                          <MapPin className="w-3.5 h-3.5" /> {area.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </article>
-            ) : (
-              <div className="prose prose-lg max-w-none text-gray-700">
-                <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#4a4d52] mb-4">
-                  About {page.title}
-                </h2>
-                <p className="leading-relaxed mb-6">{page.description}</p>
-                <p className="leading-relaxed mb-6">
-                  At {siteConfig.name}, we specialize in delivering a premium, discreet, and personalized companion experience.
-                  {isLocation
-                    ? ` Our ${locationName} service is designed for clients who value privacy, punctuality, and genuine companionship. Whether you are staying at a luxury hotel, a serviced apartment, or a private residence in ${locationName}, our team ensures a smooth and comfortable experience.`
-                    : ` We focus on quality, confidentiality, and client satisfaction. Every arrangement is handled with care, from the first inquiry to the completion of your booking.`}
-                </p>
-                <p className="leading-relaxed mb-6">
-                  {isLocation
-                    ? `Booking an escort service in ${locationName}, Gurgaon is simple and confidential. Contact us via phone or WhatsApp, share your preferences, and our team will coordinate the rest with complete discretion. We serve ${locationName} and surrounding areas with fast response times and verified companions.`
-                    : `From hotel outcalls to social companionship, we handle every request with discretion and professionalism. Contact us to discuss availability, preferences, and arrangements in your preferred Gurgaon location.`}
-                </p>
-              </div>
-            )}
-
-            <div className="flex flex-wrap gap-3 mt-12 pt-8 border-t border-gray-200">
-              <a href={`tel:${siteConfig.phone}`} className="btn-luxury">
-                <Phone className="w-4 h-4" /> Call {siteConfig.phoneDisplay}
+      <section className="border-b border-gray-100 bg-[#fdf8f5]">
+        <div className="container-luxury py-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="page-summary max-w-3xl text-sm leading-relaxed text-gray-700">
+              <span className="font-semibold text-[#2f3338]">Quick answer: </span>
+              {quickAnswer}
+            </p>
+            <div className="flex shrink-0 flex-wrap gap-2">
+              <a href={'tel:' + siteConfig.phone} className="btn-luxury text-sm">
+                <Phone className="w-4 h-4" /> {siteConfig.phoneDisplay}
               </a>
-              <a
-                href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(`Hi, I'm interested in ${page.title}.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-luxury-whatsapp"
-              >
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-luxury-whatsapp text-sm">
                 <MessageCircle className="w-4 h-4" /> WhatsApp
               </a>
             </div>
@@ -246,7 +140,142 @@ export default async function LandingPage({ params }: PageProps) {
         </div>
       </section>
 
+      <section className="section-padding bg-white">
+        <div className="container-luxury">
+          <div className="grid gap-12 lg:grid-cols-3 lg:gap-16">
+            <article className="lg:col-span-2">
+              <div className="space-y-5 text-gray-600 leading-relaxed">
+                {introParagraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+
+              {rich?.sections?.map((section) => (
+                <div key={section.heading} className="mt-10">
+                  <h2 className="font-serif text-2xl font-bold text-[#2f3338]">{section.heading}</h2>
+                  <div className="mt-4 space-y-4 text-gray-600 leading-relaxed">
+                    {section.paragraphs.map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                  {section.bullets?.length ? (
+                    <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                      {section.bullets.map((bullet) => (
+                        <li key={bullet} className="flex items-start gap-2 text-sm text-gray-600">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2f3338]" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              ))}
+
+              <div className="mt-10 rounded-2xl border border-gray-200 bg-[#fdf8f5] p-6">
+                <h2 className="font-serif text-xl font-bold text-[#2f3338]">
+                  Booking an escort in {locationName}: what to expect
+                </h2>
+                <ul className="mt-4 space-y-3 text-sm text-gray-600">
+                  <li className="flex gap-2"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[#2f3338]" /><span>Confidential coordination — your details are shared with no one outside the booking team.</span></li>
+                  <li className="flex gap-2"><Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#2f3338]" /><span>Availability 24/7, including late-night arrivals around {locationName} hotels and residences.</span></li>
+                  <li className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#2f3338]" /><span>Outcall to hotels, serviced apartments and private addresses across {locationName} and nearby sectors.</span></li>
+                  <li className="flex gap-2"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2f3338]" /><span>Verified profiles only, with the arrangement cost confirmed before the companion is dispatched.</span></li>
+                </ul>
+              </div>
+
+              {faqs.length > 0 && (
+                <div className="mt-10">
+                  <h2 className="font-serif text-2xl font-bold text-[#2f3338]">{locationName} escort service FAQs</h2>
+                  <div className="mt-4 space-y-3">
+                    {faqs.map((faq) => (
+                      <details key={faq.question} className="group rounded-xl border border-gray-200 bg-white px-5 py-4">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-[#2f3338]">
+                          <span>{faq.question}</span>
+                          <ArrowRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90" />
+                        </summary>
+                        <p className="mt-3 text-sm leading-relaxed text-gray-600">{faq.answer}</p>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </article>
+
+            <aside className="space-y-6 lg:col-span-1">
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h2 className="font-serif text-lg font-bold text-[#2f3338]">Companion categories</h2>
+                <ul className="mt-4 space-y-2">
+                  {categories.slice(0, 6).map((category) => (
+                    <li key={category.slug}>
+                      <Link href={'/categories/' + category.slug} className="flex items-center justify-between gap-2 text-sm text-gray-600 transition-colors hover:text-[#2f3338]">
+                        <span>{category.name}</span>
+                        <ArrowRight className="h-3.5 w-3.5 text-gray-300" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h2 className="font-serif text-lg font-bold text-[#2f3338]">Booking formats</h2>
+                <ul className="mt-4 space-y-2">
+                  {services.map((service) => (
+                    <li key={service.slug}>
+                      <Link href={'/services/' + service.slug} className="flex items-center justify-between gap-2 text-sm text-gray-600 transition-colors hover:text-[#2f3338]">
+                        <span>{service.name}</span>
+                        <ArrowRight className="h-3.5 w-3.5 text-gray-300" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-gray-200 bg-[#2f3338] p-6 text-white">
+                <h2 className="font-serif text-lg font-bold">Check availability in {locationName}</h2>
+                <p className="mt-2 text-sm text-gray-300">
+                  Message our team with your hotel or area and preferred time. Most requests are confirmed in minutes.
+                </p>
+                <a href={'tel:' + siteConfig.phone} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white underline underline-offset-4">
+                  <Phone className="h-4 w-4" /> Call {siteConfig.phoneDisplay}
+                </a>
+              </div>
+            </aside>
+          </div>
+
+          <div className="mt-14 border-t border-gray-200 pt-10">
+            <h2 className="font-serif text-2xl font-bold text-[#2f3338]">Areas we cover near {locationName}</h2>
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {nearbyAreas.map((area) => (
+                <li key={area.slug}>
+                  <Link href={'/' + area.slug} className="inline-flex rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-600 transition-colors hover:border-[#2f3338]/30 hover:text-[#2f3338]">
+                    {area.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/locations" className="inline-flex rounded-full bg-[#2f3338] px-4 py-2 text-sm font-medium text-white">
+                  All areas
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-3 border-t border-gray-200 pt-8">
+            <a href={'tel:' + siteConfig.phone} className="btn-luxury">
+              <Phone className="w-4 h-4" /> Call {siteConfig.phoneDisplay}
+            </a>
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-luxury-whatsapp">
+              <MessageCircle className="w-4 h-4" /> WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
       <CtaSection />
+
+      {schema.map((item, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
+      ))}
     </>
   );
 }

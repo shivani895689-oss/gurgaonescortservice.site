@@ -26,7 +26,7 @@ export default function Hero() {
             </p>
 
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] text-[#4a4d52] tracking-tight">
-              Gurgaon Escort
+              Gurgaon Escort{' '}
               <span className="block text-[#2f3338]">Service</span>
             </h1>
 

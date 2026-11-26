@@ -4,6 +4,16 @@ import { Faq } from '@/components/Faq';
 import { SectionHeading } from '@/components/SectionHeading';
 import { Phone, MessageCircle, Shield, Clock, MapPin, Star } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
+import { gurgaonAreas } from '@/lib/gurgaonAreas';
+import {
+  AreaCoverageBlock,
+  BookingJourneyBlock,
+  DiscretionBlock,
+  ExpectationBlock,
+  NearMeBlock,
+  RateGuideBlock,
+} from '@/components/content/SeoContentBlocks';
+import { EtiquetteBlock, ExtraFaqBlock, TimingBlock } from '@/components/content/SeoContentExtra';
 
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
@@ -232,6 +242,20 @@ export default function CategoriesPage() {
           </div>
         </div>
       </section>
+
+      <AreaCoverageBlock
+        subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }}
+        areas={gurgaonAreas.slice(0, 20)}
+        heading="Which Gurgaon neighbourhood suits which category"
+      />
+      <NearMeBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} areas={gurgaonAreas.slice(0, 12)} />
+      <ExpectationBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} />
+      <BookingJourneyBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} phoneDisplay={siteConfig.phoneDisplay} />
+      <RateGuideBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} baseRate={7000} />
+      <DiscretionBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} />
+      <TimingBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} />
+      <EtiquetteBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} />
+      <ExtraFaqBlock subject={{ name: 'Gurgaon escorts', kind: 'escort', slug: 'categories' }} phoneDisplay={siteConfig.phoneDisplay} />
 
       {/* CTA */}
       <section className="py-16 lg:py-20 bg-[#2f3338]">

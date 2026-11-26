@@ -5,6 +5,16 @@ import ProfileCard from '@/components/ProfileCard';
 import { siteConfig } from '@/data/siteConfig';
 import { absoluteUrl, breadcrumbSchema, faqSchema, jsonLdScript, webPageSchema } from '@/lib/seo';
 import { profilePath, profiles, type Profile } from '@/lib/profiles';
+import { gurgaonAreas } from '@/lib/gurgaonAreas';
+import {
+  AreaCoverageBlock,
+  BookingJourneyBlock,
+  DiscretionBlock,
+  ExpectationBlock,
+  NearMeBlock,
+  RateGuideBlock,
+} from '@/components/content/SeoContentBlocks';
+import { AlternativesBlock, EtiquetteBlock, ExtraFaqBlock, TimingBlock } from '@/components/content/SeoContentExtra';
 
 const areaLinks = [
   { label: 'DLF Phase 3', href: '/escort-service-dlf-phase-3-gurgaon' },
@@ -28,6 +38,9 @@ export default function ProfileView({ profile }: { profile: Profile }) {
     .slice(0, 3);
 
   const faqs = profile.faqs;
+  const baseRate = Number(profile.priceLabel.replace(/[^0-9]/g, '')) || 7500;
+  const startIndex = profiles.findIndex((p) => p.id === profile.id) * 5;
+  const areaSet = Array.from({ length: 32 }, (_, index) => gurgaonAreas[(startIndex + index) % gurgaonAreas.length]);
 
   return (
     <main className="bg-white">
@@ -207,21 +220,44 @@ export default function ProfileView({ profile }: { profile: Profile }) {
             ))}
           </ul>
 
-          <h3 className="mt-10 font-serif text-xl font-bold text-[#4a4d52]">Where {profile.name} is available in Gurgaon</h3>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {areaLinks.map((area) => (
-              <li key={area.href}>
-                <Link
-                  href={area.href}
-                  className="inline-flex rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 transition hover:border-[#2f3338]/30 hover:text-[#2f3338]"
-                >
-                  {area.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-6 text-sm leading-relaxed text-gray-500">
+            {profile.name} works across {areaLinks.length} Gurgaon neighbourhoods, from DLF and Cyber City to Sohna Road and New Gurgaon. The section
+            below explains what each area is like and how quickly an arrival can be arranged.
+          </p>
         </div>
       </section>
+
+      <AreaCoverageBlock
+        subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }}
+        areas={areaSet}
+      />
+      <NearMeBlock
+        subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }}
+        areas={areaSet}
+      />
+      <ExpectationBlock subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }} />
+      <BookingJourneyBlock
+        subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }}
+        phoneDisplay={siteConfig.phoneDisplay}
+      />
+      <RateGuideBlock subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }} baseRate={baseRate} />
+      <DiscretionBlock subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }} />
+      <TimingBlock subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }} />
+      <EtiquetteBlock subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }} />
+      <ExtraFaqBlock subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }} phoneDisplay={siteConfig.phoneDisplay} />
+      <AlternativesBlock
+        subject={{ name: profile.name, kind: profile.categoryLabel.toLowerCase() + ' companion', slug: profile.seoSlug }}
+        items={profiles
+          .filter((p) => p.id !== profile.id)
+          .slice(0, 6)
+          .map((p) => ({
+            name: p.name,
+            path: profilePath(p),
+            label: p.age + ' · ' + p.categoryLabel + ' · ' + p.priceLabel,
+            tagline: p.tagline,
+            specialties: p.specialties,
+          }))}
+      />
 
       <section className="section-padding bg-white border-t border-gray-200/70">
         <div className="container-luxury max-w-4xl">

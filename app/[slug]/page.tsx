@@ -10,6 +10,17 @@ import { siteConfig } from '@/data/siteConfig';
 import { getLandingPageBySlug, landingPages } from '@/data/landingPages';
 import { locationPageContent } from '@/data/locationPageContent';
 import { categories } from '@/data/categories';
+import { gurgaonAreas } from '@/lib/gurgaonAreas';
+import {
+  AreaCoverageBlock,
+  BookingJourneyBlock,
+  DiscretionBlock,
+  ExpectationBlock,
+  LocalZoneBlock,
+  NearMeBlock,
+  RateGuideBlock,
+} from '@/components/content/SeoContentBlocks';
+import { EtiquetteBlock, ExtraFaqBlock, TimingBlock } from '@/components/content/SeoContentExtra';
 import { services } from '@/data/services';
 import {
   absoluteUrl,
@@ -336,6 +347,52 @@ export default async function LandingPage({ params }: PageProps) {
               ))}
             </ul>
           </div>
+
+          {!rich && (
+            <>
+              <div className="mt-12 border-t border-gray-200 pt-10">
+                <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Local Guide</p>
+                <h2 className="font-serif text-2xl font-bold text-[#2f3338]">
+                  {locationName} at a glance before you book
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                  {locationName} is one of the Gurgaon neighbourhoods we cover most often for hotel and residence outcall. The notes below explain how
+                  arrivals work here, what the area is like in the evening and what to expect from the booking process, so you can plan without guessing.
+                </p>
+              </div>
+              <div className="-mx-4 sm:-mx-6 lg:-mx-8">
+                <AreaCoverageBlock
+                  subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }}
+                  areas={Array.from({ length: 30 }, (_, index) => gurgaonAreas[(page.slug.length + index) % gurgaonAreas.length])}
+                  heading={'Neighbourhoods around ' + locationName}
+                />
+                <LocalZoneBlock
+                  areaName={locationName}
+                  zone={
+                    (/dlf|cyber|sushant-lok/.test(page.slug)
+                      ? 'dlf'
+                      : /golf/.test(page.slug)
+                        ? 'golf'
+                        : /sohna|sector-29|mg-road/.test(page.slug)
+                          ? 'south'
+                          : /dwarka|new-gurgaon|southern-peripheral/.test(page.slug)
+                            ? 'new'
+                            : /palam|udyog|manesar/.test(page.slug)
+                              ? 'west'
+                              : 'old') as 'old' | 'dlf' | 'golf' | 'south' | 'new' | 'west'
+                  }
+                />
+                <NearMeBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} areas={Array.from({ length: 12 }, (_, index) => gurgaonAreas[(page.slug.length + index) % gurgaonAreas.length])} />
+                <ExpectationBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} />
+                <BookingJourneyBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} phoneDisplay={siteConfig.phoneDisplay} />
+                <RateGuideBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} baseRate={7000} />
+                <DiscretionBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} />
+                <TimingBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} />
+                <EtiquetteBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} />
+                <ExtraFaqBlock subject={{ name: 'escorts in ' + locationName, kind: 'escort', slug: page.slug }} phoneDisplay={siteConfig.phoneDisplay} />
+              </div>
+            </>
+          )}
 
           <div className="mt-10 flex flex-wrap gap-3 border-t border-gray-200 pt-8">
             <a href={'tel:' + siteConfig.phone} className="btn-luxury">

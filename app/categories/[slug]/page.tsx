@@ -8,6 +8,16 @@ import CtaSection from '@/components/home/CtaSection';
 import { getCategoryBySlug, categories } from '@/data/categories';
 import { services } from '@/data/services';
 import { profilePath, profiles } from '@/lib/profiles';
+import { gurgaonAreas } from '@/lib/gurgaonAreas';
+import {
+  AreaCoverageBlock,
+  BookingJourneyBlock,
+  DiscretionBlock,
+  ExpectationBlock,
+  NearMeBlock,
+  RateGuideBlock,
+} from '@/components/content/SeoContentBlocks';
+import { EtiquetteBlock, ExtraFaqBlock, TimingBlock } from '@/components/content/SeoContentExtra';
 import { siteConfig } from '@/data/siteConfig';
 import {
   absoluteUrl,
@@ -47,6 +57,28 @@ export default async function CategoryDetail({ params }: Props) {
 
   const path = '/categories/' + category.slug;
   const otherCategories = categories.filter((c) => c.slug !== category.slug).slice(0, 3);
+  const rateMap: Record<string, number> = {
+    'russian-escorts-gurgaon': 8000,
+    'independent-escorts-gurgaon': 6500,
+    'vip-model-escorts-gurgaon': 12000,
+    'college-girls-gurgaon': 6000,
+    'celebrity-escorts-gurgaon': 15000,
+    'air-hostess-escorts-gurgaon': 9000,
+    'high-profile-escorts-gurgaon': 11000,
+    'hourly-escorts-gurgaon': 5500,
+    'full-night-escorts-gurgaon': 18000,
+    'gfe-escorts-gurgaon': 7000,
+    'punjabi-escorts-gurgaon': 6500,
+    'model-escorts-gurgaon': 9500,
+    'housewife-escorts-gurgaon': 6000,
+    'nepali-escorts-gurgaon': 5800,
+    'south-indian-escorts-gurgaon': 6800,
+    'nri-escorts-gurgaon': 9000,
+    'bhabhi-escorts-gurgaon': 5500,
+  };
+  const categoryRate = rateMap[category.slug] || 7000;
+  const categoryIndex = categories.findIndex((c) => c.slug === category.slug);
+  const areaSet = Array.from({ length: 24 }, (_, index) => gurgaonAreas[(categoryIndex * 3 + index) % gurgaonAreas.length]);
   const introContent = category.introContent ?? [category.description];
   const whyChoose = category.whyChoose ?? category.highlights.map((h) => ({ title: h, text: h + ' is a key part of our ' + category.name.toLowerCase() + ' experience in Gurgaon, delivered with discretion and professionalism.' }));
   const idealFor = category.idealFor ?? ['Premium hotel meetings in Gurgaon', 'Private companionship across Gurugram', 'Discreet bookings with verified companions'];
@@ -272,6 +304,32 @@ export default async function CategoryDetail({ params }: Props) {
           </div>
         </section>
       )}
+
+      <AreaCoverageBlock
+        subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }}
+        areas={areaSet}
+        heading={category.name.replace(' in Gurgaon', '') + ' across Gurgaon neighbourhoods'}
+      />
+      <NearMeBlock
+        subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }}
+        areas={areaSet}
+      />
+      <ExpectationBlock subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }} />
+      <BookingJourneyBlock
+        subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }}
+        phoneDisplay={siteConfig.phoneDisplay}
+      />
+      <RateGuideBlock
+        subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }}
+        baseRate={categoryRate}
+      />
+      <DiscretionBlock subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }} />
+      <TimingBlock subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }} />
+      <EtiquetteBlock subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }} />
+      <ExtraFaqBlock
+        subject={{ name: category.name.replace(' in Gurgaon', ''), kind: category.name.toLowerCase(), slug: category.slug }}
+        phoneDisplay={siteConfig.phoneDisplay}
+      />
 
       <section className="section-padding bg-[#faf8f5] border-t border-gray-200/70">
         <div className="container-luxury">

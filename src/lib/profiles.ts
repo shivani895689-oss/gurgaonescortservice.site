@@ -3,6 +3,8 @@ export interface Profile {
   name: string;
   age: string;
   slug: string;
+  /** Keyword-rich public URL slug, e.g. "alina-call-girl-gurgaon". */
+  seoSlug: string;
   image: string;
   category: string;
   categoryLabel: string;
@@ -21,6 +23,7 @@ export const profiles: Profile[] = [
     name: 'Alina',
     age: '24',
     slug: 'alina',
+    seoSlug: 'alina-call-girl-gurgaon',
     image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80',
     category: 'russian',
     categoryLabel: 'Russian',
@@ -37,10 +40,11 @@ export const profiles: Profile[] = [
     name: 'Priya',
     age: '26',
     slug: 'priya',
+    seoSlug: 'priya-escort-service-gurgaon',
     image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80',
     category: 'indian',
     categoryLabel: 'Indian',
-    location: 'Delhi',
+    location: 'Gurgaon',
     verified: true,
     rating: 4.7,
     tagline: 'Sensual sophistication and warmth',
@@ -53,10 +57,11 @@ export const profiles: Profile[] = [
     name: 'Yana',
     age: '22',
     slug: 'yana',
+    seoSlug: 'yana-ukrainian-escort-gurgaon',
     image: 'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80',
     category: 'ukrainian',
     categoryLabel: 'Ukrainian',
-    location: 'Moscow',
+    location: 'Gurgaon',
     verified: false,
     rating: 4.5,
     tagline: 'Exotic charm and sophisticated grace',
@@ -69,6 +74,7 @@ export const profiles: Profile[] = [
     name: 'Sofia',
     age: '30',
     slug: 'sofia',
+    seoSlug: 'sofia-call-girl-gurgaon',
     image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80',
     category: 'indian',
     categoryLabel: 'Indian',
@@ -85,6 +91,7 @@ export const profiles: Profile[] = [
     name: 'Olga',
     age: '28',
     slug: 'olga',
+    seoSlug: 'olga-russian-escort-gurgaon',
     image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
     category: 'russian',
     categoryLabel: 'Russian',
@@ -101,10 +108,11 @@ export const profiles: Profile[] = [
     name: 'Kavya',
     age: '25',
     slug: 'kavya',
+    seoSlug: 'kavya-escort-gurgaon',
     image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=900&q=80',
     category: 'indian',
     categoryLabel: 'Indian',
-    location: 'Delhi',
+    location: 'Gurgaon',
     verified: true,
     rating: 4.6,
     tagline: 'Traditional beauty meets modern grace',
@@ -116,4 +124,13 @@ export const profiles: Profile[] = [
 
 export function getProfileBySlug(slug: string): Profile | undefined {
   return profiles.find((p) => p.slug === slug);
+}
+
+export function getProfileBySeoSlug(slug: string): Profile | undefined {
+  return profiles.find((p) => p.seoSlug === slug);
+}
+
+/** Canonical, keyword-rich path for a profile page. */
+export function profilePath(profile: Profile): string {
+  return '/' + profile.seoSlug;
 }

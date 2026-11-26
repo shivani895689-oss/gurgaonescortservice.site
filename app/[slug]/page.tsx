@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Phone, MessageCircle, Shield, Clock, MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
+import ProfileView from '@/components/ProfileView';
+import { getProfileBySeoSlug, profilePath, profiles } from '@/lib/profiles';
 import { siteConfig } from '@/data/siteConfig';
 import { getLandingPageBySlug, landingPages } from '@/data/landingPages';
 import { locationPageContent } from '@/data/locationPageContent';
@@ -25,11 +27,40 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return landingPages.map((page) => ({ slug: page.slug }));
+  return [
+    ...landingPages.map((page) => ({ slug: page.slug })),
+    ...profiles.map((profile) => ({ slug: profile.seoSlug })),
+  ];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+
+  const profile = getProfileBySeoSlug(slug);
+  if (profile) {
+    return pageMetadata({
+      title: profile.name + ' Call Girl Gurgaon | ' + profile.categoryLabel + ' Escort Service',
+      description:
+        profile.name + ', ' + profile.age + ', ' + profile.categoryLabel.toLowerCase() + ' call girl in Gurgaon. Verified profile, ' +
+        profile.rating + ' rating, speaks ' + profile.languages.join('/') + ', from ' + profile.priceLabel +
+        '. Hotel and residence outcall, 24/7.',
+      path: '/' + profile.seoSlug,
+      type: 'profile',
+      brand: false,
+      image: profile.image,
+      imageAlt: profile.name + ' - ' + profile.categoryLabel + ' call girl in Gurgaon',
+      keywords: [
+        profile.name + ' call girl Gurgaon',
+        profile.name + ' escort Gurgaon',
+        profile.name + ' escort service Gurgaon',
+        profile.categoryLabel + ' call girl Gurgaon',
+        profile.categoryLabel + ' escort service Gurgaon',
+        'call girl in Gurgaon',
+        'escort service Gurgaon',
+      ],
+    });
+  }
+
   const page = getLandingPageBySlug(slug);
   if (!page) return {};
   const area = page.locationName || 'Gurgaon';
@@ -51,6 +82,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function LandingPage({ params }: PageProps) {
   const { slug } = await params;
+
+  const profile = getProfileBySeoSlug(slug);
+  if (profile) return <ProfileView profile={profile} />;
+
   const page = getLandingPageBySlug(slug);
   if (!page) notFound();
 
@@ -280,6 +315,25 @@ export default async function LandingPage({ params }: PageProps) {
                   All areas
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          <div className="mt-10 border-t border-gray-200 pt-10">
+            <h2 className="font-serif text-2xl font-bold text-[#2f3338]">Companions available in {locationName}</h2>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {profiles.map((profile) => (
+                <li key={profile.id}>
+                  <Link
+                    href={profilePath(profile)}
+                    className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 transition hover:border-[#2f3338]/30 hover:shadow-sm"
+                  >
+                    <span className="text-sm text-gray-700">
+                      <span className="font-semibold text-[#2f3338]">{profile.name}</span>, {profile.age} &middot; {profile.categoryLabel}
+                    </span>
+                    <ArrowRight className="h-4 w-4 shrink-0 text-gray-300" />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

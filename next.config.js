@@ -91,11 +91,25 @@ const nextConfig = {
     ];
   },
   async redirects() {
-    return legacyRedirects.map(({ source, destination, permanent }) => ({
-      source,
-      destination,
-      permanent: permanent !== false,
-    }));
+    // Profile pages moved from /profiles/{name} to keyword URLs such as
+    // /alina-call-girl-gurgaon so the URL itself carries the search phrase.
+    const profileRedirects = [
+      { source: '/profiles/alina', destination: '/alina-call-girl-gurgaon' },
+      { source: '/profiles/priya', destination: '/priya-escort-service-gurgaon' },
+      { source: '/profiles/yana', destination: '/yana-ukrainian-escort-gurgaon' },
+      { source: '/profiles/sofia', destination: '/sofia-call-girl-gurgaon' },
+      { source: '/profiles/olga', destination: '/olga-russian-escort-gurgaon' },
+      { source: '/profiles/kavya', destination: '/kavya-escort-gurgaon' },
+    ].map(({ source, destination }) => ({ source, destination, permanent: true }));
+
+    return [
+      ...profileRedirects,
+      ...legacyRedirects.map(({ source, destination, permanent }) => ({
+        source,
+        destination,
+        permanent: permanent !== false,
+      })),
+    ];
   },
 };
 

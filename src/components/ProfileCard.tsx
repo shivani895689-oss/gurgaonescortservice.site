@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, MessageCircle, Phone, Star, BadgeCheck } from 'lucide-react';
-import type { Profile } from '@/lib/profiles';
+import { profilePath, type Profile } from '@/lib/profiles';
 import { siteConfig } from '@/data/siteConfig';
 
 interface ProfileCardProps {
@@ -18,7 +18,7 @@ export default function ProfileCard({ profile, priority = false }: ProfileCardPr
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-900/5">
-      <Link href={`/profiles/${profile.slug}`} className="block">
+      <Link href={profilePath(profile)} className="block">
         <div className="relative aspect-[3/4] overflow-hidden">
           <Image
             src={profile.image}
@@ -82,7 +82,7 @@ export default function ProfileCard({ profile, priority = false }: ProfileCardPr
             <p className="font-serif text-xl font-semibold text-[#2f3338]">{profile.priceLabel}</p>
           </div>
           <Link
-            href={`/profiles/${profile.slug}`}
+            href={profilePath(profile)}
             className="text-sm font-semibold text-[#2f3338] transition hover:text-[#4a4d52]"
           >
             View Profile →

@@ -10,6 +10,7 @@ import { landingPages } from '@/data/landingPages';
 import { locationPageContent } from '@/data/locationPageContent';
 import { siteConfig } from '@/data/siteConfig';
 import { pageMetadata } from '@/lib/seo';
+import { profilePath, profiles } from '@/lib/profiles';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -205,6 +206,30 @@ export default async function LocationDetailPage({ params }: Props) {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white border-t border-gray-200/70">
+        <div className="container-luxury">
+          <h2 className="font-serif text-3xl font-bold text-[#4a4d52]">Companions available in {location.name}</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-600">
+            Verified companion and call girl profiles who take bookings in {location.name} and the surrounding sectors.
+          </p>
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {profiles.map((profile) => (
+              <li key={profile.id}>
+                <Link
+                  href={profilePath(profile)}
+                  className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 transition hover:border-[#2f3338]/30 hover:shadow-sm"
+                >
+                  <span className="text-sm text-gray-700">
+                    <span className="font-semibold text-[#2f3338]">{profile.name}</span>, {profile.age} &middot; {profile.categoryLabel}
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-gray-300" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

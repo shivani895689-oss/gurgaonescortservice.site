@@ -40,7 +40,7 @@ const quotedSlugs = (file) => [...read(file).matchAll(/^[ \t]*slug:\s*'([^']+)'/
 const categorySlugs = quotedSlugs('src/data/categories.ts');
 const serviceSlugs = quotedSlugs('src/data/services.ts');
 const locationSlugs = quotedSlugs('src/data/locations.ts');
-const profileSlugs = quotedSlugs('src/lib/profiles.ts');
+const profileSeoSlugs = [...read('src/lib/profiles.ts').matchAll(/seoSlug:s*'([^']+)'/g)].map((m) => m[1]);
 
 const areaSlugs = new Set(landingTypes.filter((p) => p.type === 'location').map((p) => p.slug));
 const livePaths = new Set([
@@ -50,7 +50,7 @@ const livePaths = new Set([
   ...categorySlugs.map((s) => '/categories/' + s),
   ...serviceSlugs.map((s) => '/services/' + s),
   ...locationSlugs.map((s) => '/locations/' + s),
-  ...profileSlugs.map((s) => '/profiles/' + s),
+  ...profileSeoSlugs.map((s) => '/' + s),
   ...landingSlugs.map((s) => '/' + s),
 ]);
 

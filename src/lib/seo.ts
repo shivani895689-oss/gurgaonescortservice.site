@@ -61,6 +61,8 @@ type PageMetadataInput = {
   noindex?: boolean;
   publishedTime?: string;
   modifiedTime?: string;
+  /** Set false on pages whose title already ends with a brand-like name. */
+  brand?: boolean;
 };
 
 /**
@@ -78,12 +80,13 @@ export function pageMetadata({
   noindex = false,
   publishedTime,
   modifiedTime,
+  brand = true,
 }: PageMetadataInput): Metadata {
   const canonical = normalizePath(path);
   const url = absoluteUrl(canonical);
   // Titles already carry the brand, so they bypass the layout template instead
   // of stacking a second "| Gurgaon Escort Service" onto every page.
-  const finalTitle = fitTitle(title);
+  const finalTitle = brand ? fitTitle(title) : title.replace(/\s+/g, ' ').trim();
   const finalDescription = fitDescription(description);
   const socialImage = { ...OG_IMAGE, ...(image ? { url: absoluteUrl(image) } : {}), alt: imageAlt ?? OG_IMAGE.alt };
 

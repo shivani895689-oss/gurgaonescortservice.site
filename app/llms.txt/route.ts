@@ -22,7 +22,7 @@ export function GET() {
     .map((p) => link(p.locationName || p.title, '/' + p.slug))
     .join('\n');
   const profileLines = profiles
-    .map((p) => link(p.name + ', ' + p.age, '/profiles/' + p.slug, p.categoryLabel + ' companion in ' + p.location))
+    .map((p) => link(p.name + ', ' + p.age, '/' + p.seoSlug, p.categoryLabel + ' call girl and companion in ' + p.location))
     .join('\n');
 
   const faqLines = generalFaqs.map((f) => '### ' + f.question + '\n' + f.answer).join('\n\n');

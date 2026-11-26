@@ -39,7 +39,7 @@ export default function ProfilesPage() {
       path: '/profiles',
       items: profiles.map((profile) => ({
         name: profile.name + ', ' + profile.age + ' - ' + profile.categoryLabel,
-        path: '/profiles/' + profile.slug,
+        path: '/' + profile.seoSlug,
         description: profile.categoryLabel + ' companion in ' + profile.location,
       })),
     }),

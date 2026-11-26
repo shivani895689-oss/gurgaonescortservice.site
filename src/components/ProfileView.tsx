@@ -1,46 +1,24 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { ArrowLeft, BadgeCheck, Clock, Languages, MapPin, MessageCircle, Phone, Star } from 'lucide-react';
 import ProfileCard from '@/components/ProfileCard';
 import { siteConfig } from '@/data/siteConfig';
-import { absoluteUrl, breadcrumbSchema, jsonLdScript, pageMetadata, webPageSchema } from '@/lib/seo';
-import { getProfileBySlug, profiles } from '@/lib/profiles';
+import { absoluteUrl, breadcrumbSchema, faqSchema, jsonLdScript, webPageSchema } from '@/lib/seo';
+import { profilePath, profiles, type Profile } from '@/lib/profiles';
 
-type Props = { params: Promise<{ slug: string }> };
+const areaLinks = [
+  { label: 'DLF Phase 3', href: '/escort-service-dlf-phase-3-gurgaon' },
+  { label: 'Cyber City', href: '/escort-service-cyber-city-gurgaon' },
+  { label: 'Golf Course Road', href: '/escort-service-golf-course-road-gurgaon' },
+  { label: 'MG Road', href: '/escort-service-mg-road-gurgaon' },
+  { label: 'Sector 29', href: '/escort-service-sector-29-gurgaon' },
+  { label: 'Sohna Road', href: '/escort-service-sohna-road-gurgaon' },
+  { label: 'Sushant Lok', href: '/escort-service-sushant-lok-gurgaon' },
+  { label: 'New Gurgaon', href: '/escort-service-new-gurgaon' },
+];
 
-export async function generateStaticParams() {
-  return profiles.map((p) => ({ slug: p.slug }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const profile = getProfileBySlug(slug);
-  if (!profile) return { title: 'Profile Not Found' };
-  return pageMetadata({
-    title: profile.name + ', ' + profile.age + ' - ' + profile.categoryLabel + ' Companion in ' + profile.location,
-    description:
-      profile.name + ' is a ' + profile.categoryLabel.toLowerCase() + ' companion in ' + profile.location + '. ' +
-      profile.tagline + ' Verified profile, discreet booking and premium experience.',
-    path: '/profiles/' + profile.slug,
-    type: 'profile',
-    image: profile.image,
-    imageAlt: profile.name + ' - ' + profile.categoryLabel + ' companion in ' + profile.location,
-    keywords: [
-      profile.categoryLabel + ' in ' + profile.location,
-      profile.name + ' Gurgaon',
-      'verified companion ' + profile.location,
-      profile.categoryLabel + ' near me Gurgaon',
-    ],
-  });
-}
-
-export default async function ProfileDetailPage({ params }: Props) {
-  const { slug } = await params;
-  const profile = getProfileBySlug(slug);
-  if (!profile) notFound();
-
+export default function ProfileView({ profile }: { profile: Profile }) {
+  const path = profilePath(profile);
   const whatsappUrl =
     'https://wa.me/' + siteConfig.whatsapp + '?text=' +
     encodeURIComponent('Hi, I am interested in the ' + profile.name + ' (' + profile.categoryLabel + ') profile on ' + siteConfig.name + '.');
@@ -48,6 +26,27 @@ export default async function ProfileDetailPage({ params }: Props) {
   const related = profiles
     .filter((p) => p.slug !== profile.slug && (p.category === profile.category || p.location === profile.location))
     .slice(0, 3);
+
+  const faqs = [
+    {
+      question: 'How do I book ' + profile.name + ' in Gurgaon?',
+      answer:
+        'Send a WhatsApp message or call ' + siteConfig.phoneDisplay + ' with your area, date and preferred time. Our team confirms ' +
+        profile.name + ' availability for that slot, shares the exact arrangement cost starting from ' + profile.priceLabel +
+        ', and only then locks the booking.',
+    },
+    {
+      question: 'Is ' + profile.name + ' available for hotel and residence outcall?',
+      answer:
+        'Yes. ' + profile.name + ' visits 5-star hotels, serviced apartments and private residences across Gurgaon, including DLF, Cyber City, ' +
+        'Golf Course Road, MG Road and Sohna Road. Arrival is usually within 30 to 60 minutes once the booking is confirmed.',
+    },
+    {
+      question: 'What languages does ' + profile.name + ' speak?',
+      answer:
+        profile.name + ' speaks ' + profile.languages.join(', ') + '. Mention any preference while booking and the team will match the conversation style and company to the occasion.',
+    },
+  ];
 
   return (
     <main className="bg-white">
@@ -66,6 +65,9 @@ export default async function ProfileDetailPage({ params }: Props) {
             </p>
             <h1 className="mt-3 font-serif text-4xl font-bold text-white sm:text-5xl">
               {profile.name}, <span className="text-gold-300">{profile.age}</span>
+              <span className="mt-2 block text-xl font-normal text-white/80 sm:text-2xl">
+                {profile.categoryLabel} Call Girl in Gurgaon
+              </span>
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-white/80 sm:text-lg">
               {profile.tagline}
@@ -87,9 +89,9 @@ export default async function ProfileDetailPage({ params }: Props) {
         <div className="container-luxury py-5">
           <p className="page-summary max-w-4xl text-sm leading-relaxed text-gray-700">
             <span className="font-semibold text-[#2f3338]">Quick answer: </span>
-            {profile.name} is a {profile.verified ? 'verified' : 'listed'} {profile.categoryLabel.toLowerCase()} companion in {profile.location}, Gurugram.
-            Availability is {profile.availability.toLowerCase()}, starting from {profile.priceLabel}. Book on call or WhatsApp; arrivals are discreet and the
-            arrangement is confirmed before the companion is dispatched.
+            {profile.name} is a {profile.verified ? 'verified' : 'listed'} {profile.categoryLabel.toLowerCase()} companion and call girl in Gurgaon,
+            currently {profile.availability.toLowerCase()}, starting from {profile.priceLabel}. Book on call or WhatsApp; arrivals are
+            discreet and the arrangement is confirmed before the companion is dispatched.
           </p>
         </div>
       </section>
@@ -101,7 +103,7 @@ export default async function ProfileDetailPage({ params }: Props) {
               <div className="relative aspect-[3/4] w-full">
                 <Image
                   src={profile.image}
-                  alt={`${profile.name} - ${profile.categoryLabel} companion in ${profile.location}`}
+                  alt={profile.name + ' - ' + profile.categoryLabel + ' call girl in Gurgaon'}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -202,6 +204,53 @@ export default async function ProfileDetailPage({ params }: Props) {
         </div>
       </section>
 
+      <section className="section-padding bg-[#fdf8f5] border-t border-gray-200/70">
+        <div className="container-luxury max-w-4xl">
+          <h2 className="font-serif text-3xl font-bold text-[#4a4d52]">About {profile.name}</h2>
+          <div className="mt-5 space-y-4 text-gray-600 leading-relaxed">
+            <p>
+              {profile.name} is a {profile.age}-year-old {profile.categoryLabel.toLowerCase()} call girl in Gurgaon whose profile is
+              reviewed before it goes live. {profile.tagline}. Clients book {profile.name} for hotel evenings, corporate dinners,
+              weekend getaways and private gatherings across DLF, Cyber City, Golf Course Road, MG Road and Sohna Road.
+            </p>
+            <p>
+              She speaks {profile.languages.join(', ')}, and her availability is currently listed as {profile.availability.toLowerCase()}.
+              The starting arrangement is {profile.priceLabel}, confirmed on call or WhatsApp before dispatch, with no add-on charges
+              at arrival. Companions travel to five-star hotels, serviced apartments and private residences, and every booking is
+              handled with the same confidentiality as a first phone call.
+            </p>
+          </div>
+
+          <h3 className="mt-10 font-serif text-xl font-bold text-[#4a4d52]">Where {profile.name} is available in Gurgaon</h3>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {areaLinks.map((area) => (
+              <li key={area.href}>
+                <Link
+                  href={area.href}
+                  className="inline-flex rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 transition hover:border-[#2f3338]/30 hover:text-[#2f3338]"
+                >
+                  {area.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white border-t border-gray-200/70">
+        <div className="container-luxury max-w-4xl">
+          <h2 className="font-serif text-3xl font-bold text-[#4a4d52]">{profile.name} Booking Questions</h2>
+          <div className="mt-6 space-y-6">
+            {faqs.map((faq) => (
+              <div key={faq.question}>
+                <h3 className="text-base font-semibold text-gray-900">{faq.question}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {related.length > 0 && (
         <section className="section-padding bg-gray-50 border-t border-gray-200/80">
           <div className="container-luxury">
@@ -229,25 +278,26 @@ export default async function ProfileDetailPage({ params }: Props) {
           breadcrumbSchema([
             { name: 'Home', path: '/' },
             { name: 'Profiles', path: '/profiles' },
-            { name: profile.name, path: '/profiles/' + profile.slug },
+            { name: profile.name, path },
           ]),
           webPageSchema({
-            name: profile.name + ' - ' + profile.categoryLabel + ' companion in ' + profile.location,
+            name: profile.name + ' - ' + profile.categoryLabel + ' call girl in Gurgaon',
             description: profile.tagline,
-            path: '/profiles/' + profile.slug,
+            path,
             pageType: 'ProfilePage',
           }),
+          faqSchema(faqs, path),
           {
             '@context': 'https://schema.org',
             '@type': 'Person',
-            '@id': absoluteUrl('/profiles/' + profile.slug) + '#person',
+            '@id': absoluteUrl(path) + '#person',
             name: profile.name,
             description: profile.tagline,
             image: profile.image,
             jobTitle: profile.categoryLabel + ' companion',
             knowsLanguage: profile.languages,
             worksFor: { '@id': 'https://gurgaonescortservice.site/#business' },
-            url: absoluteUrl('/profiles/' + profile.slug),
+            url: absoluteUrl(path),
             ...(profile.verified
               ? { hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'Verified profile' } }
               : {}),

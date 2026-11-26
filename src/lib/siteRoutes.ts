@@ -76,7 +76,7 @@ export function getIndexableRoutes(): IndexableRoute[] {
 
   for (const profile of profiles) {
     routes.push({
-      path: `/profiles/${profile.slug}`,
+      path: `/${profile.seoSlug}`,
       group: 'profile',
       priority: 0.6,
       changeFrequency: 'weekly',

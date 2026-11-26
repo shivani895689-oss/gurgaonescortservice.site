@@ -93,7 +93,7 @@ export default function Header() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-2.5 max-h-[80vh] overflow-y-auto">
+        <nav className="lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-2.5 max-h-[80vh] overflow-y-auto" aria-label="Mobile navigation">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -122,7 +122,7 @@ export default function Header() {
               WhatsApp
             </a>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );

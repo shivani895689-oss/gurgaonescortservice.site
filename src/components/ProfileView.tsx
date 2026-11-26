@@ -43,7 +43,7 @@ export default function ProfileView({ profile }: { profile: Profile }) {
   const areaSet = Array.from({ length: 32 }, (_, index) => gurgaonAreas[(startIndex + index) % gurgaonAreas.length]);
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <section className="relative bg-[#4a4d52] pb-12 pt-28 sm:pb-16 sm:pt-32">
         <div className="container-luxury">
           <Link
@@ -334,7 +334,7 @@ export default function ProfileView({ profile }: { profile: Profile }) {
           },
         ])}
       />
-    </main>
+    </div>
   );
 }
 

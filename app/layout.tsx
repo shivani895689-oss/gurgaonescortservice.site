@@ -281,7 +281,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Header />
-        <div id="main-content">{children}</div>
+        <main id="main-content">{children}</main>
         <Footer />
         <WhatsAppButton />
         <MobileBookingBar />

@@ -40,7 +40,7 @@ export default function ProfilesPage() {
   ];
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       <PageHero
         title="Verified Companion Profiles in Gurgaon"
         subtitle="Browse verified premium companions across Gurgaon and nearby locations. Choose by category, location, and preference for a discreet and premium experience."
@@ -91,6 +91,6 @@ export default function ProfilesPage() {
       {schema.map((item, index) => (
         <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
       ))}
-    </main>
+    </div>
   );
 }

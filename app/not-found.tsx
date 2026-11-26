@@ -22,7 +22,7 @@ const popularAreas = [
 
 export default function NotFound() {
   return (
-    <main className="bg-[#fdf8f5]">
+    <div className="bg-[#fdf8f5]">
       <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:py-20">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#2f3338]">404 Error</p>
         <h1 className="mb-4 font-serif text-4xl font-bold text-[#4a4d52] md:text-5xl">This page has moved</h1>
@@ -101,6 +101,6 @@ export default function NotFound() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

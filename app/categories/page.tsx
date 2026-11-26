@@ -124,7 +124,7 @@ export default function CategoriesPage() {
   ];
 
   return (
-    <main className="bg-white">
+    <div className="bg-white">
       {schema.map((item, index) => (
         <script key={index} type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(item)} />
       ))}
@@ -281,7 +281,7 @@ export default function CategoriesPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

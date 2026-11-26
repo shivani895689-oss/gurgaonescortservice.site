@@ -237,7 +237,7 @@ export default function AdminDashboard({ initialAuthed, allUrls, keyLocation, en
 
   if (!authed) {
     return (
-      <main className="min-h-screen bg-[#fdf8f5] flex items-center justify-center px-4 py-16">
+      <div className="min-h-screen bg-[#fdf8f5] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-200 p-8">
           <div className="w-14 h-14 rounded-2xl bg-[#2f3338]/10 text-[#2f3338] flex items-center justify-center mb-5">
             <Lock className="w-7 h-7" />
@@ -273,12 +273,12 @@ export default function AdminDashboard({ initialAuthed, allUrls, keyLocation, en
             </button>
           </form>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#fdf8f5] px-4 py-8 sm:py-10">
+    <div className="min-h-screen bg-[#fdf8f5] px-4 py-8 sm:py-10">
       <div className="max-w-7xl mx-auto space-y-6">
         <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -506,7 +506,7 @@ export default function AdminDashboard({ initialAuthed, allUrls, keyLocation, en
           </section>
         )}
       </div>
-    </main>
+    </div>
   );
 }
 

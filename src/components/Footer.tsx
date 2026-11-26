@@ -307,11 +307,15 @@ export default function Footer() {
             </nav>
           </div>
 
-          <p className="mt-4 max-w-5xl text-[11px] leading-relaxed text-gray-500">
-            Disclaimer: This website is intended for adults aged 18+ only. All content is for informational and
-            companionship service purposes. We promote respectful, lawful, and consensual interactions. By accessing
-            this site, you confirm that you are of legal age in your jurisdiction.
-          </p>
+          <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 flex items-start gap-3">
+            <span className="shrink-0 mt-0.5 inline-flex items-center justify-center h-6 w-6 rounded-full bg-red-500/15 text-[10px] font-black text-red-400 leading-none">18+</span>
+            <p className="max-w-5xl text-[11px] leading-relaxed text-gray-400">
+              <span className="font-semibold text-gray-300">Adults only.</span> This website is strictly for individuals aged 18 years and above. All content is for informational and companionship service purposes only. We promote respectful, lawful, and consensual interactions. By accessing or using this site, you confirm that you are of legal age in your jurisdiction and agree to our{' '}
+              <Link href="/terms-and-conditions" className="underline underline-offset-2 hover:text-white transition-colors">Terms</Link>,{' '}
+              <Link href="/privacy-policy" className="underline underline-offset-2 hover:text-white transition-colors">Privacy Policy</Link> and{' '}
+              <Link href="/disclaimer" className="underline underline-offset-2 hover:text-white transition-colors">Disclaimer</Link>.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

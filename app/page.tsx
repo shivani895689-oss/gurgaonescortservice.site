@@ -89,6 +89,12 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <div className="border-b border-gray-200/60 bg-[#faf8f6]">
+        <div className="container-luxury py-2.5 flex items-center justify-center gap-2 text-[11px] text-gray-500">
+          <span className="inline-flex items-center justify-center h-4.5 w-4.5 rounded-full bg-gray-300/30 text-[9px] font-black text-gray-500 leading-none">18+</span>
+          <span>This website is for adults only. By continuing, you confirm you are 18+ years of age.</span>
+        </div>
+      </div>
       <section className="border-b border-gray-100 bg-white">
         <div className="container-luxury py-12 md:py-16">
           <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">

@@ -7,6 +7,7 @@ import PageHero from '@/components/PageHero';
 import CtaSection from '@/components/home/CtaSection';
 import { getCategoryBySlug, categories } from '@/data/categories';
 import { services } from '@/data/services';
+import { profilePath, profiles } from '@/lib/profiles';
 import { siteConfig } from '@/data/siteConfig';
 import {
   absoluteUrl,
@@ -271,6 +272,33 @@ export default async function CategoryDetail({ params }: Props) {
           </div>
         </section>
       )}
+
+      <section className="section-padding bg-[#faf8f5] border-t border-gray-200/70">
+        <div className="container-luxury">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-[#2f3338] mb-3">Verified Companions</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-gray-900">Book a companion in Gurgaon</h2>
+            <p className="mt-3 text-sm leading-relaxed text-gray-600">
+              Every profile on this page is reviewed before publication, with stated languages, rates and availability.
+            </p>
+          </div>
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {profiles.map((profile) => (
+              <li key={profile.id}>
+                <Link
+                  href={profilePath(profile)}
+                  className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 transition hover:border-[#2f3338]/30 hover:shadow-sm"
+                >
+                  <span className="text-sm text-gray-700">
+                    <span className="font-semibold text-[#2f3338]">{profile.name}</span>, {profile.age} &middot; {profile.categoryLabel}
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-gray-300" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       <section className="section-padding bg-white">
         <div className="container-luxury">

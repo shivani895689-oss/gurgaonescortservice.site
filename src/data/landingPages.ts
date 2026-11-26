@@ -771,6 +771,186 @@ export const landingPages: LandingPage[] = [
     "metaDescription": "Book premium escort service in Southern Peripheral Road, Gurgaon with verified companions, discreet arrivals, and 24/7 confidential booking for hotels and residences.",
     "type": "location",
     "locationName": "Southern Peripheral Road"
+  },
+  {
+    "slug": "escort-service-sector-24-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 24, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 24, Gurgaon? Verified companions, discreet outcall around the older MG Road belt near Sector 29, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 24, Gurgaon | 24/7",
+    "metaDescription": "Book verified escorts in Sector 24, Gurgaon with discreet hotel outcall, transparent rates and 24/7 booking on call or WhatsApp.",
+    "type": "location",
+    "locationName": "Sector 24"
+  },
+  {
+    "slug": "escort-service-sector-25-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 25, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 25, Gurgaon? Verified companions, discreet outcall around the quiet lanes between MG Road and Sushant Lok, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 25, Gurgaon | Verified & Discreet",
+    "metaDescription": "Premium escort service in Sector 25, Gurgaon - verified companions, private arrivals and clear pricing for hotels and apartments.",
+    "type": "location",
+    "locationName": "Sector 25"
+  },
+  {
+    "slug": "escort-service-sector-26-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 26, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 26, Gurgaon? Verified companions, discreet outcall around the residential blocks beside MG Road, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 26, Gurgaon | 24/7",
+    "metaDescription": "Looking for escorts in Sector 26? Verified profiles, discreet outcall and same-day bookings confirmed within minutes, 24/7.",
+    "type": "location",
+    "locationName": "Sector 26"
+  },
+  {
+    "slug": "escort-service-sector-27-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 27, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 27, Gurgaon? Verified companions, discreet outcall around the low-rise streets near Sector 29, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 27, Gurgaon | Verified & Discreet",
+    "metaDescription": "Escorts in Sector 27, Gurgaon with verified profiles and confidential hotel outcall - book by call or WhatsApp any time.",
+    "type": "location",
+    "locationName": "Sector 27"
+  },
+  {
+    "slug": "escort-service-sector-28-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 28, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 28, Gurgaon? Verified companions, discreet outcall around the leafy pocket next to MG Road, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 28, Gurgaon | 24/7",
+    "metaDescription": "Book verified escorts in Sector 28, Gurgaon with discreet hotel outcall, transparent rates and 24/7 booking on call or WhatsApp.",
+    "type": "location",
+    "locationName": "Sector 28"
+  },
+  {
+    "slug": "escort-service-sector-33-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 33, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 33, Gurgaon? Verified companions, discreet outcall around the stretch between Sector 29 and Subhash Chowk, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 33, Gurgaon | Verified & Discreet",
+    "metaDescription": "Premium escort service in Sector 33, Gurgaon - verified companions, private arrivals and clear pricing for hotels and apartments.",
+    "type": "location",
+    "locationName": "Sector 33"
+  },
+  {
+    "slug": "escort-service-sector-36-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 36, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 36, Gurgaon? Verified companions, discreet outcall around the service lanes near Jharsa and Medanta, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 36, Gurgaon | 24/7",
+    "metaDescription": "Looking for escorts in Sector 36? Verified profiles, discreet outcall and same-day bookings confirmed within minutes, 24/7.",
+    "type": "location",
+    "locationName": "Sector 36"
+  },
+  {
+    "slug": "escort-service-sector-37-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 37, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 37, Gurgaon? Verified companions, discreet outcall around the blocks beside Jharsa Road, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 37, Gurgaon | Verified & Discreet",
+    "metaDescription": "Escorts in Sector 37, Gurgaon with verified profiles and confidential hotel outcall - book by call or WhatsApp any time.",
+    "type": "location",
+    "locationName": "Sector 37"
+  },
+  {
+    "slug": "escort-service-sector-38-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 38, Ardee City, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 38, Ardee City, Gurgaon? Verified companions, discreet outcall around the Ardee City neighbourhood near Sector 46, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 38, Gurgaon | 24/7",
+    "metaDescription": "Book verified escorts in Sector 38, Gurgaon with discreet hotel outcall, transparent rates and 24/7 booking on call or WhatsApp.",
+    "type": "location",
+    "locationName": "Sector 38, Ardee City"
+  },
+  {
+    "slug": "escort-service-sector-39-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 39, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 39, Gurgaon? Verified companions, discreet outcall around the Sector 39 market belt near Jharsa, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 39, Gurgaon | Verified & Discreet",
+    "metaDescription": "Premium escort service in Sector 39, Gurgaon - verified companions, private arrivals and clear pricing for hotels and apartments.",
+    "type": "location",
+    "locationName": "Sector 39"
+  },
+  {
+    "slug": "escort-service-sector-41-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 41, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 41, Gurgaon? Verified companions, discreet outcall around the Sector 41 pocket close to Subhash Chowk, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 41, Gurgaon | 24/7",
+    "metaDescription": "Looking for escorts in Sector 41? Verified profiles, discreet outcall and same-day bookings confirmed within minutes, 24/7.",
+    "type": "location",
+    "locationName": "Sector 41"
+  },
+  {
+    "slug": "escort-service-sector-42-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 42, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 42, Gurgaon? Verified companions, discreet outcall around the hospitality belt near Medanta and Sohna Road, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 42, Gurgaon | Verified & Discreet",
+    "metaDescription": "Escorts in Sector 42, Gurgaon with verified profiles and confidential hotel outcall - book by call or WhatsApp any time.",
+    "type": "location",
+    "locationName": "Sector 42"
+  },
+  {
+    "slug": "escort-service-sector-48-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 48, Sohna Road, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 48, Sohna Road, Gurgaon? Verified companions, discreet outcall around the Sohna Road corridor around Subhash Chowk, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 48, Gurgaon | 24/7",
+    "metaDescription": "Book verified escorts in Sector 48, Gurgaon with discreet hotel outcall, transparent rates and 24/7 booking on call or WhatsApp.",
+    "type": "location",
+    "locationName": "Sector 48, Sohna Road"
+  },
+  {
+    "slug": "escort-service-sector-58-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 58, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 58, Gurgaon? Verified companions, discreet outcall around the Golf Course Extension side near Sushant Lok 3, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 58, Gurgaon | Verified & Discreet",
+    "metaDescription": "Premium escort service in Sector 58, Gurgaon - verified companions, private arrivals and clear pricing for hotels and apartments.",
+    "type": "location",
+    "locationName": "Sector 58"
+  },
+  {
+    "slug": "escort-service-sector-64-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 64, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 64, Gurgaon? Verified companions, discreet outcall around the New Gurgaon blocks off Golf Course Extension, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 64, Gurgaon | 24/7",
+    "metaDescription": "Looking for escorts in Sector 64? Verified profiles, discreet outcall and same-day bookings confirmed within minutes, 24/7.",
+    "type": "location",
+    "locationName": "Sector 64"
+  },
+  {
+    "slug": "escort-service-sector-68-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 68, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 68, Gurgaon? Verified companions, discreet outcall around the fast-growing New Gurgaon belt near Sector 65, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 68, Gurgaon | Verified & Discreet",
+    "metaDescription": "Escorts in Sector 68, Gurgaon with verified profiles and confidential hotel outcall - book by call or WhatsApp any time.",
+    "type": "location",
+    "locationName": "Sector 68"
+  },
+  {
+    "slug": "escort-service-sector-69-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 69, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 69, Gurgaon? Verified companions, discreet outcall around the New Gurgaon residential pocket near Sector 65, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escort Service in Sector 69, Gurgaon | 24/7",
+    "metaDescription": "Book verified escorts in Sector 69, Gurgaon with discreet hotel outcall, transparent rates and 24/7 booking on call or WhatsApp.",
+    "type": "location",
+    "locationName": "Sector 69"
+  },
+  {
+    "slug": "escort-service-sector-73-gurgaon",
+    "eyebrow": "Service Area",
+    "title": "Escort Service in Sector 73, Gurgaon - Discreet & Premium Companions",
+    "description": "Looking for a trusted escort service in Sector 73, Gurgaon? Verified companions, discreet outcall around the SPR stretch beside Sector 72 and 74, and a premium experience for hotels and private residences.",
+    "metaTitle": "Escorts in Sector 73, Gurgaon | Verified & Discreet",
+    "metaDescription": "Premium escort service in Sector 73, Gurgaon - verified companions, private arrivals and clear pricing for hotels and apartments.",
+    "type": "location",
+    "locationName": "Sector 73"
   }
 ];
 

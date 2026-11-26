@@ -27,26 +27,7 @@ export default function ProfileView({ profile }: { profile: Profile }) {
     .filter((p) => p.slug !== profile.slug && (p.category === profile.category || p.location === profile.location))
     .slice(0, 3);
 
-  const faqs = [
-    {
-      question: 'How do I book ' + profile.name + ' in Gurgaon?',
-      answer:
-        'Send a WhatsApp message or call ' + siteConfig.phoneDisplay + ' with your area, date and preferred time. Our team confirms ' +
-        profile.name + ' availability for that slot, shares the exact arrangement cost starting from ' + profile.priceLabel +
-        ', and only then locks the booking.',
-    },
-    {
-      question: 'Is ' + profile.name + ' available for hotel and residence outcall?',
-      answer:
-        'Yes. ' + profile.name + ' visits 5-star hotels, serviced apartments and private residences across Gurgaon, including DLF, Cyber City, ' +
-        'Golf Course Road, MG Road and Sohna Road. Arrival is usually within 30 to 60 minutes once the booking is confirmed.',
-    },
-    {
-      question: 'What languages does ' + profile.name + ' speak?',
-      answer:
-        profile.name + ' speaks ' + profile.languages.join(', ') + '. Mention any preference while booking and the team will match the conversation style and company to the occasion.',
-    },
-  ];
+  const faqs = profile.faqs;
 
   return (
     <main className="bg-white">
@@ -208,18 +189,23 @@ export default function ProfileView({ profile }: { profile: Profile }) {
         <div className="container-luxury max-w-4xl">
           <h2 className="font-serif text-3xl font-bold text-[#4a4d52]">About {profile.name}</h2>
           <div className="mt-5 space-y-4 text-gray-600 leading-relaxed">
+            {profile.about.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+            ))}
             <p>
-              {profile.name} is a {profile.age}-year-old {profile.categoryLabel.toLowerCase()} call girl in Gurgaon whose profile is
-              reviewed before it goes live. {profile.tagline}. Clients book {profile.name} for hotel evenings, corporate dinners,
-              weekend getaways and private gatherings across DLF, Cyber City, Golf Course Road, MG Road and Sohna Road.
-            </p>
-            <p>
-              She speaks {profile.languages.join(', ')}, and her availability is currently listed as {profile.availability.toLowerCase()}.
-              The starting arrangement is {profile.priceLabel}, confirmed on call or WhatsApp before dispatch, with no add-on charges
-              at arrival. Companions travel to five-star hotels, serviced apartments and private residences, and every booking is
-              handled with the same confidentiality as a first phone call.
+              {profile.name} speaks {profile.languages.join(', ')}, is listed as {profile.availability.toLowerCase()}, and starts at{' '}
+              {profile.priceLabel} with no add-on charges at arrival.
             </p>
           </div>
+
+          <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-[#4a4d52]">Best suited for</h3>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {profile.specialties.map((item) => (
+              <li key={item} className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700">
+                {item}
+              </li>
+            ))}
+          </ul>
 
           <h3 className="mt-10 font-serif text-xl font-bold text-[#4a4d52]">Where {profile.name} is available in Gurgaon</h3>
           <ul className="mt-4 flex flex-wrap gap-2">
